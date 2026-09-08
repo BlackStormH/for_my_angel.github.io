@@ -9,11 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #0f0c1b;
-      --card-bg: rgba(28, 22, 49, 0.7);
+      --bg-dark: #0d0a18;
+      --card-bg: rgba(26, 20, 48, 0.75);
       --accent-pink: #f472b6;
       --accent-purple: #c084fc;
-      --accent-glow: rgba(244, 114, 182, 0.3);
+      --accent-glow: rgba(244, 114, 182, 0.25);
       --text-main: #f3f4f6;
       --text-muted: #cbd5e1;
     }
@@ -26,7 +26,7 @@
     }
 
     body {
-      background: radial-gradient(circle at top, #1e1538 0%, #0d091a 100%);
+      background: radial-gradient(ellipse at top, #231647 0%, #0d0a18 100%);
       color: var(--text-main);
       font-family: 'Outfit', sans-serif;
       min-height: 100vh;
@@ -38,7 +38,7 @@
       position: relative;
     }
 
-    /* Ambient floating stars/dust */
+    /* Ambient stars */
     .star {
       position: absolute;
       background: #fff;
@@ -50,65 +50,59 @@
 
     @keyframes twinkle {
       0%, 100% { opacity: 0.2; transform: scale(0.8); }
-      50% { opacity: 0.9; transform: scale(1.2); }
+      50% { opacity: 0.95; transform: scale(1.3); }
     }
 
     /* Header */
     header {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.2rem;
       z-index: 2;
     }
 
     header h1 {
-      font-size: 2.4rem;
+      font-size: 2.2rem;
       font-weight: 600;
       background: linear-gradient(135deg, #f9a8d4, #c084fc, #93c5fd);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     header p {
       color: var(--text-muted);
-      font-size: 1.05rem;
+      font-size: 0.98rem;
     }
 
-    /* Container for sections */
     .container {
       width: 100%;
-      max-width: 580px;
+      max-width: 540px;
       display: flex;
       flex-direction: column;
-      gap: 1.8rem;
+      gap: 1.6rem;
       z-index: 2;
     }
 
     .card {
       background: var(--card-bg);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 32px var(--accent-glow);
+      box-shadow: 0 10px 30px var(--accent-glow);
       border-radius: 20px;
-      padding: 1.6rem;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .card:hover {
-      border-color: rgba(244, 114, 182, 0.3);
+      padding: 1.5rem;
     }
 
     .card h2 {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       color: #fbcfe8;
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
-    /* Interactive Envelopes */
+    /* Envelopes */
     .envelope-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -116,13 +110,13 @@
     }
 
     .envelope-btn {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(244, 114, 182, 0.2);
       border-radius: 12px;
       padding: 0.9rem;
       color: #fdf2f8;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -138,77 +132,163 @@
     }
 
     .envelope-btn span {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
     }
 
-    /* Cookie Bakery Mini-game */
-    .cookie-game {
+    /* Interactive Bakery Engine */
+    .bakery-box {
       text-align: center;
+      background: rgba(0, 0, 0, 0.22);
+      border-radius: 16px;
+      padding: 1.2rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .cookie-stage {
-      margin: 1.2rem 0;
+    .bakery-scene {
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 0.8rem;
+    }
+
+    .oven-glow {
+      position: absolute;
+      width: 130px;
+      height: 90px;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.55), transparent 70%);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .oven-glow.active {
+      opacity: 1;
+      animation: flamePulse 1s infinite alternate;
+    }
+
+    @keyframes flamePulse {
+      from { transform: scale(0.9); opacity: 0.6; }
+      to { transform: scale(1.15); opacity: 0.95; }
+    }
+
+    .main-emoji {
+      font-size: 4rem;
+      z-index: 1;
+      display: inline-block;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .shake {
+      animation: shakeAnim 0.3s ease-in-out infinite;
+    }
+
+    @keyframes shakeAnim {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-8deg); }
+      75% { transform: rotate(8deg); }
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      height: 8px;
+      overflow: hidden;
+      margin: 0.8rem 0 1rem;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+      transition: width 0.3s ease;
+    }
+
+    .ingredient-shelf {
       display: flex;
       justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .ingredient-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 0.45rem 0.8rem;
+      color: #fff;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
       align-items: center;
-      height: 110px;
+      gap: 0.35rem;
+      transition: all 0.2s;
     }
 
-    .cookie-display {
-      font-size: 4rem;
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-      user-select: none;
+    .ingredient-btn.added {
+      opacity: 0.35;
+      border-color: #10b981;
+      text-decoration: line-through;
+      pointer-events: none;
     }
 
-    .cookie-btn {
+    .action-btn-main {
+      width: 100%;
       background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
       border: none;
       color: #fff;
-      padding: 0.8rem 1.6rem;
-      border-radius: 30px;
-      font-size: 1rem;
+      padding: 0.8rem 1.4rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
       font-weight: 600;
+      font-family: inherit;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
-      transition: transform 0.15s ease, filter 0.15s ease;
+      box-shadow: 0 4px 14px rgba(244, 114, 182, 0.35);
+      transition: transform 0.15s ease;
     }
 
-    .cookie-btn:active {
-      transform: scale(0.96);
+    .action-btn-main:active {
+      transform: scale(0.97);
     }
 
-    /* Random Hug / Affirmation Generator */
+    /* Safe space quote box */
     .quote-box {
       background: rgba(0, 0, 0, 0.25);
       border-radius: 12px;
       padding: 1.1rem;
-      min-height: 75px;
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-size: 1rem;
+      font-size: 0.95rem;
       line-height: 1.45;
       color: #fdf2f8;
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
       font-style: italic;
+      transition: opacity 0.2s;
     }
 
-    .action-btn {
+    .action-btn-secondary {
       width: 100%;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.15);
       color: #fff;
       padding: 0.75rem;
       border-radius: 12px;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: background 0.2s;
     }
 
-    .action-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
+    .action-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
     }
 
     /* Modal / Letter Reader */
@@ -218,7 +298,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       display: none;
@@ -230,43 +310,38 @@
 
     .modal-overlay.active {
       display: flex;
-      animation: fadeIn 0.25s ease-out forwards;
     }
 
     .letter-paper {
       background: #fffdfa;
       color: #33261d;
       width: 100%;
-      max-width: 440px;
+      max-width: 420px;
       padding: 2.2rem 1.8rem;
       border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      position: relative;
       font-family: 'Caveat', cursive;
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       line-height: 1.4;
       max-height: 85vh;
       overflow-y: auto;
-    }
-
-    .letter-paper p {
-      margin-bottom: 1rem;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.5);
     }
 
     .close-letter-btn {
       margin-top: 1.2rem;
       width: 100%;
-      background: #d97706;
+      background: #c084fc;
       color: white;
       border: none;
       padding: 0.6rem;
       border-radius: 8px;
       font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
     }
 
-    /* Click Sparkles/Hearts */
+    /* Floating hearts */
     .floating-heart {
       position: fixed;
       font-size: 1.4rem;
@@ -277,25 +352,13 @@
     }
 
     @keyframes floatUp {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(0.6);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-70px) scale(1.2);
-      }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      0% { opacity: 1; transform: translateY(0) scale(0.6); }
+      100% { opacity: 0; transform: translateY(-70px) scale(1.2); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Star Background Generator -->
   <div id="stars-container"></div>
 
   <header>
@@ -305,11 +368,11 @@
 
   <div class="container">
 
-    <!-- Section 1: Interactive Love Letters -->
+    <!-- Section 1: Letters -->
     <div class="card">
       <h2><span>💌</span> Letters For You</h2>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
-        Click to open any letter whenever you feel like reading one:
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 0.9rem;">
+        Open any letter whenever you feel like reading one:
       </p>
       <div class="envelope-grid">
         <button class="envelope-btn" onclick="openLetter('birthday')">
@@ -331,30 +394,50 @@
       </div>
     </div>
 
-    <!-- Section 2: Interactive Cookie Bakery -->
-    <div class="card cookie-game">
+    <!-- Section 2: Interactive Bakery -->
+    <div class="card">
       <h2><span>🍪</span> The Secret Bakery</h2>
-      <p style="color: var(--text-muted); font-size: 0.9rem;" id="cookie-status">
-        You promised to bake sweets... let's make a batch together!
-      </p>
-      <div class="cookie-stage">
-        <div class="cookie-display" id="cookie-icon">🥣</div>
+      <div class="bakery-box">
+        <div class="bakery-scene">
+          <div class="oven-glow" id="ovenGlow"></div>
+          <div class="main-emoji" id="bakeryDisplay">🥣</div>
+        </div>
+        
+        <p id="bakeryStatus" style="font-size: 0.92rem; color: var(--text-muted); min-height: 24px;">
+          Add the ingredients into the bowl:
+        </p>
+
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="bakeProgress"></div>
+        </div>
+
+        <!-- Stage 1: Add Ingredients -->
+        <div class="ingredient-shelf" id="ingredientsShelf">
+          <button class="ingredient-btn" onclick="addIngredient(this, 'Flour 🌾')"><span>🌾</span> Flour</button>
+          <button class="ingredient-btn" onclick="addIngredient(this, 'Sugar 🍬')"><span>🍬</span> Sugar</button>
+          <button class="ingredient-btn" onclick="addIngredient(this, 'Choco 🍫')"><span>🍫</span> Chocolate</button>
+          <button class="ingredient-btn" onclick="addIngredient(this, 'Love 💖')"><span>💖</span> Pure Love</button>
+        </div>
+
+        <!-- Stage 2 & 3: Mix and Bake Action Buttons -->
+        <button class="action-btn-main" id="bakeryActionBtn" style="display: none;" onclick="handleBakeryAction()">
+          Mix the dough! 🥄
+        </button>
       </div>
-      <button class="cookie-btn" id="baking-btn" onclick="advanceBakery()">Add Ingredients ✨</button>
     </div>
 
-    <!-- Section 3: Instant Warmth & Hug Generator -->
+    <!-- Section 3: Safe Space Button -->
     <div class="card">
       <h2><span>🤍</span> The "Safe Space" Button</h2>
       <div class="quote-box" id="quote-text">
         "You never have to be scared of being loved the right way. I'm right here."
       </div>
-      <button class="action-btn" onclick="nextAffirmation()">Tap for a Hug & Reassurance 🫂</button>
+      <button class="action-btn-secondary" onclick="nextAffirmation()">Tap for a Hug & Reassurance 🫂</button>
     </div>
 
   </div>
 
-  <!-- Letter Modal Display -->
+  <!-- Letter Modal -->
   <div class="modal-overlay" id="letter-modal">
     <div class="letter-paper">
       <div id="letter-content"></div>
@@ -363,25 +446,22 @@
   </div>
 
   <script>
-    // 1. Generate ambient stars in background
+    // 1. Ambient Background Stars
     const starsContainer = document.getElementById('stars-container');
     for (let i = 0; i < 40; i++) {
       const star = document.createElement('div');
       star.className = 'star';
       star.style.left = `${Math.random() * 100}vw`;
       star.style.top = `${Math.random() * 100}vh`;
-      star.style.width = `${Math.random() * 2.5 + 1}px`;
+      star.style.width = `${Math.random() * 2 + 1}px`;
       star.style.height = star.style.width;
       star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-      star.style.animationDelay = `${Math.random() * 2}s`;
       starsContainer.appendChild(star);
     }
 
-    // 2. Click / Tap heart animation
+    // 2. Click / Tap Floating Particles
     window.addEventListener('pointerdown', (e) => {
-      // Don't trigger when clicking buttons or links
       if (['BUTTON', 'A'].includes(e.target.tagName)) return;
-
       const heart = document.createElement('div');
       heart.className = 'floating-heart';
       const symbols = ['🤍', '✨', '🌸', '💫', '💖'];
@@ -389,30 +469,29 @@
       heart.style.left = `${e.clientX - 10}px`;
       heart.style.top = `${e.clientY - 15}px`;
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 950);
     });
 
-    // 3. Love Letter Contents
+    // 3. Letters
     const letters = {
       birthday: `
         My sweetest angel, <br><br>
-        Happy birthday. Meeting you has been the best thing that ever happened to me. You make the world brighter, warmer, and full of color just by being in it. I hope today brings you as much peace and joy as you give me every single day.<br><br>
-        You're stuck with me forever, pretty baby. Happy birthday! 🎂🤍
+        Happy birthday. Meeting you has been the best thing that ever happened to me. You make everything brighter, warmer, and full of peace just by being in my world.<br><br>
+        I hope this year treats you with all the softness and joy you bring to everyone else. You're stuck with me forever, baby. Happy birthday! 🎂🤍
       `,
       doubt: `
         Hey baby,<br><br>
-        Whenever you feel unsure, or wonder if you deserve all of this kindness: yes, you do. You never did anything wrong, and you don't ever have to feel alone again.<br><br>
-        You are the kindest, sweetest soul, and I will always be right here to hold your hand and remind you how loved you are. Just hold on to me.
+        Whenever you feel unsure, or wonder if you deserve this kindness: yes, you do. You never did anything wrong, and you don't ever have to feel alone again.<br><br>
+        You are the kindest, sweetest soul, and I'll take care of both of us. Just hold on to me.
       `,
       miss: `
-        My pretty baby,<br><br>
-        If you're missing me right now, close your eyes and imagine the biggest, warmest hug waiting for you. I am always thinking about you, singing along to the songs that remind me of you, and waiting for the moment I get to pull you into my arms for real.<br><br>
+        My pretty angel,<br><br>
+        If you're missing me right now, close your eyes and imagine the biggest hug. I am always thinking about you, humming the songs that remind me of you, and waiting for the moment I pull you into my arms for real.<br><br>
         You have all my heart.
       `,
       sleep: `
         Goodnight, my sweet little princess.<br><br>
-        Rest your eyes and don't worry about anything tonight. You are protected, you are cherished beyond words, and you are so deeply safe with me. Dream sweet dreams, angel.
+        Rest your eyes and let everything go tonight. You are protected, you are cherished beyond words, and you are so safe with me. Sweet dreams, angel.
       `
     };
 
@@ -420,45 +499,97 @@
       document.getElementById('letter-content').innerHTML = letters[type];
       document.getElementById('letter-modal').classList.add('active');
     }
-
     function closeLetter() {
       document.getElementById('letter-modal').classList.remove('active');
     }
 
-    // 4. Bakery Mini-game Logic
-    let stage = 0;
-    const stages = [
-      { icon: '🥣', text: 'Mixing the secret recipe batter...', btn: 'Mix with Love 🥄' },
-      { icon: '🧁', text: 'Popping them in the oven... it smells so sweet!', btn: 'Wait for the Oven ⏳' },
-      { icon: '🍪', text: 'Fresh, warm homemade cookies ready for you!', btn: 'Bake Another Batch 💖' }
-    ];
+    // 4. Interactive Bakery Logic
+    let ingredientsCount = 0;
+    let bakeryStep = 'ingredients'; // ingredients -> mix -> bake -> done
 
-    function advanceBakery() {
-      const display = document.getElementById('cookie-icon');
-      const status = document.getElementById('cookie-status');
-      const btn = document.getElementById('baking-btn');
+    function addIngredient(btn, name) {
+      btn.classList.add('added');
+      ingredientsCount++;
+      const display = document.getElementById('bakeryDisplay');
+      display.style.transform = 'scale(1.25)';
+      setTimeout(() => display.style.transform = 'scale(1)', 180);
 
-      display.style.transform = 'scale(0.7)';
-      setTimeout(() => {
-        const next = stages[stage];
-        display.innerText = next.icon;
-        status.innerText = next.text;
-        btn.innerText = next.btn;
-        display.style.transform = 'scale(1.1)';
-        setTimeout(() => display.style.transform = 'scale(1)', 150);
+      document.getElementById('bakeProgress').style.width = `${(ingredientsCount / 4) * 35}%`;
+      document.getElementById('bakeryStatus').innerText = `Added ${name}! (${ingredientsCount}/4)`;
 
-        stage = (stage + 1) % stages.length;
-      }, 150);
+      if (ingredientsCount === 4) {
+        document.getElementById('ingredientsShelf').style.display = 'none';
+        const actionBtn = document.getElementById('bakeryActionBtn');
+        actionBtn.style.display = 'block';
+        actionBtn.innerText = 'Mix the batter! 🥄';
+        document.getElementById('bakeryStatus').innerText = 'All ingredients in! Now mix it together.';
+        bakeryStep = 'mix';
+      }
     }
 
-    // 5. Sweet Affirmation Generator
+    let mixClicks = 0;
+    function handleBakeryAction() {
+      const display = document.getElementById('bakeryDisplay');
+      const status = document.getElementById('bakeryStatus');
+      const actionBtn = document.getElementById('bakeryActionBtn');
+      const progress = document.getElementById('bakeProgress');
+
+      if (bakeryStep === 'mix') {
+        mixClicks++;
+        display.classList.add('shake');
+        setTimeout(() => display.classList.remove('shake'), 250);
+        progress.style.width = `${35 + (mixClicks * 15)}%`;
+
+        if (mixClicks < 3) {
+          status.innerText = `Mixing... stir it more! (${mixClicks}/3)`;
+        } else {
+          bakeryStep = 'bake';
+          display.innerText = '🥧';
+          status.innerText = 'Batter is smooth and ready for the oven!';
+          actionBtn.innerText = 'Put in the oven! 🔥';
+        }
+      } else if (bakeryStep === 'bake') {
+        bakeryStep = 'baking_in_progress';
+        actionBtn.style.display = 'none';
+        document.getElementById('ovenGlow').classList.add('active');
+        display.innerText = '♨️';
+        progress.style.width = '85%';
+        status.innerText = 'Baking in the oven... warmth is rising! ⏳';
+
+        setTimeout(() => {
+          progress.style.width = '100%';
+          document.getElementById('ovenGlow').classList.remove('active');
+          display.innerText = '🍪';
+          display.style.transform = 'scale(1.35)';
+          setTimeout(() => display.style.transform = 'scale(1)', 200);
+
+          status.innerText = 'Fresh, sweet cookies baked with love just for you! ✨';
+          actionBtn.style.display = 'block';
+          actionBtn.innerText = 'Bake more treats 💖';
+          bakeryStep = 'done';
+        }, 2200);
+      } else if (bakeryStep === 'done') {
+        // Reset game
+        ingredientsCount = 0;
+        mixClicks = 0;
+        bakeryStep = 'ingredients';
+        display.innerText = '🥣';
+        progress.style.width = '0%';
+        status.innerText = 'Add the ingredients into the bowl:';
+        actionBtn.style.display = 'none';
+        document.querySelectorAll('.ingredient-btn').forEach(btn => btn.classList.remove('added'));
+        document.getElementById('ingredientsShelf').style.display = 'flex';
+      }
+    }
+
+    // 5. Sweet Affirmations Generator
     const affirmations = [
-      "Bruised knees, tea burns, and all—you're my whole world.",
       "You don't need a single business day to write me... whatever you give me is treasure.",
       "The only thing you have to do is be right here in my arms.",
-      "You're not 'mid' in anything—you are the sweetest blessing I could ever ask for.",
       "You are the world I want to keep warm for the rest of my life.",
-      "I'll take care of both of us. Always."
+      "I'll take care of both of us. Always.",
+      "You're not 'mid' in anything—you are the sweetest blessing I could ever ask for.",
+      "I promise to always keep you safe, warm, and smiling."
     ];
 
     let lastIndex = -1;
