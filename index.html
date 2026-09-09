@@ -143,21 +143,63 @@
     @keyframes gentleShake { 0%, 100% {transform: rotate(0deg);} 5% {transform: rotate(6deg);} 10% {transform: rotate(-6deg);} 15% {transform: rotate(0deg);} }
     .gift-choices { display: none; flex-direction: column; gap: 1rem; }
 
-    /* Cinematic Overlays */
-    .cinematic-overlay { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 2s ease; }
+    /* CLEAN CINEMATIC OVERLAYS (NO OVERLAPPING TEXT) */
+    .cinematic-overlay {
+      position: fixed; inset: 0; background: #000; z-index: 10000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 1.5s ease;
+      padding: 2.5rem; text-align: center;
+    }
     .cinematic-overlay.active { opacity: 1; pointer-events: all; }
-    .cine-text { color: #fff; font-size: 1.3rem; font-weight: 300; letter-spacing: 1px; text-align: center; opacity: 0; position: absolute; transition: opacity 1.5s ease; padding: 0 20px; line-height: 1.6; }
-    .cine-text.visible { opacity: 1; }
-    .cine-final-btn { margin-top: 120px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 1.2rem 2.5rem; border-radius: 50px; font-family: inherit; font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; opacity: 0; transition: all 0.5s; pointer-events: none; }
-    .cine-final-btn.visible { opacity: 1; pointer-events: all; }
-    .cine-final-btn:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+    .cine-slide {
+      color: #fff; font-size: 1.35rem; font-weight: 300; letter-spacing: 1px;
+      line-height: 1.7; max-width: 440px; opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .cine-slide.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cine-final-btn {
+      margin-top: 2.5rem; background: transparent;
+      border: 1px solid rgba(255,255,255,0.35); color: #fff;
+      padding: 1rem 2.5rem; border-radius: 50px; font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase;
+      cursor: pointer; opacity: 0; pointer-events: none;
+      transform: translateY(15px);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+    }
+    .cine-final-btn.visible {
+      opacity: 1; pointer-events: all;
+      transform: translateY(0);
+    }
+    .cine-final-btn:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: #fff;
+    }
+
+    .gn-heart {
+      font-size: 5rem; opacity: 0; transform: scale(0.6);
+      filter: drop-shadow(0 0 25px var(--accent-pink));
+      transition: opacity 1.5s ease, transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .gn-heart.visible {
+      opacity: 1; transform: scale(1);
+      animation: heartbeat 2.5s infinite ease-in-out;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(244, 114, 182, 0.6)); }
+      50% { transform: scale(1.15); filter: drop-shadow(0 0 45px rgba(244, 114, 182, 0.9)); }
+    }
 
     /* Letter Modal */
     .letter-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; padding: 1rem; }
     .letter-modal.active { opacity: 1; pointer-events: all; }
     .envelope-scene { position: relative; width: 100%; max-width: 460px; max-height: 85vh; display: flex; flex-direction: column; align-items: center; }
     
-    /* Parchment Paper & Text Animations */
     .actual-paper { background: #fffdf8; width: 100%; border-radius: 20px; padding: 2.4rem 2rem; font-family: 'Caveat', cursive; font-size: 1.65rem; color: #2b1e16; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transform: translateY(40px); opacity: 0; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); overflow-y: auto; max-height: 72vh; line-height: 1.45; border: 1px solid #f3e8d7; }
     .actual-paper p { 
       margin-bottom: 1.2rem;
@@ -169,13 +211,11 @@
     .actual-paper p:last-child { margin-bottom: 0; }
     .letter-modal.active .actual-paper { transform: translateY(0); opacity: 1; }
 
-    /* Paragraph Stagger Timings */
     .actual-paper p:nth-child(1) { animation-delay: 0.15s; }
     .actual-paper p:nth-child(2) { animation-delay: 0.35s; }
     .actual-paper p:nth-child(3) { animation-delay: 0.55s; }
     .actual-paper p:nth-child(4) { animation-delay: 0.75s; }
     .actual-paper p:nth-child(5) { animation-delay: 0.95s; }
-    .actual-paper p:nth-child(6) { animation-delay: 1.15s; }
 
     @keyframes paragraphFloatIn {
       to {
@@ -368,23 +408,15 @@
     <div style="color: rgba(255,255,255,0.9); font-size: 1rem; margin-top: 15px; font-weight: 300;">Duration: ∞ (Tap anywhere to close)</div>
   </div>
 
-  <!-- True Ending / Goodnight Overlays -->
+  <!-- Cinematic Overlays (Clean Slide Animation) -->
   <div class="cinematic-overlay" id="cineOverlay">
-    <div class="cine-text" id="ct1">ALL FILES RECOVERED.</div>
-    <div class="cine-text" id="ct2">ALL HEARTS COLLECTED.</div>
-    <div class="cine-text" id="ct3">If you made it this far...</div>
-    <div class="cine-text" id="ct4">I hope you understand that none of this was really about the website.</div>
-    <div class="cine-text" id="ct5">I just wanted to build you a tiny universe.</div>
-    <div class="cine-text" id="ct6">A place where every button means something.<br>Every star is a memory.</div>
-    <div class="cine-text" id="ct7">And at the center of it all...<br>there's you. ❤️</div>
+    <div class="cine-slide" id="cineSlide">...</div>
     <button class="cine-final-btn" id="ctBtn" onclick="launchGoodnight()">[ Begin Goodnight ]</button>
   </div>
 
   <div class="cinematic-overlay" id="gnOverlay" style="background: radial-gradient(circle, #0a0515 0%, #000 100%); z-index:11000;">
-    <div class="cine-text" id="gn1">The adventure is over for tonight, princess.</div>
-    <div class="cine-text" id="gn2">Close your eyes.</div>
-    <div class="cine-text" id="gn3">I'll see you in your dreams. 🌙🤍</div>
-    <div class="cine-text" id="gnHeart" style="font-size: 5rem; filter: drop-shadow(0 0 25px var(--accent-pink));">🤍</div>
+    <div class="cine-slide" id="gnSlide">...</div>
+    <div class="gn-heart" id="gnHeart">🤍</div>
   </div>
 
 
@@ -509,7 +541,7 @@
       }, 300);
     }
 
-    // --- LETTERS (Full Text + Natural Commas) ---
+    // --- LETTERS (Full text, natural commas, animated paragraphs) ---
     const letterContent = {
       birthday: `
         <p>My prettiest baby,</p>
@@ -795,48 +827,68 @@
       }
     }
 
-    // --- TRUE ENDING SEQUENCES ---
-    async function sequenceFadeIn(ids, delay = 2500) {
-      for(let id of ids) {
-        document.getElementById(id).classList.add('visible');
-        await new Promise(r => setTimeout(r, delay));
+    // --- CLEAN SEQUENTIAL ENDING (NO OVERLAPPING) ---
+    async function playCineSequence() {
+      const slide = document.getElementById('cineSlide');
+      const btn = document.getElementById('ctBtn');
+
+      async function showLine(text, waitTime = 3000) {
+        slide.classList.remove('visible');
+        await new Promise(r => setTimeout(r, 600));
+        slide.innerHTML = text;
+        slide.classList.add('visible');
+        await new Promise(r => setTimeout(r, waitTime));
       }
+
+      await showLine("ALL FILES RECOVERED.", 2400);
+      await showLine("ALL HEARTS COLLECTED.", 2400);
+      await showLine("If you made it this far...", 2800);
+      await showLine("I hope you understand that none of this was really about the website.", 3500);
+      await showLine("I just wanted to build you a tiny universe.", 3000);
+      await showLine("A place where every button means something.<br>Every star is a memory.", 3500);
+
+      // Final line remains visible with the button
+      slide.classList.remove('visible');
+      await new Promise(r => setTimeout(r, 600));
+      slide.innerHTML = "And at the center of it all...<br><span style='color: var(--accent-pink); font-weight: 500;'>there's you. ❤️</span>";
+      slide.classList.add('visible');
+      await new Promise(r => setTimeout(r, 600));
+      btn.classList.add('visible');
     }
 
     function startTrueEnding() {
       window.scrollTo(0, 0);
       const overlay = document.getElementById('cineOverlay');
       overlay.classList.add('active');
-      
-      setTimeout(() => {
-        sequenceFadeIn(['ct1', 'ct2'], 2000).then(() => {
-          setTimeout(() => {
-            document.getElementById('ct1').classList.remove('visible');
-            document.getElementById('ct2').classList.remove('visible');
-            
-            setTimeout(() => {
-              sequenceFadeIn(['ct3', 'ct4', 'ct5', 'ct6', 'ct7', 'ctBtn'], 3200);
-            }, 1500);
-          }, 2500);
-        });
-      }, 1500);
+      setTimeout(playCineSequence, 1000);
+    }
+
+    async function playGoodnightSequence() {
+      const slide = document.getElementById('gnSlide');
+      const heart = document.getElementById('gnHeart');
+
+      async function showLine(text, waitTime = 3200) {
+        slide.classList.remove('visible');
+        await new Promise(r => setTimeout(r, 600));
+        slide.innerHTML = text;
+        slide.classList.add('visible');
+        await new Promise(r => setTimeout(r, waitTime));
+      }
+
+      await showLine("The adventure is over for tonight, princess.", 3200);
+      await showLine("Close your eyes.", 2600);
+      await showLine("I'll see you in your dreams. 🌙🤍", 3200);
+
+      slide.classList.remove('visible');
+      await new Promise(r => setTimeout(r, 1000));
+      heart.classList.add('visible');
     }
 
     function launchGoodnight() {
       document.getElementById('cineOverlay').classList.remove('active');
       const gnOverlay = document.getElementById('gnOverlay');
       gnOverlay.classList.add('active');
-      
-      setTimeout(() => {
-        sequenceFadeIn(['gn1', 'gn2', 'gn3'], 3500).then(() => {
-          setTimeout(() => {
-            document.getElementById('gn1').classList.remove('visible');
-            document.getElementById('gn2').classList.remove('visible');
-            document.getElementById('gn3').classList.remove('visible');
-            setTimeout(() => { document.getElementById('gnHeart').classList.add('visible'); }, 2000);
-          }, 3500);
-        });
-      }, 1500);
+      setTimeout(playGoodnightSequence, 1000);
     }
   </script>
 </body>
