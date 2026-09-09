@@ -3,450 +3,393 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For My Sweet Angel ✨</title>
+  <title>Happy Birthday, My Princess ✨</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #0d0a18;
-      --card-bg: rgba(26, 20, 48, 0.75);
+      --bg-dark: #05030a;
+      --card-bg: rgba(18, 12, 33, 0.6);
       --accent-pink: #f472b6;
       --accent-purple: #c084fc;
-      --accent-glow: rgba(244, 114, 182, 0.25);
-      --text-main: #f3f4f6;
-      --text-muted: #cbd5e1;
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass-border: rgba(255, 255, 255, 0.08);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
     body {
-      background: radial-gradient(ellipse at top, #231647 0%, #0d0a18 100%);
-      color: var(--text-main);
-      font-family: 'Outfit', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2.5rem 1rem 4rem;
-      position: relative;
+      background: radial-gradient(circle at 50% 0%, #20124d 0%, #05030a 65%, #000000 100%);
+      color: var(--text-main); font-family: 'Outfit', sans-serif;
+      min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column; align-items: center;
+      padding: 2rem 1rem 6rem; position: relative;
     }
 
-    /* Ambient stars */
-    .star {
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
-      opacity: 0.5;
-      animation: twinkle linear infinite;
-      pointer-events: none;
-    }
+    /* Background Stars */
+    .star { position: absolute; background: #fff; border-radius: 50%; opacity: 0.5; animation: twinkle linear infinite; pointer-events: none; }
+    @keyframes twinkle { 0%, 100% { opacity: 0.1; transform: scale(0.6); } 50% { opacity: 0.8; transform: scale(1.2); } }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(0.8); }
-      50% { opacity: 0.95; transform: scale(1.3); }
+    /* Achievement Toast */
+    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+    .toast {
+      background: rgba(20, 10, 30, 0.95); border-left: 4px solid var(--accent-pink); border-radius: 12px;
+      padding: 1.2rem 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+      transform: translateX(120%); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex; align-items: center; gap: 1.2rem;
     }
+    .toast.show { transform: translateX(0); }
+    .toast-icon { font-size: 2rem; }
+    .toast-text h4 { color: var(--accent-pink); margin-bottom: 3px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+    .toast-text p { color: #fff; font-size: 0.85rem; font-weight: 300; }
 
-    /* Header */
-    header {
-      text-align: center;
-      margin-bottom: 2.2rem;
-      z-index: 2;
-    }
+    /* Hidden Hearts */
+    .hidden-heart { position: absolute; font-size: 1.2rem; cursor: pointer; opacity: 0.08; transition: all 0.3s ease; z-index: 10; }
+    .hidden-heart:hover { opacity: 0.8; transform: scale(1.2); text-shadow: 0 0 10px var(--accent-pink); }
+    .hidden-heart.found { opacity: 1; color: var(--accent-pink); pointer-events: none; animation: popHeart 0.5s ease; }
+    @keyframes popHeart { 0% {transform: scale(1);} 50% {transform: scale(1.5);} 100% {transform: scale(1);} }
 
-    header h1 {
-      font-size: 2.2rem;
-      font-weight: 600;
-      background: linear-gradient(135deg, #f9a8d4, #c084fc, #93c5fd);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.4rem;
-    }
-
-    header p {
-      color: var(--text-muted);
-      font-size: 0.98rem;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 540px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.6rem;
-      z-index: 2;
-    }
-
+    /* Core Layout */
+    .container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 2rem; z-index: 2; margin-top: 1rem; }
     .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px var(--accent-glow);
-      border-radius: 20px;
-      padding: 1.5rem;
+      background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 15px 35px rgba(0,0,0,0.4);
+      border-radius: 24px; padding: 1.8rem; position: relative; overflow: hidden;
     }
+    .card h2 { font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.6rem; }
+    .card-intro { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.2rem; }
 
-    .card h2 {
-      font-size: 1.25rem;
-      color: #fbcfe8;
-      margin-bottom: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+    /* Progress Tracker */
+    .quest-tracker { text-align: center; margin-bottom: 2rem; z-index: 2; width: 100%; max-width: 400px; }
+    .quest-tracker h3 { font-size: 0.85rem; color: var(--accent-pink); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.6rem; font-weight: 700; }
+    .progress-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-bottom: 0.6rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
+    .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple)); transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 0 12px var(--accent-pink); }
+    .quest-text { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
 
-    /* Envelopes */
-    .envelope-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.8rem;
-    }
+    /* RPG Profile */
+    .rpg-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .rpg-avatar { width: 65px; height: 65px; background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: 0 0 20px rgba(244,114,182,0.4); border: 2px solid #fff; }
+    .rpg-title h3 { font-size: 1.5rem; color: #fff; margin-bottom: 2px; font-weight: 700; }
+    .rpg-title p { font-size: 0.8rem; color: var(--accent-pink); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .stat-row { display: flex; align-items: center; margin-bottom: 0.8rem; font-size: 0.9rem; font-weight: 500; }
+    .stat-label { width: 85px; color: #cbd5e1; }
+    .stat-bar-bg { flex: 1; height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
+    .stat-bar-fill { height: 100%; width: 0%; transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
+    .rpg-ability { margin-top: 1.5rem; padding: 1.2rem; background: rgba(255,255,255,0.05); border-radius: 12px; font-style: italic; font-size: 0.95rem; text-align: center; border: 1px solid rgba(255,255,255,0.1); color: #fbcfe8; }
 
-    .envelope-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(244, 114, 182, 0.2);
-      border-radius: 12px;
-      padding: 0.9rem;
-      color: #fdf2f8;
-      font-family: inherit;
-      font-size: 0.92rem;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      transition: all 0.2s ease;
-    }
+    /* Candle */
+    .wish-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 1.4rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+    .wish-box:hover { transform: translateY(-4px); border-color: rgba(244, 114, 182, 0.5); box-shadow: 0 12px 40px rgba(244, 114, 182, 0.2); }
+    .candle-icon { font-size: 3.5rem; transition: transform 0.2s; filter: drop-shadow(0 0 16px rgba(253, 224, 71, 0.8)); }
 
-    .envelope-btn:hover, .envelope-btn:active {
-      background: rgba(244, 114, 182, 0.15);
-      transform: translateY(-2px);
-      border-color: var(--accent-pink);
-    }
+    /* Little Things Grid */
+    .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .mini-box { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem 1.2rem; text-align: center; cursor: pointer; transition: transform 0.2s, background 0.2s; }
+    .mini-box:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+    .mini-icon { font-size: 2.8rem; margin-bottom: 0.8rem; transition: transform 0.3s; }
+    .mini-title { font-size: 0.9rem; font-weight: 600; color: #fff; letter-spacing: 0.5px; }
 
-    .envelope-btn span {
-      font-size: 1.5rem;
-    }
+    /* 100 Reasons */
+    .reasons-box { text-align: center; padding: 1.8rem 1.5rem; background: rgba(0,0,0,0.3); border-radius: 16px; border: 1px solid var(--glass-border); }
+    .reason-text { font-family: 'Caveat', cursive; font-size: 1.8rem; color: #fbcfe8; min-height: 90px; display: flex; align-items: center; justify-content: center; line-height: 1.3; margin-bottom: 1.2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); transition: opacity 0.3s; }
+    
+    /* Buttons */
+    .btn { background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); border: none; color: #fff; padding: 0.9rem 1.8rem; border-radius: 50px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; font-family: inherit; box-shadow: 0 6px 20px rgba(244,114,182,0.3); }
+    .btn:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(244,114,182,0.3); }
 
-    /* Interactive Bakery Engine */
-    .bakery-box {
-      text-align: center;
-      background: rgba(0, 0, 0, 0.22);
-      border-radius: 16px;
-      padding: 1.2rem 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
+    /* Letters Grid */
+    .envelope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; max-height: 320px; overflow-y: auto; padding-right: 5px; }
+    .envelope-grid::-webkit-scrollbar { width: 6px; }
+    .envelope-grid::-webkit-scrollbar-thumb { background: var(--accent-pink); border-radius: 10px; }
+    .envelope-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.2rem 0.5rem; color: #fff; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.6rem; transition: all 0.2s; text-align: center; }
+    .envelope-btn:hover { background: rgba(244,114,182,0.1); border-color: var(--accent-pink); transform: translateY(-2px); }
+    .envelope-btn span { font-size: 2rem; }
+    .envelope-btn b { font-size: 0.85rem; font-weight: 500; font-family: 'Outfit'; }
 
-    .bakery-scene {
-      height: 120px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      margin-bottom: 0.8rem;
-    }
+    /* Inventory */
+    .inventory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-bottom: 1rem; }
+    .inv-slot { aspect-ratio: 1; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; transition: all 0.2s; position: relative; }
+    .inv-slot.empty { background: rgba(0,0,0,0.1); border-style: dashed; }
+    .inv-slot:hover:not(.empty) { background: rgba(244,114,182,0.1); border-color: rgba(244,114,182,0.5); }
+    .inv-slot.active { border-color: var(--accent-pink); transform: scale(1.08); box-shadow: 0 0 15px rgba(244,114,182,0.4); background: rgba(244,114,182,0.15); z-index: 5; }
+    
+    .inv-desc { background: rgba(0,0,0,0.4); padding: 1.2rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; min-height: 110px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.3s; border-left: 3px solid transparent; }
+    
+    .use-btn { margin-top: 0.8rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 0.5rem 1.2rem; border-radius: 8px; font-family: inherit; font-size: 0.85rem; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+    .use-btn:hover { background: var(--accent-pink); border-color: var(--accent-pink); }
+    
+    @keyframes mixFlash { 0% { background: #fff; transform: scale(1); } 50% { background: var(--accent-pink); transform: scale(1.2); } 100% { background: rgba(0,0,0,0.4); transform: scale(1); } }
+    .mixing { animation: mixFlash 0.6s ease; }
 
-    .oven-glow {
-      position: absolute;
-      width: 130px;
-      height: 90px;
-      background: radial-gradient(circle, rgba(249, 115, 22, 0.55), transparent 70%);
-      border-radius: 50%;
+    /* Radio UI */
+    .radio-ui { background: rgba(0,0,0,0.3); border-radius: 16px; padding: 1.8rem 1.5rem; border: 1px solid var(--glass-border); text-align: center; }
+    .cassette-box { font-size: 4rem; margin-bottom: 1rem; display: inline-block; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); }
+    .radio-controls { display: flex; justify-content: center; align-items: center; gap: 1.2rem; margin-top: 1.2rem; }
+    .r-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); color: #fff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+    .r-btn:hover { background: var(--accent-pink); border-color: var(--accent-pink); transform: scale(1.1); }
+    .lyrics { font-family: 'Caveat', cursive; font-size: 1.6rem; color: #fff; min-height: 80px; margin-top: 1.2rem; line-height: 1.3; }
+    .radio-progress { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 1.5rem; position: relative; overflow: hidden; }
+    .radio-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--accent-pink); box-shadow: 0 0 10px var(--accent-pink); }
+
+    /* Vault */
+    .vault-input { width: 100%; padding: 1.2rem; border-radius: 12px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); color: #fff; text-align: center; font-size: 1.1rem; letter-spacing: 3px; margin-bottom: 1.2rem; outline: none; transition: border 0.3s; font-weight: 600; }
+    .vault-input:focus { border-color: var(--accent-purple); box-shadow: 0 0 15px rgba(192,132,252,0.3); }
+
+    /* Mystery Gift */
+    .gift-container { text-align: center; padding: 2.5rem 2rem; cursor: pointer; }
+    .gift-icon { font-size: 5.5rem; transition: transform 0.2s; filter: drop-shadow(0 0 25px rgba(244,114,182,0.5)); animation: gentleShake 3s infinite; }
+    @keyframes gentleShake { 0%, 100% {transform: rotate(0deg);} 5% {transform: rotate(6deg);} 10% {transform: rotate(-6deg);} 15% {transform: rotate(0deg);} }
+    .gift-choices { display: none; flex-direction: column; gap: 1rem; }
+
+    /* Cinematic Overlays */
+    .cinematic-overlay { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 2s ease; }
+    .cinematic-overlay.active { opacity: 1; pointer-events: all; }
+    .cine-text { color: #fff; font-size: 1.3rem; font-weight: 300; letter-spacing: 1px; text-align: center; opacity: 0; position: absolute; transition: opacity 1.5s ease; padding: 0 20px; line-height: 1.6; }
+    .cine-text.visible { opacity: 1; }
+    .cine-final-btn { margin-top: 120px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 1.2rem 2.5rem; border-radius: 50px; font-family: inherit; font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; opacity: 0; transition: all 0.5s; pointer-events: none; }
+    .cine-final-btn.visible { opacity: 1; pointer-events: all; }
+    .cine-final-btn:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+    /* Letter Modal */
+    .letter-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; padding: 1rem; }
+    .letter-modal.active { opacity: 1; pointer-events: all; }
+    .envelope-scene { position: relative; width: 100%; max-width: 460px; max-height: 85vh; display: flex; flex-direction: column; align-items: center; }
+    
+    /* Parchment Paper & Text Animations */
+    .actual-paper { background: #fffdf8; width: 100%; border-radius: 20px; padding: 2.4rem 2rem; font-family: 'Caveat', cursive; font-size: 1.65rem; color: #2b1e16; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transform: translateY(40px); opacity: 0; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); overflow-y: auto; max-height: 72vh; line-height: 1.45; border: 1px solid #f3e8d7; }
+    .actual-paper p { 
+      margin-bottom: 1.2rem;
       opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
+      transform: translateY(14px);
+      filter: blur(2px);
+      animation: paragraphFloatIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    .actual-paper p:last-child { margin-bottom: 0; }
+    .letter-modal.active .actual-paper { transform: translateY(0); opacity: 1; }
+
+    /* Paragraph Stagger Timings */
+    .actual-paper p:nth-child(1) { animation-delay: 0.15s; }
+    .actual-paper p:nth-child(2) { animation-delay: 0.35s; }
+    .actual-paper p:nth-child(3) { animation-delay: 0.55s; }
+    .actual-paper p:nth-child(4) { animation-delay: 0.75s; }
+    .actual-paper p:nth-child(5) { animation-delay: 0.95s; }
+    .actual-paper p:nth-child(6) { animation-delay: 1.15s; }
+
+    @keyframes paragraphFloatIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
     }
 
-    .oven-glow.active {
-      opacity: 1;
-      animation: flamePulse 1s infinite alternate;
-    }
+    .close-paper { margin-top: 1.2rem; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 0.85rem 2.4rem; border-radius: 50px; cursor: pointer; font-family: 'Outfit'; font-size: 0.95rem; font-weight: 600; opacity: 0; transition: all 0.3s; }
+    .close-paper:hover { background: rgba(255,255,255,0.28); transform: translateY(-1px); }
+    .letter-modal.active .close-paper { opacity: 1; }
 
-    @keyframes flamePulse {
-      from { transform: scale(0.9); opacity: 0.6; }
-      to { transform: scale(1.15); opacity: 0.95; }
-    }
-
-    .main-emoji {
-      font-size: 4rem;
-      z-index: 1;
-      display: inline-block;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .shake {
-      animation: shakeAnim 0.3s ease-in-out infinite;
-    }
-
-    @keyframes shakeAnim {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-8deg); }
-      75% { transform: rotate(8deg); }
-    }
-
-    .progress-bar-wrap {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      height: 8px;
-      overflow: hidden;
-      margin: 0.8rem 0 1rem;
-    }
-
-    .progress-bar {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
-      transition: width 0.3s ease;
-    }
-
-    .ingredient-shelf {
-      display: flex;
-      justify-content: center;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-
-    .ingredient-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 10px;
-      padding: 0.45rem 0.8rem;
-      color: #fff;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      transition: all 0.2s;
-    }
-
-    .ingredient-btn.added {
-      opacity: 0.35;
-      border-color: #10b981;
-      text-decoration: line-through;
-      pointer-events: none;
-    }
-
-    .action-btn-main {
-      width: 100%;
-      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
-      border: none;
-      color: #fff;
-      padding: 0.8rem 1.4rem;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      font-family: inherit;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(244, 114, 182, 0.35);
-      transition: transform 0.15s ease;
-    }
-
-    .action-btn-main:active {
-      transform: scale(0.97);
-    }
-
-    /* Safe space quote box */
-    .quote-box {
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: 12px;
-      padding: 1.1rem;
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 0.95rem;
-      line-height: 1.45;
-      color: #fdf2f8;
-      margin-bottom: 0.9rem;
-      font-style: italic;
-      transition: opacity 0.2s;
-    }
-
-    .action-btn-secondary {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
-      padding: 0.75rem;
-      border-radius: 12px;
-      font-family: inherit;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .action-btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    /* Modal / Letter Reader */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      z-index: 100;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .letter-paper {
-      background: #fffdfa;
-      color: #33261d;
-      width: 100%;
-      max-width: 420px;
-      padding: 2.2rem 1.8rem;
-      border-radius: 14px;
-      font-family: 'Caveat', cursive;
-      font-size: 1.45rem;
-      line-height: 1.4;
-      max-height: 85vh;
-      overflow-y: auto;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.5);
-    }
-
-    .close-letter-btn {
-      margin-top: 1.2rem;
-      width: 100%;
-      background: #c084fc;
-      color: white;
-      border: none;
-      padding: 0.6rem;
-      border-radius: 8px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    /* Floating hearts */
-    .floating-heart {
-      position: fixed;
-      font-size: 1.4rem;
-      pointer-events: none;
-      user-select: none;
-      animation: floatUp 1s ease-out forwards;
-      z-index: 999;
-    }
-
-    @keyframes floatUp {
-      0% { opacity: 1; transform: translateY(0) scale(0.6); }
-      100% { opacity: 0; transform: translateY(-70px) scale(1.2); }
-    }
+    /* Hug / Healing Overlays */
+    .hug-overlay { position: fixed; inset: 0; background: rgba(244,114,182,0.95); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 1s; }
+    .hug-overlay.active { opacity: 1; pointer-events: all; }
+    .hug-emoji { font-size: 7rem; animation: pulse 1.5s infinite; filter: drop-shadow(0 0 30px rgba(255,255,255,0.6)); }
+    @keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.15);} }
+    .hug-text { color: #fff; font-size: 1.8rem; font-weight: 700; margin-top: 1.5rem; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
   </style>
 </head>
 <body>
 
-  <div id="stars-container"></div>
+  <!-- Hidden Hearts scattered -->
+  <span class="hidden-heart" style="top: 2%; left: 5%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 15%; right: 8%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 35%; left: 12%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 55%; right: 5%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="bottom: 25%; left: 8%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="bottom: 10%; right: 15%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 75%; left: 50%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 45%; right: 45%;" onclick="findHeart(this)">🤍</span>
 
-  <header>
-    <h1>Happy Birthday, My Angel 🎂✨</h1>
-    <p>A little universe built just for you, whenever you need a reminder.</p>
-  </header>
+  <div id="stars-container"></div>
+  <div id="toast-container"></div>
+
+  <!-- Quest Tracker -->
+  <div class="quest-tracker">
+    <h3>Princess Mission</h3>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="questFill"></div></div>
+    <p class="quest-text" id="questText">0/7 DISCOVERED</p>
+  </div>
 
   <div class="container">
 
-    <!-- Section 1: Letters -->
+    <!-- RPG Profile -->
     <div class="card">
-      <h2><span>💌</span> Letters For You</h2>
-      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 0.9rem;">
-        Open any letter whenever you feel like reading one:
-      </p>
+      <div class="rpg-header">
+        <div class="rpg-avatar">👑</div>
+        <div class="rpg-title">
+          <h3>Steph</h3>
+          <p>Level: ∞ • Class: Princess</p>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">Love</div>
+        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: #f472b6;" id="statLove"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">Cuteness</div>
+        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: #c084fc;" id="statCute"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">Kindness</div>
+        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: #38bdf8;" id="statKind"></div></div>
+      </div>
+      <div class="rpg-ability">
+        Special Ability: "Makes my entire world better just by existing."
+      </div>
+    </div>
+
+    <!-- Candle & Wish -->
+    <div class="card" style="text-align: center;">
+      <h2><span>🎂</span> Birthday Wish</h2>
+      <p class="card-intro">Tap the candle to make a wish.</p>
+      <div class="wish-box" id="wishBox" onclick="makeWish()">
+        <div class="candle-icon" id="candleEmoji">🕯️</div>
+      </div>
+    </div>
+
+    <!-- Interactive Little Things -->
+    <div class="mini-grid">
+      <div class="mini-box" onclick="growFlower(this)">
+        <div class="mini-icon" id="flowerIcon">🌱</div>
+        <div class="mini-title">Water Me</div>
+      </div>
+      <div class="mini-box" onclick="giveVirtualHug()">
+        <div class="mini-icon">🫂</div>
+        <div class="mini-title">Need a Hug?</div>
+      </div>
+    </div>
+
+    <!-- 100 Reasons -->
+    <div class="card">
+      <h2><span>💕</span> Why You're My Angel</h2>
+      <div class="reasons-box">
+        <div class="reason-text" id="reasonText">"I love the way you..."</div>
+        <button class="btn" onclick="nextReason()">Give me a reason ❤️</button>
+      </div>
+    </div>
+
+    <!-- Letters -->
+    <div class="card">
+      <h2><span>💌</span> "Open When..."</h2>
+      <p class="card-intro">Select a letter for exactly how you feel right now.</p>
       <div class="envelope-grid">
-        <button class="envelope-btn" onclick="openLetter('birthday')">
-          <span>🎂</span>
-          <b>On Your Birthday</b>
-        </button>
-        <button class="envelope-btn" onclick="openLetter('doubt')">
-          <span>🥺</span>
-          <b>When You Need Warmth</b>
-        </button>
-        <button class="envelope-btn" onclick="openLetter('miss')">
-          <span>🫂</span>
-          <b>When You Miss Me</b>
-        </button>
-        <button class="envelope-btn" onclick="openLetter('sleep')">
-          <span>🌙</span>
-          <b>Before You Sleep</b>
-        </button>
+        <button class="envelope-btn" onclick="openLetter('birthday')"><span>🎂</span><b>Your Birthday</b></button>
+        <button class="envelope-btn" onclick="openLetter('doubt')"><span>🥺</span><b>Feel Scared</b></button>
+        <button class="envelope-btn" onclick="openLetter('miss')"><span>🫂</span><b>Miss Me</b></button>
+        <button class="envelope-btn" onclick="openLetter('sleep')"><span>🌙</span><b>Can't Sleep</b></button>
+        <button class="envelope-btn" onclick="openLetter('hug')"><span>🤍</span><b>Need a Hug</b></button>
+        <button class="envelope-btn" onclick="openLetter('angry')"><span>😤</span><b>You're Angry</b></button>
+        <button class="envelope-btn" onclick="openLetter('nosleep')"><span>🦉</span><b>Wide Awake</b></button>
+        <button class="envelope-btn" onclick="openLetter('unloved')"><span>🌧️</span><b>Feel Unloved</b></button>
+        <button class="envelope-btn" onclick="openLetter('smile')"><span>🌻</span><b>Need a Smile</b></button>
+        <button class="envelope-btn" onclick="openLetter('motivation')"><span>✨</span><b>Motivation</b></button>
       </div>
     </div>
 
-    <!-- Section 2: Interactive Bakery -->
+    <!-- RE Inventory System -->
     <div class="card">
-      <h2><span>🍪</span> The Secret Bakery</h2>
-      <div class="bakery-box">
-        <div class="bakery-scene">
-          <div class="oven-glow" id="ovenGlow"></div>
-          <div class="main-emoji" id="bakeryDisplay">🥣</div>
-        </div>
-        
-        <p id="bakeryStatus" style="font-size: 0.92rem; color: var(--text-muted); min-height: 24px;">
-          Add the ingredients into the bowl:
-        </p>
+      <h2><span>🎒</span> Attache Case</h2>
+      <p class="card-intro">Tap an item to inspect it. Tap two items to combine.</p>
+      <div class="inventory-grid" id="invGrid">
+        <div class="inv-slot" data-id="herb" onclick="selectItem(this)">🌿</div>
+        <div class="inv-slot" data-id="spray" onclick="selectItem(this)">🧴</div>
+        <div class="inv-slot" data-id="star" onclick="selectItem(this)">✨</div>
+        <div class="inv-slot empty" id="slot4" data-id="empty" onclick="selectItem(this)"></div>
+        <div class="inv-slot empty" id="slot5" data-id="empty" onclick="selectItem(this)"></div>
+        <div class="inv-slot empty" id="slot6" data-id="empty" onclick="selectItem(this)"></div>
+        <div class="inv-slot empty" id="slot7" data-id="empty" onclick="selectItem(this)"></div>
+        <div class="inv-slot empty" id="slot8" data-id="empty" onclick="selectItem(this)"></div>
+      </div>
+      <div class="inv-desc" id="invDesc">Select an item from your case to view its status...</div>
+    </div>
 
-        <div class="progress-bar-wrap">
-          <div class="progress-bar" id="bakeProgress"></div>
-        </div>
+    <!-- Vault -->
+    <div class="card">
+      <h2><span>🔐</span> Secret Vault</h2>
+      <p class="card-intro">Find the secret 4-digit passcode.</p>
+      <input type="password" id="vaultInput" class="vault-input" placeholder="Enter 4-digit code...">
+      <button class="btn" style="width: 100%; padding: 1.2rem;" onclick="unlockVault()">Unlock Vault</button>
+    </div>
 
-        <!-- Stage 1: Add Ingredients -->
-        <div class="ingredient-shelf" id="ingredientsShelf">
-          <button class="ingredient-btn" onclick="addIngredient(this, 'Flour 🌾')"><span>🌾</span> Flour</button>
-          <button class="ingredient-btn" onclick="addIngredient(this, 'Sugar 🍬')"><span>🍬</span> Sugar</button>
-          <button class="ingredient-btn" onclick="addIngredient(this, 'Choco 🍫')"><span>🍫</span> Chocolate</button>
-          <button class="ingredient-btn" onclick="addIngredient(this, 'Love 💖')"><span>💖</span> Pure Love</button>
+    <!-- Radio -->
+    <div class="card">
+      <h2><span>📻</span> Midnight Radio</h2>
+      <div class="radio-ui">
+        <div class="cassette-box" id="cassette">📼</div>
+        <div style="font-size: 0.85rem; color: var(--accent-pink); letter-spacing: 1px; text-transform: uppercase; font-weight: 700;" id="tapeTitle">Tape 01: TV Girl</div>
+        <div class="radio-progress"><div class="radio-fill" id="radioFill"></div></div>
+        <div class="radio-controls">
+          <button class="r-btn" onclick="changeTape(-1)">◀</button>
+          <button class="r-btn" onclick="playRadio()" style="width:55px;height:55px;font-size:1.4rem;">▶</button>
+          <button class="r-btn" onclick="changeTape(1)">▶</button>
         </div>
-
-        <!-- Stage 2 & 3: Mix and Bake Action Buttons -->
-        <button class="action-btn-main" id="bakeryActionBtn" style="display: none;" onclick="handleBakeryAction()">
-          Mix the dough! 🥄
-        </button>
+        <div class="lyrics" id="radioLyrics">...</div>
       </div>
     </div>
 
-    <!-- Section 3: Safe Space Button -->
-    <div class="card">
-      <h2><span>🤍</span> The "Safe Space" Button</h2>
-      <div class="quote-box" id="quote-text">
-        "You never have to be scared of being loved the right way. I'm right here."
+    <!-- Mystery Gift -->
+    <div class="card" id="giftCard">
+      <h2><span>🎁</span> Mystery Box</h2>
+      <div id="giftSection">
+        <div class="gift-container" onclick="openGift()">
+          <div class="gift-icon" id="giftIcon">🎁</div>
+          <p style="margin-top: 1rem; color: var(--accent-pink); font-weight: 600; letter-spacing: 1px;">YOUR GIFT IS WAITING...</p>
+        </div>
+        <div class="gift-choices" id="giftChoices">
+          <button class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); margin-bottom: 0.5rem;" onclick="claimGift('letter')">💌 Claim: Secret Letter</button>
+          <button class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);" onclick="claimGift('hug')">🎟️ Claim: Hug Voucher</button>
+        </div>
       </div>
-      <button class="action-btn-secondary" onclick="nextAffirmation()">Tap for a Hug & Reassurance 🫂</button>
     </div>
 
   </div>
 
   <!-- Letter Modal -->
-  <div class="modal-overlay" id="letter-modal">
-    <div class="letter-paper">
-      <div id="letter-content"></div>
-      <button class="close-letter-btn" onclick="closeLetter()">Keep letter safe 🤍</button>
+  <div class="letter-modal" id="letterModal">
+    <div class="envelope-scene">
+      <div class="actual-paper" id="paperContent"></div>
+      <button class="close-paper" onclick="closeLetter()">Fold and keep safe 🤍</button>
     </div>
   </div>
 
+  <!-- Virtual Hug Overlay -->
+  <div class="hug-overlay" id="hugOverlay" onclick="this.classList.remove('active')">
+    <div class="hug-emoji">🫂</div>
+    <div class="hug-text">HUG DELIVERED</div>
+    <div style="color: rgba(255,255,255,0.9); font-size: 1rem; margin-top: 15px; font-weight: 300;">Duration: ∞ (Tap anywhere to close)</div>
+  </div>
+
+  <!-- True Ending / Goodnight Overlays -->
+  <div class="cinematic-overlay" id="cineOverlay">
+    <div class="cine-text" id="ct1">ALL FILES RECOVERED.</div>
+    <div class="cine-text" id="ct2">ALL HEARTS COLLECTED.</div>
+    <div class="cine-text" id="ct3">If you made it this far...</div>
+    <div class="cine-text" id="ct4">I hope you understand that none of this was really about the website.</div>
+    <div class="cine-text" id="ct5">I just wanted to build you a tiny universe.</div>
+    <div class="cine-text" id="ct6">A place where every button means something.<br>Every star is a memory.</div>
+    <div class="cine-text" id="ct7">And at the center of it all...<br>there's you. ❤️</div>
+    <button class="cine-final-btn" id="ctBtn" onclick="launchGoodnight()">[ Begin Goodnight ]</button>
+  </div>
+
+  <div class="cinematic-overlay" id="gnOverlay" style="background: radial-gradient(circle, #0a0515 0%, #000 100%); z-index:11000;">
+    <div class="cine-text" id="gn1">The adventure is over for tonight, princess.</div>
+    <div class="cine-text" id="gn2">Close your eyes.</div>
+    <div class="cine-text" id="gn3">I'll see you in your dreams. 🌙🤍</div>
+    <div class="cine-text" id="gnHeart" style="font-size: 5rem; filter: drop-shadow(0 0 25px var(--accent-pink));">🤍</div>
+  </div>
+
+
   <script>
-    // 1. Ambient Background Stars
+    // --- AMBIENT STARS ---
     const starsContainer = document.getElementById('stars-container');
     for (let i = 0; i < 40; i++) {
       const star = document.createElement('div');
@@ -459,153 +402,441 @@
       starsContainer.appendChild(star);
     }
 
-    // 2. Click / Tap Floating Particles
-    window.addEventListener('pointerdown', (e) => {
-      if (['BUTTON', 'A'].includes(e.target.tagName)) return;
-      const heart = document.createElement('div');
-      heart.className = 'floating-heart';
-      const symbols = ['🤍', '✨', '🌸', '💫', '💖'];
-      heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-      heart.style.left = `${e.clientX - 10}px`;
-      heart.style.top = `${e.clientY - 15}px`;
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 950);
-    });
+    // --- PROGRESS & QUEST SYSTEM ---
+    const quests = { wish: false, hearts: false, gift: false, vault: false, inventory: false, tape: false, letters: false };
+    let heartsFound = 0;
+    let lettersOpened = 0;
 
-    // 3. Letters
-    const letters = {
-      birthday: `
-        My sweetest angel, <br><br>
-        Happy birthday. Meeting you has been the best thing that ever happened to me. You make everything brighter, warmer, and full of peace just by being in my world.<br><br>
-        I hope this year treats you with all the softness and joy you bring to everyone else. You're stuck with me forever, baby. Happy birthday! 🎂🤍
-      `,
-      doubt: `
-        Hey baby,<br><br>
-        Whenever you feel unsure, or wonder if you deserve this kindness: yes, you do. You never did anything wrong, and you don't ever have to feel alone again.<br><br>
-        You are the kindest, sweetest soul, and I'll take care of both of us. Just hold on to me.
-      `,
-      miss: `
-        My pretty angel,<br><br>
-        If you're missing me right now, close your eyes and imagine the biggest hug. I am always thinking about you, humming the songs that remind me of you, and waiting for the moment I pull you into my arms for real.<br><br>
-        You have all my heart.
-      `,
-      sleep: `
-        Goodnight, my sweet little princess.<br><br>
-        Rest your eyes and let everything go tonight. You are protected, you are cherished beyond words, and you are so safe with me. Sweet dreams, angel.
-      `
+    function updateProgress() {
+      const total = Object.keys(quests).length;
+      const completed = Object.values(quests).filter(v => v).length;
+      document.getElementById('questFill').style.width = `${(completed / total) * 100}%`;
+      document.getElementById('questText').innerText = `${completed}/${total} DISCOVERED`;
+      
+      if (completed === total) {
+        setTimeout(startTrueEnding, 2500);
+      }
+    }
+
+    function unlockAchievement(title, desc) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<div class="toast-icon">🏆</div><div class="toast-text"><h4>${title}</h4><p>${desc}</p></div>`;
+      container.appendChild(toast);
+      
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500);
+      }, 4500);
+      
+      updateProgress();
+    }
+
+    // --- INITIAL ANIMATIONS ---
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('statLove').style.width = '100%';
+        document.getElementById('statCute').style.width = '100%';
+        document.getElementById('statKind').style.width = '100%';
+      }, 600);
     };
 
-    function openLetter(type) {
-      document.getElementById('letter-content').innerHTML = letters[type];
-      document.getElementById('letter-modal').classList.add('active');
-    }
-    function closeLetter() {
-      document.getElementById('letter-modal').classList.remove('active');
-    }
-
-    // 4. Interactive Bakery Logic
-    let ingredientsCount = 0;
-    let bakeryStep = 'ingredients'; // ingredients -> mix -> bake -> done
-
-    function addIngredient(btn, name) {
-      btn.classList.add('added');
-      ingredientsCount++;
-      const display = document.getElementById('bakeryDisplay');
-      display.style.transform = 'scale(1.25)';
-      setTimeout(() => display.style.transform = 'scale(1)', 180);
-
-      document.getElementById('bakeProgress').style.width = `${(ingredientsCount / 4) * 35}%`;
-      document.getElementById('bakeryStatus').innerText = `Added ${name}! (${ingredientsCount}/4)`;
-
-      if (ingredientsCount === 4) {
-        document.getElementById('ingredientsShelf').style.display = 'none';
-        const actionBtn = document.getElementById('bakeryActionBtn');
-        actionBtn.style.display = 'block';
-        actionBtn.innerText = 'Mix the batter! 🥄';
-        document.getElementById('bakeryStatus').innerText = 'All ingredients in! Now mix it together.';
-        bakeryStep = 'mix';
+    // --- HIDDEN HEARTS ---
+    function findHeart(el) {
+      if(el.classList.contains('found')) return;
+      el.classList.add('found');
+      heartsFound++;
+      if (heartsFound === 8 && !quests.hearts) {
+        quests.hearts = true;
+        unlockAchievement('Heart Collector', 'You found every piece of my heart.');
+        addToInventory('🔑', 'key'); 
+      } else {
+        const hint = document.createElement('div');
+        hint.style.position = 'fixed'; hint.style.top = '15px'; hint.style.left = '50%'; hint.style.transform = 'translateX(-50%)';
+        hint.style.color = '#f472b6'; hint.style.zIndex = '9999'; hint.style.fontWeight = '700'; hint.style.letterSpacing = '1px';
+        hint.innerText = `Heart Found (${heartsFound}/8)`;
+        document.body.appendChild(hint);
+        setTimeout(() => hint.remove(), 2500);
       }
     }
 
-    let mixClicks = 0;
-    function handleBakeryAction() {
-      const display = document.getElementById('bakeryDisplay');
-      const status = document.getElementById('bakeryStatus');
-      const actionBtn = document.getElementById('bakeryActionBtn');
-      const progress = document.getElementById('bakeProgress');
+    // --- CANDLE WISH ---
+    function makeWish() {
+      if (quests.wish) return;
+      quests.wish = true;
+      document.getElementById('candleEmoji').innerText = '💨✨';
+      unlockAchievement('Wish Made', 'Your wish is safe with me.');
+      setTimeout(() => document.getElementById('candleEmoji').innerText = '🕯️', 1200);
+    }
 
-      if (bakeryStep === 'mix') {
-        mixClicks++;
-        display.classList.add('shake');
-        setTimeout(() => display.classList.remove('shake'), 250);
-        progress.style.width = `${35 + (mixClicks * 15)}%`;
-
-        if (mixClicks < 3) {
-          status.innerText = `Mixing... stir it more! (${mixClicks}/3)`;
-        } else {
-          bakeryStep = 'bake';
-          display.innerText = '🥧';
-          status.innerText = 'Batter is smooth and ready for the oven!';
-          actionBtn.innerText = 'Put in the oven! 🔥';
+    // --- LITTLE THINGS ---
+    const flowerStages = ['🌱', '🌿', '🌷', '🌸'];
+    let flowerStage = 0;
+    function growFlower(el) {
+      if (flowerStage < 3) {
+        flowerStage++;
+        document.getElementById('flowerIcon').innerText = flowerStages[flowerStage];
+        if (flowerStage === 3) {
+          el.querySelector('.mini-title').innerText = 'It Bloomed 🤍';
         }
-      } else if (bakeryStep === 'bake') {
-        bakeryStep = 'baking_in_progress';
-        actionBtn.style.display = 'none';
-        document.getElementById('ovenGlow').classList.add('active');
-        display.innerText = '♨️';
-        progress.style.width = '85%';
-        status.innerText = 'Baking in the oven... warmth is rising! ⏳';
-
-        setTimeout(() => {
-          progress.style.width = '100%';
-          document.getElementById('ovenGlow').classList.remove('active');
-          display.innerText = '🍪';
-          display.style.transform = 'scale(1.35)';
-          setTimeout(() => display.style.transform = 'scale(1)', 200);
-
-          status.innerText = 'Fresh, sweet cookies baked with love just for you! ✨';
-          actionBtn.style.display = 'block';
-          actionBtn.innerText = 'Bake more treats 💖';
-          bakeryStep = 'done';
-        }, 2200);
-      } else if (bakeryStep === 'done') {
-        // Reset game
-        ingredientsCount = 0;
-        mixClicks = 0;
-        bakeryStep = 'ingredients';
-        display.innerText = '🥣';
-        progress.style.width = '0%';
-        status.innerText = 'Add the ingredients into the bowl:';
-        actionBtn.style.display = 'none';
-        document.querySelectorAll('.ingredient-btn').forEach(btn => btn.classList.remove('added'));
-        document.getElementById('ingredientsShelf').style.display = 'flex';
       }
     }
 
-    // 5. Sweet Affirmations Generator
-    const affirmations = [
-      "You don't need a single business day to write me... whatever you give me is treasure.",
-      "The only thing you have to do is be right here in my arms.",
-      "You are the world I want to keep warm for the rest of my life.",
-      "I'll take care of both of us. Always.",
-      "You're not 'mid' in anything—you are the sweetest blessing I could ever ask for.",
-      "I promise to always keep you safe, warm, and smiling."
+    function giveVirtualHug() {
+      const overlay = document.getElementById('hugOverlay');
+      overlay.classList.add('active');
+      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+    }
+
+    // --- 100 REASONS ---
+    const reasons = [
+      "The way you care so deeply about the people you love.",
+      "Because you're the only person who can make me smile this fast.",
+      "How you make everyday conversations feel like a fairytale.",
+      "The way you promised to bake me sweets.",
+      "Because you are my safe space.",
+      "How fiercely loyal and protective you are.",
+      "The beautiful way your mind works."
     ];
-
-    let lastIndex = -1;
-    function nextAffirmation() {
-      let index;
-      do {
-        index = Math.floor(Math.random() * affirmations.length);
-      } while (index === lastIndex && affirmations.length > 1);
-      lastIndex = index;
-
-      const quoteBox = document.getElementById('quote-text');
-      quoteBox.style.opacity = '0';
+    function nextReason() {
+      const box = document.getElementById('reasonText');
+      box.style.opacity = '0';
       setTimeout(() => {
-        quoteBox.innerText = `"${affirmations[index]}"`;
-        quoteBox.style.opacity = '1';
-      }, 200);
+        box.innerText = `"${reasons[Math.floor(Math.random() * reasons.length)]}"`;
+        box.style.opacity = '1';
+      }, 300);
+    }
+
+    // --- LETTERS (Full Text + Natural Commas) ---
+    const letterContent = {
+      birthday: `
+        <p>My prettiest baby,</p>
+        <p>Happy Birthday. If I could give you anything today, I would give you the ability to see yourself through my eyes, just for five seconds, so you’d understand why you are my easiest choice and the sweetest blessing in my life. You think you’re just an ordinary girl, but you turned my whole world upside down in the best way possible.</p>
+        <p>You calling me a gem when you are literally my entire universe made my heart melt. Today belongs entirely to you. Eat all the sweets you want, smile until your cheeks hurt, and remember: you're stuck with me forever. I’m never letting you go, maximum into my arms, duhhhh.</p>
+        <p>Happy birthday, my angel! 🎂🤍</p>
+      `,
+      doubt: `
+        <p>Hey my sweet girl,</p>
+        <p>I know that when someone loves you properly, and gently, it can feel terrifying if you're used to having to fight for basic kindness. You told me my love scares you because nobody has ever cared for you like this before.</p>
+        <p>Listen to me: you never did a single thing wrong in your life to think you didn't deserve softness. You are not "hard to love," you don't need a three to five business day turnaround to text me back, and you never have to put on a performance to keep me around.</p>
+        <p>When those doubts creep in, take a deep breath and just hold onto my hand. I’m not leaving, I’m not giving up on you, and I will protect you from every memory that made you feel small. You are completely safe with me. 🤍</p>
+      `,
+      miss: `
+        <p>My baby,</p>
+        <p>If you opened this because you miss me right now, close your eyes, take a slow breath, and imagine my arms pulling you in tight until there's no space left between us.</p>
+        <p>There’s that TV Girl line where he says, <i>"I want to run my fingers through your hair and tell you that I've never done this before with someone like you."</i> That is you to me. You can run your fingers through my hair as much as you want, lean your head on my chest, and let me keep you warm.</p>
+        <p>Distance is only temporary, angel. Until I can pull you into my arms for real, remember I’m carrying you in my heart every second of the day. 🫂🤍</p>
+      `,
+      sleep: `
+        <p>Goodnight, my sweet little princess.</p>
+        <p>Put your phone down, pull the blanket up, and let the entire day go. You don't have to carry the weight of tomorrow right now, and you don't have to overthink anything in the dark.</p>
+        <p>We are a team now. Whatever heavy thoughts or racing worries are trying to keep you awake, pass them to me, I'll keep watch over them while you rest.</p>
+        <p>Dream the sweetest dreams, my angel, and wake up knowing you are the most adored person on earth. I love you endlessly. 🌙🤍</p>
+      `,
+      hug: `
+        <p>Come here.</p>
+        <p>Close your eyes, take a deep breath, and just imagine my arms wrapping completely around you. You are completely secure, you are warm, and nothing outside of this hug can touch you right now.</p>
+        <p>No overthinking, no stress, no worries. Just you and me. I've got you. Just breathe. 🫂🤍</p>
+      `,
+      angry: `
+        <p>Hey.</p>
+        <p>Take a deep breath. Whatever made you mad, your feelings are completely valid and you have every right to be upset. You never have to apologize to me for having an attitude or needing to vent. I am on your side, unconditionally.</p>
+        <p>Do you want to vent about it until you run out of breath? I’ll listen to every single word. Do you want me to activate bodyguard protocol and handle it for you? Done. Or do you just want to sit in silence and be mad together? Whatever you need, I've got your back. Nobody messes with my girl. 😤🤍</p>
+      `,
+      nosleep: `
+        <p>Hey... still awake?</p>
+        <p>It's okay. Don't force yourself to sleep, and definitely don't beat yourself up for having a loud mind tonight. Late nights have a way of magnifying every little worry, but none of those thoughts are facts, they're just tiredness talking.</p>
+        <p>Picture our safe room. No noise, no pressure, no demands from anyone. Just soft blankets, the faint sound of music playing in the background, and me holding you while you listen to my heartbeat. Let your body relax even if your thoughts are still drifting. You don't have to solve anything tonight. 🦉✨</p>
+      `,
+      unloved: `
+        <p>Stop whatever you're doing, put your hand over your heart, and read this carefully:</p>
+        <p>You are my entire world. You are not "too much," you are not a burden, and you are not someone who can easily be replaced. On the days where your brain tricks you into feeling invisible or unappreciated, remember that somewhere out there, there is someone whose favorite notification is your name on his screen.</p>
+        <p>You bring peace just by existing. You are the prettiest blessing I could have ever asked for, and I will spend every single day reminding you of that until you finally believe it yourself. 🤍</p>
+      `,
+      smile: `
+        <p>Did you know you're at your absolute prettiest when you smile?</p>
+        <p>I bet you're sitting there looking adorable right now. Just think about us: think about the late-night chats, the promise to bake treats together, and all the silly moments where we couldn't stop laughing.</p>
+        <p>You turned my ordinary life into something warm and exciting. I’m probably smiling at my screen right now just picturing your face. Let that little smile show, princess, it looks too good on you to keep hidden. 🌻✨</p>
+      `,
+      motivation: `
+        <p>My little fighter,</p>
+        <p>Whatever mountain is in front of you right now, whether it's school, stress, or just feeling exhausted, you are going to conquer it. You have this quiet, stubborn strength inside you that you don't give yourself enough credit for.</p>
+        <p>Don't look at the whole staircase, just take the very next step. I believe in you even when you forget to believe in yourself. Put your chin up, do your best, and remember that your biggest fan is cheering you on every second. You've got this! ✨💪</p>
+      `
+    };
+    
+    function openLetter(key) {
+      const modal = document.getElementById('letterModal');
+      const paper = document.getElementById('paperContent');
+      paper.innerHTML = letterContent[key];
+      modal.classList.add('active');
+      paper.scrollTop = 0;
+      
+      lettersOpened++;
+      if (lettersOpened === 10 && !quests.letters) {
+        quests.letters = true;
+        unlockAchievement('Message Collector', 'You read every word I wrote for you.');
+      }
+    }
+    function closeLetter() { document.getElementById('letterModal').classList.remove('active'); }
+
+    // --- INVENTORY COMBINATION & LOGIC ---
+    const invData = {
+      'herb': { name: 'Green Herb 🌿', desc: 'Restores warmth.' },
+      'spray': { name: 'First Aid 🧴', desc: 'Cures overthinking instantly.', action: 'Use Spray', func: 'useSpray()' },
+      'star': { name: 'Starbolt ✨', desc: 'Tamaranian protection energy.', action: 'Shoot Starbolt', func: 'useStar()' },
+      'key': { name: 'Heart Key 🔑', desc: 'A strange key with a tiny inscription: <br><b style="font-size:1.4rem; letter-spacing: 2px;">0508</b>' },
+      'tape': { name: 'Cassette Tape 📼', desc: 'A secret recording...', action: 'Insert into Radio', func: 'useTape()' },
+      'letter_item': { name: 'Secret Letter 💌', desc: 'Combine this with the Green Herb...' },
+      'love_herb': { name: 'Love Herb 💖', desc: 'Restores 100% of princess happiness.', action: 'Consume', func: 'useLoveHerb()' },
+      'hug_ticket': { name: 'Hug Voucher 🎟️', desc: 'A golden ticket for instant warmth.', action: 'Redeem Hug', func: 'useHugTicket()' }
+    };
+
+    let selectedSlot = null;
+
+    function addToInventory(icon, id) {
+      const slots = document.querySelectorAll('.inv-slot.empty');
+      if(slots.length > 0) {
+        const slot = slots[0];
+        slot.classList.remove('empty');
+        slot.innerHTML = icon;
+        slot.setAttribute('data-id', id);
+      }
+    }
+
+    function clearSlot(slot) {
+      slot.className = 'inv-slot empty';
+      slot.innerHTML = '';
+      slot.setAttribute('data-id', 'empty');
+      slot.style = '';
+    }
+
+    function selectItem(el) {
+      if(el.classList.contains('empty')) return;
+      
+      const itemId = el.getAttribute('data-id');
+      
+      // Combination
+      if (selectedSlot && selectedSlot !== el) {
+        const id1 = selectedSlot.getAttribute('data-id');
+        const id2 = itemId;
+        
+        if ((id1 === 'herb' && id2 === 'letter_item') || (id2 === 'herb' && id1 === 'letter_item')) {
+          el.innerHTML = '💖';
+          el.setAttribute('data-id', 'love_herb');
+          el.classList.add('mixing');
+          clearSlot(selectedSlot);
+          selectedSlot = null;
+          
+          document.getElementById('invDesc').innerHTML = `<b>Love Herb Created!</b><br>Restores 100% of princess happiness.`;
+          if(!quests.inventory) {
+            quests.inventory = true;
+            unlockAchievement('Alchemist', 'You successfully combined items!');
+          }
+          return;
+        }
+      }
+
+      document.querySelectorAll('.inv-slot').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+      selectedSlot = el;
+      
+      const item = invData[itemId] || {name: 'Unknown Item', desc: '...'};
+      let descHtml = `<b>${item.name}</b><br><span style="margin-top: 5px; display: block;">${item.desc}</span>`;
+      
+      if (item.action) {
+        descHtml += `<button class="use-btn" onclick="${item.func}">${item.action}</button>`;
+      }
+      
+      const descBox = document.getElementById('invDesc');
+      descBox.style.opacity = '0';
+      setTimeout(() => {
+        let bColor = 'transparent';
+        if(itemId === 'herb' || itemId === 'love_herb') bColor = 'var(--accent-green)';
+        if(itemId === 'spray') bColor = '#38bdf8';
+        if(itemId === 'star') bColor = 'var(--accent-purple)';
+        descBox.style.borderLeftColor = bColor;
+        descBox.innerHTML = descHtml;
+        descBox.style.opacity = '1';
+      }, 150);
+    }
+
+    // --- ITEM ACTIONS ---
+    function useTape() {
+      tapes.push({ title: "Tape 04: Secret Message", lyrics: '"I will always be your safe space. Forever." 🤍' });
+      currentTape = tapes.length - 1;
+      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
+      if (!isPlaying) playRadio(); 
+      clearSlot(selectedSlot);
+      selectedSlot = null;
+      document.getElementById('invDesc').innerHTML = "Tape inserted into the Midnight Radio.";
+      if(!quests.tape) {
+        quests.tape = true;
+        unlockAchievement('Secret Tape', 'You played the hidden frequency.');
+      }
+    }
+
+    function useSpray() {
+      const flash = document.createElement('div');
+      flash.style = "position:fixed;inset:0;background:rgba(56, 189, 248, 0.4);z-index:9999;pointer-events:none;transition:opacity 0.8s;opacity:1;";
+      document.body.appendChild(flash);
+      setTimeout(() => flash.style.opacity = '0', 100);
+      setTimeout(() => flash.remove(), 900);
+      
+      clearSlot(selectedSlot);
+      selectedSlot = null;
+      document.getElementById('invDesc').innerHTML = "Used First Aid Spray.<br>Overthinking cured! +100 Peace.";
+    }
+
+    function useLoveHerb() {
+      const flash = document.createElement('div');
+      flash.style = "position:fixed;inset:0;background:rgba(244, 114, 182, 0.4);z-index:9999;pointer-events:none;transition:opacity 1s;opacity:1;";
+      document.body.appendChild(flash);
+      setTimeout(() => flash.style.opacity = '0', 200);
+      setTimeout(() => flash.remove(), 1200);
+      
+      clearSlot(selectedSlot);
+      selectedSlot = null;
+      document.getElementById('invDesc').innerHTML = "Consumed Love Herb.<br>Maximum warmth restored! 💖";
+    }
+
+    function useStar() {
+      const bolt = document.createElement('div');
+      bolt.innerText = '✨';
+      bolt.style = "position:fixed;bottom:20%;left:-100px;font-size:4rem;z-index:9999;filter:drop-shadow(0 0 20px #10b981);transition:transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);";
+      document.body.appendChild(bolt);
+      setTimeout(() => { bolt.style.transform = `translate(${window.innerWidth + 200}px, -${window.innerHeight/2}px)`; }, 50);
+      setTimeout(() => bolt.remove(), 900);
+    }
+
+    function useHugTicket() {
+      giveVirtualHug();
+      clearSlot(selectedSlot);
+      selectedSlot = null;
+      document.getElementById('invDesc').innerHTML = "Ticket redeemed!";
+    }
+
+    // --- VAULT ---
+    function unlockVault() {
+      const input = document.getElementById('vaultInput').value;
+      if (input === '0508') {
+        document.getElementById('vaultInput').style.background = 'rgba(16, 185, 129, 0.15)';
+        document.getElementById('vaultInput').style.borderColor = 'var(--accent-green)';
+        document.getElementById('vaultInput').value = 'ACCESS GRANTED';
+        document.getElementById('vaultInput').disabled = true;
+        
+        if (!quests.vault) {
+          quests.vault = true;
+          unlockAchievement('Secret Keeper', 'You remembered our special date.');
+          addToInventory('📼', 'tape'); 
+        }
+      } else {
+        document.getElementById('vaultInput').value = '';
+        document.getElementById('vaultInput').placeholder = 'Incorrect passcode...';
+      }
+    }
+
+    // --- MYSTERY GIFT ---
+    function openGift() {
+      document.getElementById('giftIcon').style.animation = 'none';
+      document.getElementById('giftChoices').style.display = 'flex';
+      document.querySelector('.gift-container p').style.display = 'none';
+    }
+    
+    function claimGift(type) {
+      if (type === 'letter') addToInventory('💌', 'letter_item');
+      if (type === 'hug') addToInventory('🎟️', 'hug_ticket');
+      
+      document.getElementById('giftSection').innerHTML = '<div style="padding: 2rem; text-align: center;"><div style="font-size:4rem; margin-bottom:1rem;">🎁</div><p style="color:var(--text-muted);">Gift added to your Attache Case.</p></div>';
+      
+      if (!quests.gift) {
+        quests.gift = true;
+        unlockAchievement('Surprise!', 'You opened your birthday gift.');
+      }
+    }
+
+    // --- RADIO ---
+    const tapes = [
+      { title: "Tape 01: TV Girl", lyrics: '"I want to run my fingers through your hair..." 🎵' },
+      { title: "Tape 02: Our Space", lyrics: '"As long as you need me I am here." 🤍' },
+      { title: "Tape 03: Fairytale", lyrics: '"I feel like I am in a fairytale rn." ✨' }
+    ];
+    let currentTape = 0;
+    let isPlaying = false;
+
+    function playRadio() {
+      const fill = document.getElementById('radioFill');
+      const cass = document.getElementById('cassette');
+      isPlaying = !isPlaying;
+      
+      if(isPlaying) {
+        cass.classList.add('playing');
+        fill.style.transition = 'width 10s linear';
+        fill.style.width = '100%';
+        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
+      } else {
+        cass.classList.remove('playing');
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        document.getElementById('radioLyrics').innerText = '...';
+      }
+    }
+    
+    function changeTape(dir) {
+      currentTape += dir;
+      if(currentTape < 0) currentTape = tapes.length -1;
+      if(currentTape >= tapes.length) currentTape = 0;
+      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
+      if(isPlaying) {
+        isPlaying = false; 
+        playRadio(); 
+      }
+    }
+
+    // --- TRUE ENDING SEQUENCES ---
+    async function sequenceFadeIn(ids, delay = 2500) {
+      for(let id of ids) {
+        document.getElementById(id).classList.add('visible');
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+
+    function startTrueEnding() {
+      window.scrollTo(0, 0);
+      const overlay = document.getElementById('cineOverlay');
+      overlay.classList.add('active');
+      
+      setTimeout(() => {
+        sequenceFadeIn(['ct1', 'ct2'], 2000).then(() => {
+          setTimeout(() => {
+            document.getElementById('ct1').classList.remove('visible');
+            document.getElementById('ct2').classList.remove('visible');
+            
+            setTimeout(() => {
+              sequenceFadeIn(['ct3', 'ct4', 'ct5', 'ct6', 'ct7', 'ctBtn'], 3200);
+            }, 1500);
+          }, 2500);
+        });
+      }, 1500);
+    }
+
+    function launchGoodnight() {
+      document.getElementById('cineOverlay').classList.remove('active');
+      const gnOverlay = document.getElementById('gnOverlay');
+      gnOverlay.classList.add('active');
+      
+      setTimeout(() => {
+        sequenceFadeIn(['gn1', 'gn2', 'gn3'], 3500).then(() => {
+          setTimeout(() => {
+            document.getElementById('gn1').classList.remove('visible');
+            document.getElementById('gn2').classList.remove('visible');
+            document.getElementById('gn3').classList.remove('visible');
+            setTimeout(() => { document.getElementById('gnHeart').classList.add('visible'); }, 2000);
+          }, 3500);
+        });
+      }, 1500);
     }
   </script>
 </body>
