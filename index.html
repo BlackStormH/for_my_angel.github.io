@@ -28,6 +28,22 @@
       padding: 2rem 1rem 6rem; position: relative;
     }
 
+    /* Floating Music Toggle */
+    .music-toggle {
+      position: fixed; top: 18px; right: 18px; z-index: 999;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      width: 45px; height: 45px; border-radius: 50%; color: #fff; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); transition: all 0.25s ease;
+    }
+    .music-toggle:hover { transform: scale(1.08); border-color: var(--accent-pink); }
+    .music-toggle.playing {
+      box-shadow: 0 0 16px rgba(244, 114, 182, 0.5); border-color: var(--accent-pink);
+      animation: musicPulse 2s infinite ease-in-out;
+    }
+    @keyframes musicPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+
     /* Background Stars */
     .star { position: absolute; background: #fff; border-radius: 50%; opacity: 0.5; animation: twinkle linear infinite; pointer-events: none; }
     @keyframes twinkle { 0%, 100% { opacity: 0.1; transform: scale(0.6); } 50% { opacity: 0.8; transform: scale(1.2); } }
@@ -143,7 +159,7 @@
     @keyframes gentleShake { 0%, 100% {transform: rotate(0deg);} 5% {transform: rotate(6deg);} 10% {transform: rotate(-6deg);} 15% {transform: rotate(0deg);} }
     .gift-choices { display: none; flex-direction: column; gap: 1rem; }
 
-    /* CLEAN CINEMATIC OVERLAYS (NO OVERLAPPING TEXT) */
+    /* Cinematic Overlays (Clean Slide Animation) */
     .cinematic-overlay {
       position: fixed; inset: 0; background: #000; z-index: 10000;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -158,10 +174,7 @@
       transform: translateY(12px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .cine-slide.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .cine-slide.visible { opacity: 1; transform: translateY(0); }
 
     .cine-final-btn {
       margin-top: 2.5rem; background: transparent;
@@ -172,40 +185,26 @@
       transform: translateY(15px);
       transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
     }
-    .cine-final-btn.visible {
-      opacity: 1; pointer-events: all;
-      transform: translateY(0);
-    }
-    .cine-final-btn:hover {
-      background: rgba(255,255,255,0.15);
-      border-color: #fff;
-    }
+    .cine-final-btn.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .cine-final-btn:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
 
     .gn-heart {
       font-size: 5rem; opacity: 0; transform: scale(0.6);
       filter: drop-shadow(0 0 25px var(--accent-pink));
       transition: opacity 1.5s ease, transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .gn-heart.visible {
-      opacity: 1; transform: scale(1);
-      animation: heartbeat 2.5s infinite ease-in-out;
-    }
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(244, 114, 182, 0.6)); }
-      50% { transform: scale(1.15); filter: drop-shadow(0 0 45px rgba(244, 114, 182, 0.9)); }
-    }
+    .gn-heart.visible { opacity: 1; transform: scale(1); animation: heartbeat 2.5s infinite ease-in-out; }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(244, 114, 182, 0.6)); } 50% { transform: scale(1.15); filter: drop-shadow(0 0 45px rgba(244, 114, 182, 0.9)); } }
 
     /* Letter Modal */
     .letter-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; padding: 1rem; }
     .letter-modal.active { opacity: 1; pointer-events: all; }
     .envelope-scene { position: relative; width: 100%; max-width: 460px; max-height: 85vh; display: flex; flex-direction: column; align-items: center; }
     
+    /* Parchment Paper & Text Animations */
     .actual-paper { background: #fffdf8; width: 100%; border-radius: 20px; padding: 2.4rem 2rem; font-family: 'Caveat', cursive; font-size: 1.65rem; color: #2b1e16; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transform: translateY(40px); opacity: 0; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); overflow-y: auto; max-height: 72vh; line-height: 1.45; border: 1px solid #f3e8d7; }
     .actual-paper p { 
-      margin-bottom: 1.2rem;
-      opacity: 0;
-      transform: translateY(14px);
-      filter: blur(2px);
+      margin-bottom: 1.2rem; opacity: 0; transform: translateY(14px); filter: blur(2px);
       animation: paragraphFloatIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
     .actual-paper p:last-child { margin-bottom: 0; }
@@ -217,19 +216,13 @@
     .actual-paper p:nth-child(4) { animation-delay: 0.75s; }
     .actual-paper p:nth-child(5) { animation-delay: 0.95s; }
 
-    @keyframes paragraphFloatIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-      }
-    }
+    @keyframes paragraphFloatIn { to { opacity: 1; transform: translateY(0); filter: blur(0); } }
 
     .close-paper { margin-top: 1.2rem; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 0.85rem 2.4rem; border-radius: 50px; cursor: pointer; font-family: 'Outfit'; font-size: 0.95rem; font-weight: 600; opacity: 0; transition: all 0.3s; }
     .close-paper:hover { background: rgba(255,255,255,0.28); transform: translateY(-1px); }
     .letter-modal.active .close-paper { opacity: 1; }
 
-    /* Hug / Healing Overlays */
+    /* Hug Overlay */
     .hug-overlay { position: fixed; inset: 0; background: rgba(244,114,182,0.95); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 1s; }
     .hug-overlay.active { opacity: 1; pointer-events: all; }
     .hug-emoji { font-size: 7rem; animation: pulse 1.5s infinite; filter: drop-shadow(0 0 30px rgba(255,255,255,0.6)); }
@@ -238,6 +231,14 @@
   </style>
 </head>
 <body>
+
+  <!-- Hidden Background Audio Player -->
+  <audio id="bgMusic" preload="auto">
+    <source src="media.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Floating Audio Button -->
+  <button id="musicToggleBtn" class="music-toggle" onclick="toggleMusicBtn()" title="Play / Pause Music">🔇</button>
 
   <!-- Hidden Hearts scattered -->
   <span class="hidden-heart" style="top: 2%; left: 5%;" onclick="findHeart(this)">🤍</span>
@@ -369,7 +370,7 @@
         <div class="radio-progress"><div class="radio-fill" id="radioFill"></div></div>
         <div class="radio-controls">
           <button class="r-btn" onclick="changeTape(-1)">◀</button>
-          <button class="r-btn" onclick="playRadio()" style="width:55px;height:55px;font-size:1.4rem;">▶</button>
+          <button class="r-btn" onclick="playRadioToggle()" style="width:55px;height:55px;font-size:1.4rem;">▶</button>
           <button class="r-btn" onclick="changeTape(1)">▶</button>
         </div>
         <div class="lyrics" id="radioLyrics">...</div>
@@ -408,7 +409,7 @@
     <div style="color: rgba(255,255,255,0.9); font-size: 1rem; margin-top: 15px; font-weight: 300;">Duration: ∞ (Tap anywhere to close)</div>
   </div>
 
-  <!-- Cinematic Overlays (Clean Slide Animation) -->
+  <!-- Cinematic Overlays -->
   <div class="cinematic-overlay" id="cineOverlay">
     <div class="cine-slide" id="cineSlide">...</div>
     <button class="cine-final-btn" id="ctBtn" onclick="launchGoodnight()">[ Begin Goodnight ]</button>
@@ -433,6 +434,100 @@
       star.style.animationDuration = `${Math.random() * 3 + 2}s`;
       starsContainer.appendChild(star);
     }
+
+    // --- AUDIO SYSTEM (Synced with Radio) ---
+    const bgAudio = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicToggleBtn');
+    let hasStartedMusic = false;
+    let isPlaying = false;
+
+    let tapes = [
+      { title: "Tape 01: TV Girl", lyrics: '"I want to run my fingers through your hair..." 🎵', file: 'media.mp3' },
+      { title: "Tape 02: Our Space", lyrics: '"As long as you need me I am here." 🤍', file: 'media2.mp3' },
+      { title: "Tape 03: Fairytale", lyrics: '"I feel like I am in a fairytale rn." ✨', file: 'media3.mp3' },
+      { title: "Tape 04: Late Night", lyrics: '"Just you, me, and the stars." 🌌', file: 'media4.mp3' }
+    ];
+    let currentTape = 0;
+
+    function toggleMusicBtn() {
+      if (bgAudio.paused) {
+        playRadio(true); 
+      } else {
+        playRadio(false); 
+      }
+    }
+
+    function playRadioToggle() {
+      playRadio(!isPlaying);
+    }
+
+    function playRadio(forcePlay) {
+      const fill = document.getElementById('radioFill');
+      const cass = document.getElementById('cassette');
+      
+      isPlaying = typeof forcePlay === 'boolean' ? forcePlay : !isPlaying;
+      
+      if (isPlaying) {
+        cass.classList.add('playing');
+        fill.style.transition = 'width 10s linear';
+        fill.style.width = '100%';
+        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
+        
+        musicBtn.innerText = '🎵';
+        musicBtn.classList.add('playing');
+        
+        if (bgAudio.src.indexOf(tapes[currentTape].file) === -1) {
+            bgAudio.src = tapes[currentTape].file;
+        }
+        bgAudio.play().catch(e => console.log("Waiting for user tap..."));
+
+        if(!quests.tape && currentTape === 2) { 
+           quests.tape = true;
+           unlockAchievement('Radio Operator', 'You listened to our tapes.');
+        }
+      } else {
+        cass.classList.remove('playing');
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        document.getElementById('radioLyrics').innerText = '...';
+        
+        musicBtn.innerText = '🔇';
+        musicBtn.classList.remove('playing');
+        bgAudio.pause();
+      }
+    }
+    
+    function changeTape(dir) {
+      currentTape += dir;
+      if(currentTape < 0) currentTape = tapes.length -1;
+      if(currentTape >= tapes.length) currentTape = 0;
+      
+      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
+      bgAudio.src = tapes[currentTape].file;
+      
+      if(isPlaying) {
+        bgAudio.play().catch(e=>{});
+        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
+        const fill = document.getElementById('radioFill');
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        setTimeout(() => {
+          fill.style.transition = 'width 10s linear';
+          fill.style.width = '100%';
+        }, 50);
+      }
+    }
+
+    bgAudio.addEventListener('ended', () => { changeTape(1); });
+
+    window.addEventListener('pointerdown', function startOnFirstTouch(e) {
+      if (!hasStartedMusic) {
+        hasStartedMusic = true;
+        playRadio(true);
+        window.removeEventListener('pointerdown', startOnFirstTouch);
+      }
+    }, { once: true });
+
 
     // --- PROGRESS & QUEST SYSTEM ---
     const quests = { wish: false, hearts: false, gift: false, vault: false, inventory: false, tape: false, letters: false };
@@ -466,7 +561,6 @@
       updateProgress();
     }
 
-    // --- INITIAL ANIMATIONS ---
     window.onload = () => {
       setTimeout(() => {
         document.getElementById('statLove').style.width = '100%';
@@ -541,7 +635,7 @@
       }, 300);
     }
 
-    // --- LETTERS (Full text, natural commas, animated paragraphs) ---
+    // --- LETTERS (Full Text + Animated Paragraphs) ---
     const letterContent = {
       birthday: `
         <p>My prettiest baby,</p>
@@ -598,7 +692,7 @@
         <p>Don't look at the whole staircase, just take the very next step. I believe in you even when you forget to believe in yourself. Put your chin up, do your best, and remember that your biggest fan is cheering you on every second. You've got this! ✨💪</p>
       `
     };
-    
+
     function openLetter(key) {
       const modal = document.getElementById('letterModal');
       const paper = document.getElementById('paperContent');
@@ -697,10 +791,10 @@
 
     // --- ITEM ACTIONS ---
     function useTape() {
-      tapes.push({ title: "Tape 04: Secret Message", lyrics: '"I will always be your safe space. Forever." 🤍' });
+      tapes.push({ title: "Tape 05: Secret Message", lyrics: '"I will always be your safe space. Forever." 🤍', file: 'media.mp3' }); // Loops back to media.mp3 or any track you prefer
       currentTape = tapes.length - 1;
       document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
-      if (!isPlaying) playRadio(); 
+      playRadio(true); 
       clearSlot(selectedSlot);
       selectedSlot = null;
       document.getElementById('invDesc').innerHTML = "Tape inserted into the Midnight Radio.";
@@ -789,45 +883,7 @@
       }
     }
 
-    // --- RADIO ---
-    const tapes = [
-      { title: "Tape 01: TV Girl", lyrics: '"I want to run my fingers through your hair..." 🎵' },
-      { title: "Tape 02: Our Space", lyrics: '"As long as you need me I am here." 🤍' },
-      { title: "Tape 03: Fairytale", lyrics: '"I feel like I am in a fairytale rn." ✨' }
-    ];
-    let currentTape = 0;
-    let isPlaying = false;
-
-    function playRadio() {
-      const fill = document.getElementById('radioFill');
-      const cass = document.getElementById('cassette');
-      isPlaying = !isPlaying;
-      
-      if(isPlaying) {
-        cass.classList.add('playing');
-        fill.style.transition = 'width 10s linear';
-        fill.style.width = '100%';
-        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
-      } else {
-        cass.classList.remove('playing');
-        fill.style.transition = 'none';
-        fill.style.width = '0%';
-        document.getElementById('radioLyrics').innerText = '...';
-      }
-    }
-    
-    function changeTape(dir) {
-      currentTape += dir;
-      if(currentTape < 0) currentTape = tapes.length -1;
-      if(currentTape >= tapes.length) currentTape = 0;
-      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
-      if(isPlaying) {
-        isPlaying = false; 
-        playRadio(); 
-      }
-    }
-
-    // --- CLEAN SEQUENTIAL ENDING (NO OVERLAPPING) ---
+    // --- CLEAN SEQUENTIAL ENDING ---
     async function playCineSequence() {
       const slide = document.getElementById('cineSlide');
       const btn = document.getElementById('ctBtn');
@@ -847,7 +903,6 @@
       await showLine("I just wanted to build you a tiny universe.", 3000);
       await showLine("A place where every button means something.<br>Every star is a memory.", 3500);
 
-      // Final line remains visible with the button
       slide.classList.remove('visible');
       await new Promise(r => setTimeout(r, 600));
       slide.innerHTML = "And at the center of it all...<br><span style='color: var(--accent-pink); font-weight: 500;'>there's you. ❤️</span>";
