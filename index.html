@@ -232,10 +232,8 @@
 </head>
 <body>
 
-  <!-- Hidden Background Audio Player -->
-  <audio id="bgMusic" preload="auto">
-    <source src="media.mp3" type="audio/mpeg" />
-  </audio>
+  <!-- Direct src properly applied to background audio tag to prevent iOS blocks -->
+  <audio id="bgMusic" preload="auto" playsinline src="media.mp3"></audio>
 
   <!-- Floating Audio Button -->
   <button id="musicToggleBtn" class="music-toggle" onclick="toggleMusicBtn()" title="Play / Pause Music">🔇</button>
@@ -409,7 +407,7 @@
     <div style="color: rgba(255,255,255,0.9); font-size: 1rem; margin-top: 15px; font-weight: 300;">Duration: ∞ (Tap anywhere to close)</div>
   </div>
 
-  <!-- Cinematic Overlays -->
+  <!-- Cinematic Overlays (Clean Slide Animation without Overlapping) -->
   <div class="cinematic-overlay" id="cineOverlay">
     <div class="cine-slide" id="cineSlide">...</div>
     <button class="cine-final-btn" id="ctBtn" onclick="launchGoodnight()">[ Begin Goodnight ]</button>
@@ -434,100 +432,6 @@
       star.style.animationDuration = `${Math.random() * 3 + 2}s`;
       starsContainer.appendChild(star);
     }
-
-    // --- AUDIO SYSTEM (Synced with Radio) ---
-    const bgAudio = document.getElementById('bgMusic');
-    const musicBtn = document.getElementById('musicToggleBtn');
-    let hasStartedMusic = false;
-    let isPlaying = false;
-
-    let tapes = [
-      { title: "Tape 01: TV Girl", lyrics: '"I want to run my fingers through your hair..." 🎵', file: 'media.mp3' },
-      { title: "Tape 02: Our Space", lyrics: '"As long as you need me I am here." 🤍', file: 'media2.mp3' },
-      { title: "Tape 03: Fairytale", lyrics: '"I feel like I am in a fairytale rn." ✨', file: 'media3.mp3' },
-      { title: "Tape 04: Late Night", lyrics: '"Just you, me, and the stars." 🌌', file: 'media4.mp3' }
-    ];
-    let currentTape = 0;
-
-    function toggleMusicBtn() {
-      if (bgAudio.paused) {
-        playRadio(true); 
-      } else {
-        playRadio(false); 
-      }
-    }
-
-    function playRadioToggle() {
-      playRadio(!isPlaying);
-    }
-
-    function playRadio(forcePlay) {
-      const fill = document.getElementById('radioFill');
-      const cass = document.getElementById('cassette');
-      
-      isPlaying = typeof forcePlay === 'boolean' ? forcePlay : !isPlaying;
-      
-      if (isPlaying) {
-        cass.classList.add('playing');
-        fill.style.transition = 'width 10s linear';
-        fill.style.width = '100%';
-        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
-        
-        musicBtn.innerText = '🎵';
-        musicBtn.classList.add('playing');
-        
-        if (bgAudio.src.indexOf(tapes[currentTape].file) === -1) {
-            bgAudio.src = tapes[currentTape].file;
-        }
-        bgAudio.play().catch(e => console.log("Waiting for user tap..."));
-
-        if(!quests.tape && currentTape === 2) { 
-           quests.tape = true;
-           unlockAchievement('Radio Operator', 'You listened to our tapes.');
-        }
-      } else {
-        cass.classList.remove('playing');
-        fill.style.transition = 'none';
-        fill.style.width = '0%';
-        document.getElementById('radioLyrics').innerText = '...';
-        
-        musicBtn.innerText = '🔇';
-        musicBtn.classList.remove('playing');
-        bgAudio.pause();
-      }
-    }
-    
-    function changeTape(dir) {
-      currentTape += dir;
-      if(currentTape < 0) currentTape = tapes.length -1;
-      if(currentTape >= tapes.length) currentTape = 0;
-      
-      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
-      bgAudio.src = tapes[currentTape].file;
-      
-      if(isPlaying) {
-        bgAudio.play().catch(e=>{});
-        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
-        const fill = document.getElementById('radioFill');
-        fill.style.transition = 'none';
-        fill.style.width = '0%';
-        setTimeout(() => {
-          fill.style.transition = 'width 10s linear';
-          fill.style.width = '100%';
-        }, 50);
-      }
-    }
-
-    bgAudio.addEventListener('ended', () => { changeTape(1); });
-
-    window.addEventListener('pointerdown', function startOnFirstTouch(e) {
-      if (!hasStartedMusic) {
-        hasStartedMusic = true;
-        playRadio(true);
-        window.removeEventListener('pointerdown', startOnFirstTouch);
-      }
-    }, { once: true });
-
 
     // --- PROGRESS & QUEST SYSTEM ---
     const quests = { wish: false, hearts: false, gift: false, vault: false, inventory: false, tape: false, letters: false };
@@ -568,6 +472,102 @@
         document.getElementById('statKind').style.width = '100%';
       }, 600);
     };
+
+    // --- BULLETPROOF AUDIO SYSTEM ---
+    const bgAudio = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicToggleBtn');
+    let isPlaying = false;
+    let audioUnlocked = false;
+
+    let tapes = [
+      { title: "Tape 01: TV Girl", lyrics: '"I want to run my fingers through your hair..." 🎵', file: 'media.mp3' },
+      { title: "Tape 02: Cigarettes After Sex", lyrics: '"It\'s so sweet, knowing that you love me..." 🤍', file: 'media2.mp3' },
+      { title: "Tape 03: Aware", lyrics: '"Every second with you feels like our own universe..." ✨', file: 'media3.mp3' },
+      { title: "Tape 04: Resident Evil (Safe Room)", lyrics: '[ Safe Room Active: You are completely protected here. ] 🌿🤍', file: 'media4.mp3' }
+    ];
+    let currentTape = 0;
+
+    function syncRadioUI(playing) {
+      const fill = document.getElementById('radioFill');
+      const cass = document.getElementById('cassette');
+      if (playing) {
+        cass.classList.add('playing');
+        fill.style.transition = 'width 10s linear';
+        fill.style.width = '100%';
+        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
+        musicBtn.innerText = '🎵';
+        musicBtn.classList.add('playing');
+      } else {
+        cass.classList.remove('playing');
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        document.getElementById('radioLyrics').innerText = '...';
+        musicBtn.innerText = '🔇';
+        musicBtn.classList.remove('playing');
+      }
+    }
+
+    function loadAndPlayTape(index) {
+      currentTape = index;
+      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
+
+      // Only change src and reload if it's actually a different track
+      if (!bgAudio.src.endsWith(tapes[currentTape].file.replace('./', ''))) {
+          bgAudio.src = tapes[currentTape].file;
+          bgAudio.load();
+      }
+
+      bgAudio.play().then(() => {
+        isPlaying = true;
+        syncRadioUI(true);
+        if(!quests.tape && currentTape === 2) { 
+           quests.tape = true;
+           unlockAchievement('Radio Operator', 'You listened to our tapes.');
+        }
+      }).catch(err => {
+        console.warn("Audio waiting for user gesture:", err);
+        isPlaying = false;
+        syncRadioUI(false);
+      });
+    }
+
+    function toggleMusicBtn() {
+      if (!isPlaying) {
+        loadAndPlayTape(currentTape);
+      } else {
+        bgAudio.pause();
+        isPlaying = false;
+        syncRadioUI(false);
+      }
+    }
+
+    function playRadioToggle() {
+      toggleMusicBtn();
+    }
+
+    function changeTape(dir) {
+      currentTape += dir;
+      if (currentTape < 0) currentTape = tapes.length - 1;
+      if (currentTape >= tapes.length) currentTape = 0;
+      loadAndPlayTape(currentTape);
+    }
+
+    bgAudio.addEventListener('ended', () => {
+      changeTape(1);
+    });
+
+    // Mobile-friendly audio unlock on the very first touch anywhere on screen
+    function unlockAudio() {
+      if (!audioUnlocked) {
+        audioUnlocked = true;
+        loadAndPlayTape(0);
+        document.removeEventListener('click', unlockAudio);
+        document.removeEventListener('touchend', unlockAudio);
+      }
+    }
+
+    document.addEventListener('click', unlockAudio);
+    document.addEventListener('touchend', unlockAudio);
 
     // --- HIDDEN HEARTS ---
     function findHeart(el) {
@@ -635,7 +635,7 @@
       }, 300);
     }
 
-    // --- LETTERS (Full Text + Animated Paragraphs) ---
+    // --- LETTERS ---
     const letterContent = {
       birthday: `
         <p>My prettiest baby,</p>
@@ -791,10 +791,9 @@
 
     // --- ITEM ACTIONS ---
     function useTape() {
-      tapes.push({ title: "Tape 05: Secret Message", lyrics: '"I will always be your safe space. Forever." 🤍', file: 'media.mp3' }); // Loops back to media.mp3 or any track you prefer
-      currentTape = tapes.length - 1;
-      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
-      playRadio(true); 
+      tapes.push({ title: "Tape 05: Secret Message", lyrics: '"I will always be your safe space. Forever." 🤍', file: 'media.mp3' });
+      loadAndPlayTape(tapes.length - 1);
+      
       clearSlot(selectedSlot);
       selectedSlot = null;
       document.getElementById('invDesc').innerHTML = "Tape inserted into the Midnight Radio.";
