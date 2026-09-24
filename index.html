@@ -2,359 +2,2612 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday, My Princess ✨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Happy Birthday, My Princess Steph ✨</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Dancing+Script:wght@600;700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #05030a;
-      --card-bg: rgba(18, 12, 33, 0.6);
+      --bg-dark: #070312;
+      --card-bg: rgba(16, 9, 32, 0.74);
+      --card-border: rgba(192, 132, 252, 0.2);
       --accent-pink: #f472b6;
+      --accent-pink-glow: rgba(244, 114, 182, 0.5);
       --accent-purple: #c084fc;
+      --accent-purple-dark: #7c3aed;
       --accent-green: #10b981;
+      --accent-gold: #fde047;
+      --accent-gold-glow: rgba(253, 224, 71, 0.55);
+      --accent-blue: #38bdf8;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --glass-border: rgba(255, 255, 255, 0.08);
+      --neon-glow: 0 0 20px rgba(192, 132, 252, 0.35);
+      --neon-pink-glow: 0 0 25px rgba(244, 114, 182, 0.5);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
     body {
-      background: radial-gradient(circle at 50% 0%, #20124d 0%, #05030a 65%, #000000 100%);
-      color: var(--text-main); font-family: 'Outfit', sans-serif;
-      min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column; align-items: center;
-      padding: 2rem 1rem 6rem; position: relative;
+      background: radial-gradient(circle at 50% 0%, #200d3d 0%, var(--bg-dark) 55%, #020108 100%);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem 7.5rem;
+      position: relative;
     }
 
-    /* Floating Music Toggle */
-    .music-toggle {
-      position: fixed; top: 18px; right: 18px; z-index: 999;
-      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      width: 45px; height: 45px; border-radius: 50%; color: #fff; font-size: 1.2rem;
-      display: flex; align-items: center; justify-content: center; cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); transition: all 0.25s ease;
+    /* Star Canvas */
+    #spaceCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
     }
-    .music-toggle:hover { transform: scale(1.08); border-color: var(--accent-pink); }
-    .music-toggle.playing {
-      box-shadow: 0 0 16px rgba(244, 114, 182, 0.5); border-color: var(--accent-pink);
-      animation: musicPulse 2s infinite ease-in-out;
-    }
-    @keyframes musicPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 
-    /* Background Stars */
-    .star { position: absolute; background: #fff; border-radius: 50%; opacity: 0.5; animation: twinkle linear infinite; pointer-events: none; }
-    @keyframes twinkle { 0%, 100% { opacity: 0.1; transform: scale(0.6); } 50% { opacity: 0.8; transform: scale(1.2); } }
-
-    /* Achievement Toast */
-    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-    .toast {
-      background: rgba(20, 10, 30, 0.95); border-left: 4px solid var(--accent-pink); border-radius: 12px;
-      padding: 1.2rem 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.6); backdrop-filter: blur(10px);
-      transform: translateX(120%); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      display: flex; align-items: center; gap: 1.2rem;
+    /* Tap Sparks & Flying Hearts */
+    .tap-spark {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      font-size: 1.25rem;
+      animation: floatSpark 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      filter: drop-shadow(0 0 8px var(--accent-pink));
     }
-    .toast.show { transform: translateX(0); }
-    .toast-icon { font-size: 2rem; }
-    .toast-text h4 { color: var(--accent-pink); margin-bottom: 3px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-    .toast-text p { color: #fff; font-size: 0.85rem; font-weight: 300; }
+    @keyframes floatSpark {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(0.6) rotate(0deg); }
+      50% { opacity: 0.9; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) - 30px)) scale(1.35) rotate(var(--rot)); }
+      100% { opacity: 0; transform: translate(calc(-50% + var(--dx) * 1.5), calc(-50% + var(--dy) - 75px)) scale(0.3) rotate(var(--rot)); }
+    }
+
+    /* Kiss Animations */
+    @keyframes kissPop {
+      0% { transform: scale(0.3) rotate(-15deg); opacity: 0; }
+      50% { transform: scale(1.25) rotate(5deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    /* Confetti particle */
+    .confetti-piece {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      animation: fallConfetti 2.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    @keyframes fallConfetti {
+      0% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+      100% { opacity: 0; transform: translate(var(--cx), var(--cy)) rotate(var(--crot)) scale(0.3); }
+    }
+
+    /* Top Floating Music HUD */
+    .top-hud {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      width: calc(100% - 28px);
+      max-width: 540px;
+      background: rgba(14, 7, 28, 0.82);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 50px;
+      padding: 0.5rem 0.8rem 0.5rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.65), var(--neon-glow);
+    }
+    .hud-track-info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      overflow: hidden;
+      flex: 1;
+    }
+    .hud-cassette-icon {
+      font-size: 1.35rem;
+      display: inline-block;
+      animation: gentleSpin 6s linear infinite paused;
+    }
+    .hud-cassette-icon.playing { animation-play-state: running; }
+    @keyframes gentleSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .hud-text-box { overflow: hidden; white-space: nowrap; }
+    .hud-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.5px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .hud-subtitle {
+      font-size: 0.72rem;
+      color: var(--accent-pink);
+      font-family: 'Dancing Script', cursive;
+      font-size: 0.95rem;
+    }
+    .hud-visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 16px;
+      margin-left: 4px;
+    }
+    .viz-bar {
+      width: 3px;
+      height: 4px;
+      background: var(--accent-pink);
+      border-radius: 2px;
+      transition: height 0.15s ease;
+    }
+    .viz-bar.active {
+      animation: vizDance 0.8s ease-in-out infinite alternate;
+    }
+    .viz-bar:nth-child(1) { animation-delay: 0.1s; }
+    .viz-bar:nth-child(2) { animation-delay: 0.3s; }
+    .viz-bar:nth-child(3) { animation-delay: 0.2s; }
+    .viz-bar:nth-child(4) { animation-delay: 0.4s; }
+    @keyframes vizDance { 0% { height: 4px; } 100% { height: 16px; } }
+
+    .hud-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .hud-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .hud-btn:hover {
+      background: var(--accent-purple);
+      border-color: var(--accent-purple);
+      transform: scale(1.08);
+      box-shadow: var(--neon-glow);
+    }
+    .hud-btn.play-btn {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      border: none;
+      width: 38px; height: 38px;
+      box-shadow: 0 0 15px rgba(244,114,182,0.4);
+    }
+
+    /* Start prompt banner */
+    .start-prompt {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 998;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.92), rgba(244, 114, 182, 0.92));
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      color: #fff;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), var(--neon-pink-glow);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      animation: pulseBanner 2.2s infinite ease-in-out;
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    @keyframes pulseBanner { 0%, 100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.04); } }
 
     /* Hidden Hearts */
-    .hidden-heart { position: absolute; font-size: 1.2rem; cursor: pointer; opacity: 0.08; transition: all 0.3s ease; z-index: 10; }
-    .hidden-heart:hover { opacity: 0.8; transform: scale(1.2); text-shadow: 0 0 10px var(--accent-pink); }
-    .hidden-heart.found { opacity: 1; color: var(--accent-pink); pointer-events: none; animation: popHeart 0.5s ease; }
-    @keyframes popHeart { 0% {transform: scale(1);} 50% {transform: scale(1.5);} 100% {transform: scale(1);} }
+    .hidden-heart {
+      position: absolute;
+      font-size: 1.3rem;
+      cursor: pointer;
+      opacity: 0.12;
+      transition: all 0.3s ease;
+      z-index: 10;
+      user-select: none;
+    }
+    .hidden-heart:hover {
+      opacity: 0.9;
+      transform: scale(1.3);
+      filter: drop-shadow(0 0 12px var(--accent-pink));
+    }
+    .hidden-heart.found {
+      opacity: 1;
+      color: var(--accent-pink);
+      pointer-events: none;
+      animation: popHeart 0.6s ease forwards;
+      filter: drop-shadow(0 0 15px var(--accent-pink));
+    }
+    @keyframes popHeart {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.7); }
+      100% { transform: scale(1.1); }
+    }
 
     /* Core Layout */
-    .container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 2rem; z-index: 2; margin-top: 1rem; }
-    .card {
-      background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 15px 35px rgba(0,0,0,0.4);
-      border-radius: 24px; padding: 1.8rem; position: relative; overflow: hidden;
+    .container {
+      width: 100%;
+      max-width: 530px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      z-index: 2;
+      margin-top: 4.8rem;
     }
-    .card h2 { font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.6rem; }
-    .card-intro { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.2rem; }
 
-    /* Progress Tracker */
-    .quest-tracker { text-align: center; margin-bottom: 2rem; z-index: 2; width: 100%; max-width: 400px; }
-    .quest-tracker h3 { font-size: 0.85rem; color: var(--accent-pink); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.6rem; font-weight: 700; }
-    .progress-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-bottom: 0.6rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
-    .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple)); transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 0 12px var(--accent-pink); }
-    .quest-text { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 20px 45px rgba(0,0,0,0.65), 0 0 20px rgba(192, 132, 252, 0.04);
+      border-radius: 26px;
+      padding: 1.8rem 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease, border-color 0.3s;
+    }
+    .card:hover {
+      border-color: rgba(192, 132, 252, 0.4);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 22px 50px rgba(0,0,0,0.7), var(--neon-glow);
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      letter-spacing: 0.3px;
+    }
+    .card-intro {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      margin-bottom: 1.3rem;
+      font-weight: 300;
+    }
 
-    /* RPG Profile */
+    /* Hero Header */
+    .hero-card {
+      text-align: center;
+      padding: 2.4rem 1.8rem 2rem;
+      background: linear-gradient(180deg, rgba(38, 16, 75, 0.8) 0%, rgba(16, 9, 32, 0.8) 100%);
+      border: 1px solid rgba(244, 114, 182, 0.28);
+    }
+    .hero-crown {
+      font-size: 3.5rem;
+      margin-bottom: 0.4rem;
+      filter: drop-shadow(0 0 20px rgba(253, 224, 71, 0.65));
+      animation: crownFloat 3s ease-in-out infinite;
+      display: inline-block;
+    }
+    @keyframes crownFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .hero-title {
+      font-size: 2.15rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 15%, var(--accent-pink) 60%, var(--accent-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.5px;
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: #e9d5ff;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+    .hero-badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-pill {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--card-border);
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* 1. BIRTHDAY CAKE & CANDLE BLOWOUT */
+    .cake-card {
+      text-align: center;
+      background: linear-gradient(180deg, rgba(35, 14, 60, 0.75) 0%, rgba(16, 9, 32, 0.75) 100%);
+      border: 1px solid rgba(253, 224, 71, 0.3);
+    }
+    .candles-row {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 1.2rem;
+      height: 70px;
+      margin-bottom: 0.4rem;
+    }
+    .candle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .flame {
+      width: 14px; height: 22px;
+      background: radial-gradient(ellipse at 50% 80%, #fff 0%, #fde047 40%, #f97316 85%, transparent 100%);
+      border-radius: 50% 50% 20% 20%;
+      filter: drop-shadow(0 0 10px #fde047);
+      animation: flameFlicker 1.2s ease-in-out infinite alternate;
+      transition: all 0.4s ease;
+    }
+    .candle:nth-child(2) .flame { animation-delay: 0.3s; }
+    .candle:nth-child(3) .flame { animation-delay: 0.15s; }
+    .candle.extinguished .flame {
+      opacity: 0;
+      transform: scale(0.1) translateY(-10px);
+      filter: blur(4px);
+    }
+    .candle-stick {
+      width: 10px; height: 35px;
+      background: linear-gradient(180deg, #f472b6 0%, #c084fc 100%);
+      border-radius: 3px 3px 0 0;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.4);
+    }
+    .cake-body {
+      font-size: 4.8rem;
+      line-height: 1;
+      display: inline-block;
+      filter: drop-shadow(0 8px 25px rgba(244, 114, 182, 0.45));
+    }
+    @keyframes flameFlicker {
+      0% { transform: scale(1) rotate(-2deg); }
+      50% { transform: scale(1.1, 0.95) rotate(3deg); }
+      100% { transform: scale(0.95, 1.05) rotate(-1deg); }
+    }
+    .blow-btn {
+      margin-top: 1.2rem;
+      background: linear-gradient(135deg, #f59e0b, #ec4899);
+      border: none;
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+      transition: all 0.25s;
+    }
+    .blow-btn:hover { transform: translateY(-2px) scale(1.03); }
+    .cake-wish-reveal {
+      margin-top: 1.2rem;
+      background: rgba(0,0,0,0.5);
+      border: 1px dashed var(--accent-gold);
+      border-radius: 16px;
+      padding: 1.3rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1.55rem;
+      color: #fef08a;
+      line-height: 1.45;
+      display: none;
+      animation: paragraphFloatIn 0.8s ease forwards;
+    }
+
+    /* 2. VIP BOARDING PASS TO YOU */
+    .ticket-card {
+      background: linear-gradient(180deg, rgba(22, 12, 45, 0.8) 0%, rgba(14, 7, 28, 0.8) 100%);
+      border: 1px solid rgba(253, 224, 71, 0.35);
+      padding: 0;
+      overflow: hidden;
+    }
+    .ticket-header {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(244, 114, 182, 0.9));
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+    }
+    .ticket-header h3 {
+      font-size: 0.92rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .ticket-body {
+      padding: 1.5rem 1.4rem;
+      position: relative;
+    }
+    .ticket-route {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+    .airport-node { text-align: left; }
+    .airport-node.right { text-align: right; }
+    .airport-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .airport-city {
+      font-size: 0.78rem;
+      color: var(--accent-pink);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .ticket-flight-path {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1rem;
+    }
+    .ticket-plane { font-size: 1.4rem; animation: planeFly 4s ease-in-out infinite alternate; }
+    .ticket-details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      background: rgba(0,0,0,0.4);
+      padding: 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 1.2rem;
+    }
+    .ticket-detail-item { text-align: center; }
+    .ticket-detail-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .ticket-detail-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .ticket-perforation {
+      height: 2px;
+      background-image: linear-gradient(to right, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 0%);
+      background-position: bottom;
+      background-size: 12px 2px;
+      background-repeat: repeat-x;
+      margin: 1rem 0;
+      position: relative;
+    }
+    .ticket-perforation::before, .ticket-perforation::after {
+      content: '';
+      position: absolute;
+      top: -9px;
+      width: 18px; height: 18px;
+      background: var(--bg-dark);
+      border-radius: 50%;
+    }
+    .ticket-perforation::before { left: -23px; }
+    .ticket-perforation::after { right: -23px; }
+
+    .ticket-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .ticket-barcode {
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.75rem;
+    }
+    .ticket-stamp-btn {
+      background: transparent;
+      border: 2px solid var(--accent-gold);
+      color: var(--accent-gold);
+      padding: 0.5rem 1.2rem;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .ticket-stamp-btn.stamped {
+      background: var(--accent-gold);
+      color: #1a1002;
+      box-shadow: 0 0 20px var(--accent-gold-glow);
+      transform: rotate(-3deg) scale(1.05);
+    }
+
+    /* 3. HOLD MY HAND TOUCH PAD */
+    .hand-pad-card {
+      text-align: center;
+      background: linear-gradient(180deg, rgba(28, 14, 52, 0.75) 0%, rgba(16, 9, 32, 0.75) 100%);
+    }
+    .hand-pad-target {
+      width: 120px; height: 120px;
+      margin: 1rem auto;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(244, 114, 182, 0.25) 0%, rgba(124, 58, 237, 0.15) 70%, transparent 100%);
+      border: 2px dashed var(--accent-pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 0 25px rgba(244, 114, 182, 0.2);
+    }
+    .hand-pad-target.holding {
+      transform: scale(1.15);
+      border-style: solid;
+      background: radial-gradient(circle, rgba(244, 114, 182, 0.5) 0%, rgba(124, 58, 237, 0.4) 70%, transparent 100%);
+      box-shadow: 0 0 45px var(--accent-pink-glow);
+      animation: heartbeatPulse 1.2s infinite;
+    }
+    .hand-hold-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.15rem;
+      color: var(--accent-pink);
+      font-weight: 700;
+      min-height: 30px;
+      margin-top: 0.5rem;
+    }
+    .hand-quote {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.35rem;
+      color: #e9d5ff;
+      min-height: 40px;
+      margin-top: 0.4rem;
+      transition: opacity 0.3s;
+    }
+
+    /* 4. OUR STORY TIMELINE */
+    .timeline-wrap {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      margin-top: 1rem;
+      padding-left: 20px;
+    }
+    .timeline-wrap::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 10px; bottom: 10px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-purple), var(--accent-pink), var(--accent-gold));
+    }
+    .timeline-step {
+      position: relative;
+      margin-bottom: 1.6rem;
+      padding-left: 18px;
+    }
+    .timeline-step:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -20px; top: 3px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      border: 3px solid var(--accent-pink);
+      box-shadow: 0 0 10px var(--accent-pink);
+    }
+    .timeline-step.gold .timeline-dot {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 12px var(--accent-gold-glow);
+    }
+    .timeline-time {
+      font-size: 0.72rem;
+      color: var(--accent-pink);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .timeline-step.gold .timeline-time { color: var(--accent-gold); }
+    .timeline-title {
+      font-size: 1rem;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .timeline-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      font-weight: 300;
+    }
+
+    /* 5. 6 PROMISES ACROSS THE MILES & GOLDEN LOVE LOCK */
+    .promises-card {
+      background: linear-gradient(180deg, rgba(26, 14, 48, 0.85) 0%, rgba(15, 8, 32, 0.9) 100%);
+      border: 1px solid rgba(244, 114, 182, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .promises-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 1.2rem 0;
+    }
+    .promise-pill {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      cursor: pointer;
+      transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .promise-pill:hover {
+      background: rgba(244, 114, 182, 0.1);
+      border-color: rgba(244, 114, 182, 0.35);
+      transform: translateX(4px);
+    }
+    .promise-pill.revealed {
+      background: rgba(244, 114, 182, 0.16);
+      border-color: var(--accent-pink);
+      box-shadow: 0 4px 20px rgba(244, 114, 182, 0.25);
+    }
+    .promise-icon {
+      font-size: 1.35rem;
+      width: 36px; height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      flex-shrink: 0;
+    }
+    .promise-content {
+      flex: 1;
+    }
+    .promise-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.2rem;
+      transition: color 0.25s;
+    }
+    .promise-pill.revealed .promise-title {
+      color: #f9a8d4;
+    }
+    .promise-body {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      font-weight: 300;
+    }
+    .promise-pill.revealed .promise-body {
+      color: #f3e8ff;
+    }
+    .promise-seal {
+      font-size: 1.1rem;
+      opacity: 0.4;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .promise-pill.revealed .promise-seal {
+      opacity: 1;
+      transform: scale(1.15);
+      filter: drop-shadow(0 0 6px rgba(244, 114, 182, 0.8));
+    }
+
+    /* Golden Love Lock */
+    .love-lock-section {
+      margin-top: 1.8rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .lock-visual-wrap {
+      margin: 0.8rem 0 1.2rem 0;
+      position: relative;
+    }
+    .golden-lock {
+      width: 110px;
+      height: 120px;
+      position: relative;
+      margin: 0 auto;
+    }
+    .lock-shackle {
+      width: 58px;
+      height: 52px;
+      border: 8px solid #f6d365;
+      border-bottom: none;
+      border-radius: 28px 28px 0 0;
+      position: absolute;
+      top: 0;
+      left: 26px;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 -2px 10px rgba(246, 211, 101, 0.4);
+    }
+    .golden-lock.locked .lock-shackle {
+      transform: translateY(16px);
+    }
+    .lock-body {
+      width: 104px;
+      height: 74px;
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 50%, #d4af37 100%);
+      border-radius: 14px;
+      position: absolute;
+      bottom: 0;
+      left: 3px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.6), 0 0 20px rgba(246, 211, 101, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem;
+    }
+    .lock-initials {
+      font-family: 'Cinzel', serif;
+      font-size: 0.66rem;
+      font-weight: 800;
+      color: #3b1803;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+    .lock-keyhole {
+      font-size: 1.1rem;
+      line-height: 1;
+      filter: drop-shadow(0 1px 1px rgba(255,255,255,0.4));
+    }
+    .lock-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.54rem;
+      color: #5c2c06;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .lock-status-text {
+      font-size: 0.82rem;
+      color: #e9d5ff;
+      margin-bottom: 1rem;
+      max-width: 320px;
+      line-height: 1.45;
+    }
+    .lock-btn {
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      color: #2b1102;
+      border: none;
+      padding: 0.85rem 1.6rem;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 6px 20px rgba(246, 211, 101, 0.4);
+      transition: all 0.25s ease;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lock-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 28px rgba(246, 211, 101, 0.6);
+    }
+    .lock-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* COMPREHENSIVE PHONE OPTIMIZATIONS */
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem 0.65rem 110px 0.65rem !important;
+      }
+      .card {
+        padding: 1.25rem 1rem !important;
+        border-radius: 18px !important;
+        margin-bottom: 1.2rem !important;
+      }
+      .hero-card {
+        padding: 1.5rem 1rem !important;
+      }
+      .hero-title {
+        font-size: 2.15rem !important;
+        line-height: 1.2 !important;
+      }
+      .ticket-card {
+        padding: 1.2rem 0.85rem !important;
+      }
+      .boarding-route {
+        gap: 0.5rem !important;
+      }
+      .airport-code {
+        font-size: 1.85rem !important;
+      }
+      .airplane-icon {
+        font-size: 1.3rem !important;
+      }
+      .ticket-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.6rem !important;
+      }
+      .call-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.8rem !important;
+      }
+      .cinema-screen {
+        min-height: 220px !important;
+      }
+      .cinema-video {
+        max-height: 380px !important;
+      }
+      .music-hud {
+        padding: 0.6rem 0.9rem max(12px, env(safe-area-inset-bottom)) 0.9rem !important;
+      }
+      .music-hud-left {
+        gap: 0.6rem !important;
+      }
+      .music-hud-title {
+        max-width: 140px !important;
+      }
+      .toast {
+        width: calc(100% - 24px) !important;
+        left: 12px !important;
+        right: 12px !important;
+        max-width: 100% !important;
+      }
+      .modal-content {
+        width: 92% !important;
+        max-height: 85vh !important;
+        padding: 1.4rem 1.1rem !important;
+      }
+    }
+
+    /* Quest Tracker */
+    .quest-tracker {
+      text-align: center;
+      margin-bottom: 0.4rem;
+      z-index: 2;
+      width: 100%;
+      max-width: 530px;
+    }
+    .quest-tracker h3 {
+      font-size: 0.8rem;
+      color: var(--accent-purple);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 0 0 10px var(--accent-purple);
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 9px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+      transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      box-shadow: 0 0 15px var(--accent-pink);
+    }
+    .quest-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    /* Toast Notification */
+    #toast-container {
+      position: fixed;
+      top: 75px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+    .toast {
+      background: rgba(14, 7, 28, 0.95);
+      border-left: 4px solid var(--accent-pink);
+      border-radius: 14px;
+      padding: 1rem 1.3rem;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8), var(--neon-pink-glow);
+      backdrop-filter: blur(14px);
+      transform: translateX(120%);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      max-width: 320px;
+      pointer-events: all;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast-icon { font-size: 1.8rem; filter: drop-shadow(0 0 8px var(--accent-pink)); }
+    .toast-text h4 { color: var(--accent-pink); margin-bottom: 2px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+    .toast-text p { color: #e2e8f0; font-size: 0.8rem; font-weight: 300; line-height: 1.3; }
+
+    /* RPG Profile Card */
     .rpg-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-    .rpg-avatar { width: 65px; height: 65px; background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: 0 0 20px rgba(244,114,182,0.4); border: 2px solid #fff; }
-    .rpg-title h3 { font-size: 1.5rem; color: #fff; margin-bottom: 2px; font-weight: 700; }
-    .rpg-title p { font-size: 0.8rem; color: var(--accent-pink); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-    .stat-row { display: flex; align-items: center; margin-bottom: 0.8rem; font-size: 0.9rem; font-weight: 500; }
-    .stat-label { width: 85px; color: #cbd5e1; }
-    .stat-bar-bg { flex: 1; height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
-    .stat-bar-fill { height: 100%; width: 0%; transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
-    .rpg-ability { margin-top: 1.5rem; padding: 1.2rem; background: rgba(255,255,255,0.05); border-radius: 12px; font-style: italic; font-size: 0.95rem; text-align: center; border: 1px solid rgba(255,255,255,0.1); color: #fbcfe8; }
-
-    /* Candle */
-    .wish-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 1.4rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
-    .wish-box:hover { transform: translateY(-4px); border-color: rgba(244, 114, 182, 0.5); box-shadow: 0 12px 40px rgba(244, 114, 182, 0.2); }
-    .candle-icon { font-size: 3.5rem; transition: transform 0.2s; filter: drop-shadow(0 0 16px rgba(253, 224, 71, 0.8)); }
-
-    /* Little Things Grid */
-    .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .mini-box { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem 1.2rem; text-align: center; cursor: pointer; transition: transform 0.2s, background 0.2s; }
-    .mini-box:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
-    .mini-icon { font-size: 2.8rem; margin-bottom: 0.8rem; transition: transform 0.3s; }
-    .mini-title { font-size: 0.9rem; font-weight: 600; color: #fff; letter-spacing: 0.5px; }
-
-    /* 100 Reasons */
-    .reasons-box { text-align: center; padding: 1.8rem 1.5rem; background: rgba(0,0,0,0.3); border-radius: 16px; border: 1px solid var(--glass-border); }
-    .reason-text { font-family: 'Caveat', cursive; font-size: 1.8rem; color: #fbcfe8; min-height: 90px; display: flex; align-items: center; justify-content: center; line-height: 1.3; margin-bottom: 1.2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); transition: opacity 0.3s; }
+    .rpg-avatar {
+      width: 68px; height: 68px;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem;
+      box-shadow: 0 0 25px rgba(244,114,182,0.5);
+      border: 2px solid rgba(255,255,255,0.8);
+      position: relative;
+    }
+    .rpg-avatar::after {
+      content: '✨';
+      position: absolute;
+      top: -6px; right: -4px;
+      font-size: 1.1rem;
+    }
+    .rpg-title h3 { font-size: 1.5rem; color: #fff; margin-bottom: 3px; font-weight: 700; }
+    .rpg-title p { font-size: 0.82rem; color: var(--accent-pink); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; text-shadow: 0 0 8px rgba(244,114,182,0.4); }
     
-    /* Buttons */
-    .btn { background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple)); border: none; color: #fff; padding: 0.9rem 1.8rem; border-radius: 50px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; font-family: inherit; box-shadow: 0 6px 20px rgba(244,114,182,0.3); }
-    .btn:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(244,114,182,0.3); }
-
-    /* Letters Grid */
-    .envelope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; max-height: 320px; overflow-y: auto; padding-right: 5px; }
-    .envelope-grid::-webkit-scrollbar { width: 6px; }
-    .envelope-grid::-webkit-scrollbar-thumb { background: var(--accent-pink); border-radius: 10px; }
-    .envelope-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.2rem 0.5rem; color: #fff; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.6rem; transition: all 0.2s; text-align: center; }
-    .envelope-btn:hover { background: rgba(244,114,182,0.1); border-color: var(--accent-pink); transform: translateY(-2px); }
-    .envelope-btn span { font-size: 2rem; }
-    .envelope-btn b { font-size: 0.85rem; font-weight: 500; font-family: 'Outfit'; }
-
-    /* Inventory */
-    .inventory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-bottom: 1rem; }
-    .inv-slot { aspect-ratio: 1; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; transition: all 0.2s; position: relative; }
-    .inv-slot.empty { background: rgba(0,0,0,0.1); border-style: dashed; }
-    .inv-slot:hover:not(.empty) { background: rgba(244,114,182,0.1); border-color: rgba(244,114,182,0.5); }
-    .inv-slot.active { border-color: var(--accent-pink); transform: scale(1.08); box-shadow: 0 0 15px rgba(244,114,182,0.4); background: rgba(244,114,182,0.15); z-index: 5; }
+    .stat-row { display: flex; align-items: center; margin-bottom: 0.75rem; font-size: 0.88rem; font-weight: 500; }
+    .stat-label { width: 105px; color: #cbd5e1; display: flex; align-items: center; gap: 0.4rem; }
+    .stat-bar-bg { flex: 1; height: 11px; background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+    .stat-bar-fill { height: 100%; width: 0%; transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: inset 0 0 6px rgba(255,255,255,0.5); }
     
-    .inv-desc { background: rgba(0,0,0,0.4); padding: 1.2rem; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; min-height: 110px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.3s; border-left: 3px solid transparent; }
-    
-    .use-btn { margin-top: 0.8rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 0.5rem 1.2rem; border-radius: 8px; font-family: inherit; font-size: 0.85rem; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-    .use-btn:hover { background: var(--accent-pink); border-color: var(--accent-pink); }
-    
-    @keyframes mixFlash { 0% { background: #fff; transform: scale(1); } 50% { background: var(--accent-pink); transform: scale(1.2); } 100% { background: rgba(0,0,0,0.4); transform: scale(1); } }
-    .mixing { animation: mixFlash 0.6s ease; }
+    .rpg-ability {
+      margin-top: 1.3rem;
+      padding: 1.1rem;
+      background: rgba(0,0,0,0.35);
+      border-radius: 14px;
+      font-size: 0.92rem;
+      text-align: center;
+      border: 1px dashed var(--card-border);
+      color: #e9d5ff;
+      line-height: 1.5;
+    }
+    .rpg-charm-btn {
+      margin-top: 1rem;
+      width: 100%;
+      background: linear-gradient(135deg, rgba(192, 132, 252, 0.2), rgba(244, 114, 182, 0.2));
+      border: 1px solid var(--accent-pink);
+      color: #fff;
+      padding: 0.75rem;
+      border-radius: 50px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .rpg-charm-btn:hover {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      box-shadow: var(--neon-pink-glow);
+      transform: translateY(-2px);
+    }
 
-    /* Radio UI */
-    .radio-ui { background: rgba(0,0,0,0.3); border-radius: 16px; padding: 1.8rem 1.5rem; border: 1px solid var(--glass-border); text-align: center; }
-    .cassette-box { font-size: 4rem; margin-bottom: 1rem; display: inline-block; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); }
-    .radio-controls { display: flex; justify-content: center; align-items: center; gap: 1.2rem; margin-top: 1.2rem; }
-    .r-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); color: #fff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
-    .r-btn:hover { background: var(--accent-pink); border-color: var(--accent-pink); transform: scale(1.1); }
-    .lyrics { font-family: 'Caveat', cursive; font-size: 1.6rem; color: #fff; min-height: 80px; margin-top: 1.2rem; line-height: 1.3; }
-    .radio-progress { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 1.5rem; position: relative; overflow: hidden; }
-    .radio-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--accent-pink); box-shadow: 0 0 10px var(--accent-pink); }
+    /* Dual World Clock & Distance Tracker */
+    .world-clock-box {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(0,0,0,0.4);
+      padding: 1.4rem 1rem;
+      border-radius: 18px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 1.2rem;
+    }
+    .clock-side { text-align: center; }
+    .clock-flag { font-size: 2.2rem; margin-bottom: 0.3rem; display: inline-block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+    .clock-city { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
+    .clock-time { font-family: 'JetBrains Mono', monospace; font-size: 1.35rem; font-weight: 700; color: #fff; margin-top: 0.2rem; }
+    .clock-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0 0.4rem;
+    }
+    .plane-track {
+      width: 60px;
+      height: 2px;
+      background: rgba(255,255,255,0.15);
+      position: relative;
+    }
+    .plane-icon {
+      position: absolute;
+      top: -10px;
+      left: 0;
+      font-size: 1rem;
+      animation: planeFly 4s ease-in-out infinite alternate;
+    }
+    @keyframes planeFly { 0% { left: 0%; transform: scaleX(1); } 100% { left: 80%; transform: scaleX(1); } }
+    .clock-sync-badge {
+      font-size: 0.7rem;
+      color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .distance-quote {
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.35rem;
+      color: #e9d5ff;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+    .distance-quote:hover { color: var(--accent-pink); }
+
+    /* LATE NIGHT CALL / ONLINE DATE CARD */
+    .call-card {
+      background: linear-gradient(180deg, rgba(26, 12, 50, 0.75) 0%, rgba(16, 9, 32, 0.75) 100%);
+      border: 1px solid rgba(192, 132, 252, 0.25);
+    }
+    .call-hud-screen {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .call-avatars-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.8rem;
+      width: 100%;
+      margin-bottom: 1.2rem;
+    }
+    .call-user-avatar {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7c3aed, var(--accent-purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      border: 2px solid rgba(255,255,255,0.7);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+      position: relative;
+    }
+    .call-user-avatar.steph {
+      background: linear-gradient(135deg, var(--accent-pink), #ec4899);
+      box-shadow: 0 0 25px rgba(244, 114, 182, 0.6);
+      animation: gentlePulseAvatar 2.2s infinite ease-in-out;
+    }
+    @keyframes gentlePulseAvatar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+    .call-online-dot {
+      position: absolute;
+      bottom: 2px; right: 2px;
+      width: 12px; height: 12px;
+      background: var(--accent-green);
+      border: 2px solid #000;
+      border-radius: 50%;
+    }
+    .call-pulse-wave {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 24px;
+    }
+    .call-wave-bar {
+      width: 3px; height: 8px;
+      background: var(--accent-pink);
+      border-radius: 2px;
+      animation: callWave 1.2s infinite ease-in-out alternate;
+    }
+    .call-wave-bar:nth-child(2) { animation-delay: 0.2s; }
+    .call-wave-bar:nth-child(3) { animation-delay: 0.4s; }
+    .call-wave-bar:nth-child(4) { animation-delay: 0.1s; }
+    .call-wave-bar:nth-child(5) { animation-delay: 0.3s; }
+    @keyframes callWave { 0% { height: 6px; } 100% { height: 26px; } }
+    .call-status-tag {
+      font-size: 0.8rem;
+      color: #38bdf8;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+    .call-timer-ticker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+    .call-quote {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.25rem;
+      color: #e9d5ff;
+      text-align: center;
+    }
+    .call-kiss-btn {
+      margin-top: 1.2rem;
+      width: 100%;
+      background: linear-gradient(135deg, rgba(244, 114, 182, 0.35), rgba(192, 132, 252, 0.35));
+      border: 1px solid var(--accent-pink);
+      color: #fff;
+      padding: 0.85rem;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 0 15px rgba(244, 114, 182, 0.3);
+      transition: all 0.25s;
+    }
+    .call-kiss-btn:hover {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      box-shadow: var(--neon-pink-glow);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* CINEMA: FAVORITE VIDEOS OF YOU */
+    .cinema-screen-wrap {
+      background: #000;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.8), var(--neon-glow);
+      position: relative;
+      margin-bottom: 1.2rem;
+    }
+    .cinema-video {
+      width: 100%;
+      max-height: 480px;
+      display: block;
+      background: #000;
+      object-fit: cover;
+    }
+    .cinema-badge-overlay {
+      position: absolute;
+      top: 12px; left: 14px;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(8px);
+      padding: 0.25rem 0.65rem;
+      border-radius: 50px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: #f87171;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      z-index: 5;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .rec-dot {
+      width: 7px; height: 7px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: blinkRec 1s infinite;
+    }
+    @keyframes blinkRec { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    .cinema-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .cinema-tabs::-webkit-scrollbar { height: 3px; }
+    .cinema-tabs::-webkit-scrollbar-thumb { background: var(--accent-purple); border-radius: 10px; }
+    .cinema-tab-btn {
+      flex: 1;
+      min-width: 130px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--card-border);
+      color: #cbd5e1;
+      padding: 0.75rem 0.6rem;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+    .cinema-tab-btn.active {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: var(--neon-pink-glow);
+    }
+
+    .cinema-caption {
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: 1.35rem;
+      color: #fce7f3;
+      padding: 0.4rem 0 0.8rem;
+      min-height: 50px;
+      line-height: 1.4;
+    }
+
+    .cinema-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+    .cinema-heart-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--accent-pink);
+      color: #fff;
+      padding: 0.55rem 1.2rem;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .cinema-heart-btn:hover {
+      background: var(--accent-pink);
+      box-shadow: var(--neon-pink-glow);
+      transform: scale(1.05);
+    }
+
+    /* Teaser screen for Film 03 (Coming Soon) */
+    .cinema-locked-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      background: radial-gradient(circle, rgba(35, 15, 65, 0.9) 0%, rgba(10, 5, 20, 0.95) 100%);
+      border-radius: 20px;
+      border: 1px dashed var(--accent-pink);
+      margin-bottom: 1.2rem;
+    }
+
+    /* Love Stopwatch & Infinity Timer */
+    .love-timer-card {
+      text-align: center;
+      background: linear-gradient(180deg, rgba(26, 12, 50, 0.75) 0%, rgba(16, 9, 32, 0.75) 100%);
+    }
+    .infinity-symbol {
+      font-size: 4.8rem;
+      font-weight: 300;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 25px rgba(192,132,252,0.55));
+      margin: 0.2rem 0;
+      line-height: 1;
+    }
+    .timer-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* 0 Photos Album: Future Polaroids */
+    .polaroid-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .polaroid-card {
+      background: #ffffff;
+      padding: 0.6rem 0.6rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      transform: rotate(var(--rot, 0deg));
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      position: relative;
+    }
+    .polaroid-card:nth-child(1) { --rot: -2deg; }
+    .polaroid-card:nth-child(2) { --rot: 2.5deg; }
+    .polaroid-card:nth-child(3) { --rot: 1.5deg; }
+    .polaroid-card:nth-child(4) { --rot: -2.5deg; }
+    .polaroid-card:nth-child(5) { --rot: -1.2deg; }
+    .polaroid-card:nth-child(6) { --rot: 2deg; }
+    .polaroid-card:hover {
+      transform: scale(1.06) rotate(0deg);
+      z-index: 5;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(244,114,182,0.4);
+    }
+    .polaroid-tape {
+      position: absolute;
+      top: -10px; left: 50%;
+      transform: translateX(-50%);
+      width: 45px; height: 16px;
+      background: rgba(244, 114, 182, 0.45);
+      border-radius: 2px;
+      backdrop-filter: blur(2px);
+    }
+    .polaroid-photo {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #181228;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 2.2rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .polaroid-label {
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem;
+      color: #1e1b4b;
+      text-align: center;
+      margin-top: 0.6rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .polaroid-desc-box {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.45rem;
+      color: var(--accent-pink);
+      min-height: 35px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    /* "Reasons Why I Love You" Love Jar */
+    .love-jar-card { text-align: center; }
+    .jar-visual {
+      font-size: 4.8rem;
+      margin: 0.5rem 0;
+      cursor: pointer;
+      display: inline-block;
+      filter: drop-shadow(0 0 20px rgba(253, 224, 71, 0.4));
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .jar-visual:hover { transform: scale(1.15) rotate(5deg); }
+    .jar-scroll-box {
+      background: rgba(0,0,0,0.45);
+      border: 1px dashed var(--card-border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      margin-top: 1rem;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .jar-scroll-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.45rem;
+      color: #fef08a;
+      line-height: 1.4;
+      transition: opacity 0.3s;
+    }
+    .jar-draw-btn {
+      margin-top: 1rem;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      border: none;
+      color: #fff;
+      padding: 0.75rem 1.8rem;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--neon-pink-glow);
+      transition: all 0.2s;
+    }
+    .jar-draw-btn:hover { transform: translateY(-2px); }
+
+    /* Bucket List */
+    .bucket-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .bucket-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.85rem 1.1rem;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .bucket-item:hover {
+      background: rgba(192,132,252,0.12);
+      border-color: rgba(192,132,252,0.35);
+      transform: translateX(6px);
+    }
+    .bucket-icon { font-size: 1.25rem; filter: drop-shadow(0 0 6px rgba(255,255,255,0.3)); }
+    .bucket-item.completed {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    /* Core Chat Messages */
+    .chat-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      padding: 1rem 0;
+      cursor: pointer;
+      min-height: 250px;
+      justify-content: flex-end;
+    }
+    .msg-bubble {
+      max-width: 78%;
+      padding: 0.85rem 1.25rem;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      line-height: 1.45;
+    }
+    .msg-bubble.show { opacity: 1; transform: translateY(0); }
+    .msg-her {
+      background: rgba(255,255,255,0.09);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #f1f5f9;
+    }
+    .msg-you {
+      background: linear-gradient(135deg, #7c3aed, var(--accent-purple));
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      box-shadow: var(--neon-glow);
+      color: #fff;
+    }
+    .chat-prompt {
+      text-align: center;
+      color: var(--accent-purple);
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 0.8rem;
+      animation: pulseText 2s infinite;
+      font-weight: 600;
+    }
+    @keyframes pulseText { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+    /* Same Sky */
+    .sky-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 3rem 1.5rem;
+      background: linear-gradient(to bottom, #0b0722, #261f52, #181438);
+      border-radius: 18px;
+      margin-top: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--card-border);
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+    }
+    .sky-half { display: flex; flex-direction: column; align-items: center; width: 45%; position: relative; z-index: 2; }
+    .sky-label { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #cbd5e1; margin-bottom: 2rem; font-weight: 600; }
+    .sky-star { font-size: 1.5rem; filter: drop-shadow(0 0 15px #fff); animation: twinkle 3s infinite; }
+    .sky-text {
+      position: absolute;
+      bottom: 14px;
+      width: 100%;
+      text-align: center;
+      color: var(--accent-pink);
+      font-size: 1.15rem;
+      opacity: 0;
+      transition: opacity 0.5s;
+      z-index: 2;
+      font-family: 'Caveat', cursive;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+    }
+    .sky-container:hover .sky-text { opacity: 1; }
+    @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); filter: drop-shadow(0 0 10px #fff); } }
+
+    /* Future Home */
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-top: 0.8rem;
+      background: rgba(0,0,0,0.4);
+      padding: 2rem 1.2rem;
+      border-radius: 18px;
+      border: 1px dashed rgba(192,132,252,0.3);
+    }
+    .home-item {
+      font-size: 2.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.1));
+    }
+    .home-item:hover { transform: scale(1.3); filter: drop-shadow(0 0 20px var(--accent-purple)); }
+    .home-text { text-align: center; margin-top: 1.4rem; color: #e9d5ff; font-size: 1.25rem; min-height: 25px; font-family: 'Caveat', cursive; letter-spacing: 0.5px; }
+
+    /* Virtual Hug Card */
+    .hug-launch-card {
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      padding: 2.5rem 1.8rem;
+    }
+    .hug-launch-card:hover {
+      border-color: var(--accent-pink);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7), var(--neon-pink-glow);
+    }
+    .hug-icon-large {
+      font-size: 4rem;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+      filter: drop-shadow(0 0 20px rgba(244,114,182,0.55));
+      animation: heartbeatPulse 2.5s infinite;
+    }
+    @keyframes heartbeatPulse {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.15); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.18); }
+      70% { transform: scale(1); }
+    }
+
+    /* Envelope Grid ("Open When...") */
+    .envelope-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+      max-height: 340px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .envelope-grid::-webkit-scrollbar { width: 4px; }
+    .envelope-grid::-webkit-scrollbar-thumb { background: var(--accent-purple); border-radius: 10px; }
+    .envelope-btn {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 1.2rem 0.6rem;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.25s;
+      text-align: center;
+      position: relative;
+    }
+    .envelope-btn:hover {
+      background: rgba(192,132,252,0.15);
+      border-color: var(--accent-purple);
+      transform: translateY(-3px);
+      box-shadow: var(--neon-glow);
+    }
+    .envelope-btn span { font-size: 2.2rem; filter: drop-shadow(0 0 6px rgba(255,255,255,0.25)); }
+    .envelope-btn b { font-size: 0.85rem; font-weight: 600; font-family: 'Outfit'; letter-spacing: 0.3px; }
+
+    /* Inventory (Attache Case) */
+    .inventory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 1.3rem; }
+    .inv-slot {
+      aspect-ratio: 1;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+    }
+    .inv-slot.empty { background: rgba(0,0,0,0.2); border-style: dashed; }
+    .inv-slot:hover:not(.empty) { background: rgba(192,132,252,0.15); border-color: var(--accent-purple); box-shadow: var(--neon-glow); }
+    .inv-slot.active {
+      border-color: var(--accent-pink);
+      transform: scale(1.08);
+      box-shadow: var(--neon-pink-glow);
+      background: rgba(244,114,182,0.18);
+      z-index: 5;
+    }
+    .inv-desc {
+      background: rgba(0,0,0,0.45);
+      padding: 1.4rem;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #e2e8f0;
+      min-height: 120px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.25s;
+      border-left: 4px solid transparent;
+      border-right: 1px solid var(--card-border);
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .use-btn {
+      margin-top: 0.9rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      padding: 0.6rem 1.5rem;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .use-btn:hover { background: var(--accent-purple); border-color: var(--accent-purple); box-shadow: var(--neon-glow); }
+    @keyframes mixFlash { 0% { background: #fff; transform: scale(1); } 50% { background: var(--accent-purple); transform: scale(1.2); box-shadow: 0 0 30px var(--accent-purple); } 100% { background: rgba(0,0,0,0.5); transform: scale(1); } }
+    .mixing { animation: mixFlash 0.8s ease; }
 
     /* Vault */
-    .vault-input { width: 100%; padding: 1.2rem; border-radius: 12px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); color: #fff; text-align: center; font-size: 1.1rem; letter-spacing: 3px; margin-bottom: 1.2rem; outline: none; transition: border 0.3s; font-weight: 600; }
-    .vault-input:focus { border-color: var(--accent-purple); box-shadow: 0 0 15px rgba(192,132,252,0.3); }
-
-    /* Mystery Gift */
-    .gift-container { text-align: center; padding: 2.5rem 2rem; cursor: pointer; }
-    .gift-icon { font-size: 5.5rem; transition: transform 0.2s; filter: drop-shadow(0 0 25px rgba(244,114,182,0.5)); animation: gentleShake 3s infinite; }
-    @keyframes gentleShake { 0%, 100% {transform: rotate(0deg);} 5% {transform: rotate(6deg);} 10% {transform: rotate(-6deg);} 15% {transform: rotate(0deg);} }
-    .gift-choices { display: none; flex-direction: column; gap: 1rem; }
-
-    /* Lock Screen Overlay */
-    .lock-screen {
-      position: fixed; inset: 0; z-index: 20000;
-      background: radial-gradient(circle at 50% 0%, rgba(32,18,77,0.98) 0%, rgba(5,3,10,0.98) 65%, rgba(0,0,0,0.98) 100%);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      transition: opacity 1.5s ease;
+    .vault-input {
+      width: 100%;
+      padding: 1.2rem;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      text-align: center;
+      font-size: 1.3rem;
+      letter-spacing: 5px;
+      margin-bottom: 1rem;
+      outline: none;
+      transition: all 0.3s;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
     }
-    .lock-screen.hidden { opacity: 0; pointer-events: none; }
-    .lock-content { text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center; }
-    .lock-icon { font-size: 4.5rem; margin-bottom: 1.5rem; animation: gentleShake 4s infinite; filter: drop-shadow(0 0 20px rgba(244,114,182,0.5)); }
-    .lock-title { font-family: 'Caveat', cursive; font-size: 2.8rem; color: #fbcfe8; margin-bottom: 0.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-    .lock-countdown { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 600; color: #fff; margin-bottom: 2.5rem; letter-spacing: 2px; background: rgba(255,255,255,0.05); padding: 0.8rem 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); }
-    
-    .lock-music {
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
-      padding: 0.8rem 1.8rem; border-radius: 50px; display: flex; align-items: center; gap: 1.8rem;
-      backdrop-filter: blur(10px);
+    .vault-input:focus { border-color: var(--accent-purple); box-shadow: var(--neon-glow); background: rgba(192,132,252,0.06); }
+    .vault-hint-text {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      cursor: pointer;
     }
-    .lock-btn { background: none; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; transition: transform 0.2s, color 0.2s; display: flex; align-items: center; justify-content: center; }
-    .lock-btn:hover { transform: scale(1.15); color: var(--accent-pink); }
+    .vault-hint-text:hover { color: var(--accent-pink); }
 
-    /* Cinematic Overlays */
-    .cinematic-overlay {
-      position: fixed; inset: 0; background: #000; z-index: 10000;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 1.5s ease;
-      padding: 2.5rem; text-align: center;
+    /* General Buttons */
+    .btn {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      border: none;
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      box-shadow: var(--neon-pink-glow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    .cinematic-overlay.active { opacity: 1; pointer-events: all; }
+    .btn:active { transform: scale(0.97); }
 
-    .cine-slide {
-      color: #fff; font-size: 1.35rem; font-weight: 300; letter-spacing: 1px;
-      line-height: 1.7; max-width: 440px; opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    /* Midnight Radio UI */
+    .radio-ui {
+      background: rgba(0,0,0,0.45);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--card-border);
+      text-align: center;
     }
-    .cine-slide.visible { opacity: 1; transform: translateY(0); }
-
-    .cine-final-btn {
-      margin-top: 2.5rem; background: transparent;
-      border: 1px solid rgba(255,255,255,0.35); color: #fff;
-      padding: 1rem 2.5rem; border-radius: 50px; font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase;
-      cursor: pointer; opacity: 0; pointer-events: none;
-      transform: translateY(15px);
-      transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+    .cassette-box {
+      font-size: 4.8rem;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+      filter: drop-shadow(0 5px 20px rgba(0,0,0,0.8));
+      transition: transform 0.5s;
     }
-    .cine-final-btn.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
-    .cine-final-btn:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
-
-    .gn-heart {
-      font-size: 5rem; opacity: 0; transform: scale(0.6);
-      filter: drop-shadow(0 0 25px var(--accent-pink));
-      transition: opacity 1.5s ease, transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    .cassette-box.playing { animation: gentleShake 2.5s infinite ease-in-out; filter: drop-shadow(0 0 25px rgba(192,132,252,0.6)); }
+    @keyframes gentleShake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(2.5deg); } 75% { transform: rotate(-2.5deg); } }
+    .radio-controls { display: flex; justify-content: center; align-items: center; gap: 1.4rem; margin-top: 1.5rem; }
+    .r-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-size: 1.15rem;
     }
-    .gn-heart.visible { opacity: 1; transform: scale(1); animation: heartbeat 2.5s infinite ease-in-out; }
-    @keyframes heartbeat { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(244, 114, 182, 0.6)); } 50% { transform: scale(1.15); filter: drop-shadow(0 0 45px rgba(244, 114, 182, 0.9)); } }
+    .r-btn:hover { background: var(--accent-purple); border-color: var(--accent-purple); transform: scale(1.1); box-shadow: var(--neon-glow); }
+    .lyrics {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.85rem;
+      color: #e9d5ff;
+      min-height: 80px;
+      margin-top: 1.5rem;
+      line-height: 1.35;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .radio-progress { width: 100%; height: 7px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 1.8rem; position: relative; overflow: hidden; }
+    .radio-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); box-shadow: 0 0 15px var(--accent-pink); }
 
-    /* Letter Modal */
-    .letter-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; padding: 1rem; }
+    /* Overlays: Letter Modal */
+    .letter-modal {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(14px);
+      z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s;
+      padding: 1.2rem;
+    }
     .letter-modal.active { opacity: 1; pointer-events: all; }
-    .envelope-scene { position: relative; width: 100%; max-width: 460px; max-height: 85vh; display: flex; flex-direction: column; align-items: center; }
-    
-    /* Parchment Paper & Text Animations */
-    .actual-paper { background: #fffdf8; width: 100%; border-radius: 20px; padding: 2.4rem 2rem; font-family: 'Caveat', cursive; font-size: 1.65rem; color: #2b1e16; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transform: translateY(40px); opacity: 0; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); overflow-y: auto; max-height: 72vh; line-height: 1.45; border: 1px solid #f3e8d7; }
-    .actual-paper p { 
-      margin-bottom: 1.2rem; opacity: 0; transform: translateY(14px); filter: blur(2px);
+    .envelope-scene {
+      position: relative;
+      width: 100%; max-width: 490px;
+      max-height: 85vh;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .actual-paper {
+      background: #181228;
+      width: 100%;
+      border-radius: 22px;
+      padding: 2.5rem 2.2rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1.65rem;
+      color: #f5e8ff;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9), inset 0 0 25px rgba(192,132,252,0.08);
+      transform: translateY(40px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      overflow-y: auto;
+      max-height: 72vh;
+      line-height: 1.5;
+      border: 1px solid var(--card-border);
+    }
+    .actual-paper p {
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      transform: translateY(14px);
+      filter: blur(2px);
       animation: paragraphFloatIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
     .actual-paper p:last-child { margin-bottom: 0; }
     .letter-modal.active .actual-paper { transform: translateY(0); opacity: 1; }
-
-    .actual-paper p:nth-child(1) { animation-delay: 0.15s; }
-    .actual-paper p:nth-child(2) { animation-delay: 0.35s; }
-    .actual-paper p:nth-child(3) { animation-delay: 0.55s; }
-    .actual-paper p:nth-child(4) { animation-delay: 0.75s; }
-    .actual-paper p:nth-child(5) { animation-delay: 0.95s; }
-
     @keyframes paragraphFloatIn { to { opacity: 1; transform: translateY(0); filter: blur(0); } }
-
-    .close-paper { margin-top: 1.2rem; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 0.85rem 2.4rem; border-radius: 50px; cursor: pointer; font-family: 'Outfit'; font-size: 0.95rem; font-weight: 600; opacity: 0; transition: all 0.3s; }
-    .close-paper:hover { background: rgba(255,255,255,0.28); transform: translateY(-1px); }
+    .close-paper {
+      margin-top: 1.4rem;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Outfit';
+      font-size: 0.92rem;
+      font-weight: 600;
+      opacity: 0;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .close-paper:hover { background: rgba(192,132,252,0.2); transform: translateY(-2px); box-shadow: var(--neon-glow); border-color: var(--accent-purple); }
     .letter-modal.active .close-paper { opacity: 1; }
 
-    /* Hug Overlay */
-    .hug-overlay { position: fixed; inset: 0; background: rgba(244,114,182,0.95); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 1s; }
+    /* LDR Hug Overlay */
+    .hug-overlay {
+      position: fixed; inset: 0;
+      background: rgba(8, 3, 17, 0.96);
+      backdrop-filter: blur(18px);
+      z-index: 10000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.8s;
+      padding: 1.5rem;
+    }
     .hug-overlay.active { opacity: 1; pointer-events: all; }
-    .hug-emoji { font-size: 7rem; animation: pulse 1.5s infinite; filter: drop-shadow(0 0 30px rgba(255,255,255,0.6)); }
-    @keyframes pulse { 0%, 100% {transform: scale(1);} 50% {transform: scale(1.15);} }
-    .hug-text { color: #fff; font-size: 1.8rem; font-weight: 700; margin-top: 1.5rem; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .hug-status-box {
+      width: 100%; max-width: 400px;
+      background: rgba(0,0,0,0.6);
+      padding: 2.2rem 2rem;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.7), var(--neon-glow);
+    }
+    .hug-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      color: #94a3b8;
+      margin-bottom: 1.3rem;
+      line-height: 1.5;
+    }
+    .hug-bar-container {
+      width: 100%; height: 10px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 0.6rem;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+    }
+    .hug-load-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+      transition: width 2.8s cubic-bezier(0.25, 1, 0.5, 1);
+      box-shadow: 0 0 15px var(--accent-pink);
+    }
+    .hug-delivered {
+      opacity: 0;
+      transition: opacity 0.8s;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .close-hug-btn {
+      margin-top: 1.5rem;
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: #cbd5e1;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .close-hug-btn:hover { color: #fff; border-color: var(--accent-pink); }
+
+    /* Cinematic Overlays */
+    .cinematic-overlay {
+      position: fixed; inset: 0;
+      background: var(--bg-dark);
+      z-index: 10500;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 1.5s ease;
+      padding: 2.5rem; text-align: center;
+    }
+    .cinematic-overlay.active { opacity: 1; pointer-events: all; }
+    .cine-slide {
+      color: #fff;
+      font-size: 1.45rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      line-height: 1.7;
+      max-width: 460px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      font-family: 'Outfit', sans-serif;
+    }
+    .cine-slide.visible { opacity: 1; transform: translateY(0); }
+    .cine-final-btn {
+      margin-top: 3rem;
+      background: transparent;
+      border: 1px solid var(--accent-purple);
+      color: var(--accent-purple);
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      opacity: 0; pointer-events: none;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    .cine-final-btn.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .cine-final-btn:hover { background: rgba(192,132,252,0.2); box-shadow: var(--neon-glow); color: #fff; }
+
+    /* Footer Notes */
+    .footer-note {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2rem;
+      z-index: 2;
+      line-height: 1.6;
+    }
+    .footer-note span { color: var(--accent-pink); }
   </style>
 </head>
 <body>
 
-  <!-- Direct src properly applied to background audio tag to prevent iOS blocks -->
-  <audio id="bgMusic" preload="auto" playsinline src="media.mp3"></audio>
+  <!-- Background Space Canvas -->
+  <canvas id="spaceCanvas"></canvas>
 
-  <!-- Lock Screen Overlay -->
-  <div class="lock-screen" id="lockScreen">
-    <div class="lock-content">
-      <div class="lock-icon">🔒</div>
-      <div class="lock-title">you need to wait princess</div>
-      <div class="lock-countdown" id="lockCountdown">Loading...</div>
-      
-      <div class="lock-music">
-        <button class="lock-btn" id="lockPlayBtn" onclick="toggleLockMusic()">▶</button>
-        <button class="lock-btn" onclick="skipLockMusic()">⏭</button>
+  <!-- Audio Element -->
+  <audio id="bgMusic" preload="auto">
+    <source src="media.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Top Floating HUD Music Bar -->
+  <div class="top-hud">
+    <div class="hud-track-info">
+      <span class="hud-cassette-icon" id="hudCassette">📼</span>
+      <div class="hud-text-box">
+        <div class="hud-title" id="hudTrackTitle">Tape 01: TV Girl</div>
+        <div class="hud-subtitle" id="hudSubtitle">Happy Birthday Steph ✨</div>
       </div>
+      <div class="hud-visualizer" id="hudVisualizer">
+        <div class="viz-bar"></div>
+        <div class="viz-bar"></div>
+        <div class="viz-bar"></div>
+        <div class="viz-bar"></div>
+      </div>
+    </div>
+    <div class="hud-controls">
+      <button class="hud-btn" onclick="changeTape(-1)" title="Previous Tape">⏮</button>
+      <button class="hud-btn play-btn" id="hudPlayBtn" onclick="toggleMusicBtn()" title="Play / Pause">▶</button>
+      <button class="hud-btn" onclick="changeTape(1)" title="Next Tape">⏭</button>
+      <button class="hud-btn" id="sfxToggleBtn" onclick="toggleSFX()" title="Toggle Sound Effects">🔔</button>
     </div>
   </div>
 
-  <!-- Floating Audio Button -->
-  <button id="musicToggleBtn" class="music-toggle" onclick="toggleMusicBtn()" title="Play / Pause Music">🔇</button>
-
-  <!-- Hidden Hearts scattered -->
-  <span class="hidden-heart" style="top: 2%; left: 5%;" onclick="findHeart(this)">🤍</span>
-  <span class="hidden-heart" style="top: 15%; right: 8%;" onclick="findHeart(this)">🤍</span>
-  <span class="hidden-heart" style="top: 35%; left: 12%;" onclick="findHeart(this)">🤍</span>
-  <span class="hidden-heart" style="top: 55%; right: 5%;" onclick="findHeart(this)">🤍</span>
-  <span class="hidden-heart" style="bottom: 25%; left: 8%;" onclick="findHeart(this)">🤍</span>
-  <span class="hidden-heart" style="bottom: 10%; right: 15%;" onclick="findHeart(this)">🤍</span>
-  <span class="hidden-heart" style="top: 75%; left: 50%;" onclick="findHeart(this)">🤍</span>
-  <span class="hidden-heart" style="top: 45%; right: 45%;" onclick="findHeart(this)">🤍</span>
-
-  <div id="stars-container"></div>
-  <div id="toast-container"></div>
-
-  <!-- Quest Tracker -->
-  <div class="quest-tracker">
-    <h3>Princess Mission</h3>
-    <div class="progress-bar-bg"><div class="progress-bar-fill" id="questFill"></div></div>
-    <p class="quest-text" id="questText">0/7 DISCOVERED</p>
+  <!-- Autoplay Prompt Banner (If Audio blocked initially) -->
+  <div class="start-prompt" id="startPrompt" onclick="startAudioExperience()">
+    <span>🎵</span> Tap to start our music & magic
   </div>
 
+  <!-- Hidden Hearts System -->
+  <span class="hidden-heart" style="top: 2%; left: 6%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 14%; right: 7%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 28%; left: 10%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 45%; right: 8%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 60%; left: 6%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="top: 75%; right: 12%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="bottom: 12%; left: 15%;" onclick="findHeart(this)">🤍</span>
+  <span class="hidden-heart" style="bottom: 4%; right: 8%;" onclick="findHeart(this)">🤍</span>
+
+  <!-- Toast Notification Hub -->
+  <div id="toast-container"></div>
+
+  <!-- Main Content Container -->
   <div class="container">
 
-    <!-- RPG Profile -->
+    <!-- Hero Card -->
+    <div class="card hero-card">
+      <div class="hero-crown">👑</div>
+      <h1 class="hero-title">Happy Birthday, Steph</h1>
+      <p class="hero-sub">"Dating online for now... in each other's arms soon." ✨🤍</p>
+      <div class="hero-badge-row">
+        <span class="hero-pill"><span>🎂</span> September 24</span>
+        <span class="hero-pill"><span>💻</span> Online Soulmates</span>
+        <span class="hero-pill"><span>✈️</span> 🇷🇴 Romania ➔ 🇸🇦 Saudi Arabia</span>
+        <span class="hero-pill"><span>🔒</span> Level: ∞ Princess</span>
+      </div>
+    </div>
+
+    <!-- 1. INTERACTIVE BIRTHDAY CAKE -->
+    <div class="card cake-card">
+      <h2><span>🎂</span> Make A Birthday Wish</h2>
+      <p class="card-intro">Close your eyes, make the sweetest wish in your heart, then tap to blow out the candles.</p>
+
+      <div class="candles-row" id="candlesRow">
+        <div class="candle"><div class="flame"></div><div class="candle-stick"></div></div>
+        <div class="candle"><div class="flame"></div><div class="candle-stick"></div></div>
+        <div class="candle"><div class="flame"></div><div class="candle-stick"></div></div>
+      </div>
+
+      <div class="cake-body">🎂</div>
+
+      <button class="blow-btn" id="blowBtn" onclick="blowCandles()">
+        <span>🕯️</span> Make A Wish & Blow Out
+      </button>
+
+      <div class="cake-wish-reveal" id="cakeWishReveal">
+        "My wish already came true the day you walked into my life. May every dream in your precious heart come true this year, my angel. Happy Birthday! 🎂✨"
+      </div>
+    </div>
+
+    <!-- Princess Mission Tracker -->
+    <div class="quest-tracker">
+      <h3>Princess Mission</h3>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="questFill"></div></div>
+      <p class="quest-text" id="questText">0/8 SECRETS DISCOVERED</p>
+    </div>
+
+    <!-- RPG Character Profile -->
     <div class="card">
       <div class="rpg-header">
         <div class="rpg-avatar">👑</div>
         <div class="rpg-title">
           <h3>Steph</h3>
-          <p>Level: ∞ • Class: Princess</p>
+          <p>Class: Online Princess & Safe Space</p>
         </div>
       </div>
       <div class="stat-row">
-        <div class="stat-label">Love</div>
-        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: #f472b6;" id="statLove"></div></div>
+        <div class="stat-label"><span>💖</span> Love</div>
+        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: var(--accent-pink);" id="statLove"></div></div>
       </div>
       <div class="stat-row">
-        <div class="stat-label">Cuteness</div>
-        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: #c084fc;" id="statCute"></div></div>
+        <div class="stat-label"><span>✨</span> Cuteness</div>
+        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: var(--accent-purple);" id="statCute"></div></div>
       </div>
       <div class="stat-row">
-        <div class="stat-label">Kindness</div>
-        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: #38bdf8;" id="statKind"></div></div>
+        <div class="stat-label"><span>🤍</span> Kindness</div>
+        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: var(--accent-blue);" id="statKind"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label"><span>🕊️</span> Angelic Vibe</div>
+        <div class="stat-bar-bg"><div class="stat-bar-fill" style="background: var(--accent-gold);" id="statAngel"></div></div>
       </div>
       <div class="rpg-ability">
-        Special Ability: "Makes my entire world better just by existing."
+        <b>Ultimate Passive:</b> "Makes my entire world feel safe, warm, and complete from thousands of miles away."
+      </div>
+      <button class="rpg-charm-btn" onclick="castPrincessCharm()">
+        <span>✨</span> Cast Princess Charm
+      </button>
+    </div>
+
+    <!-- LATE NIGHT CALL / ONLINE DATE NIGHT CARD -->
+    <div class="card call-card">
+      <h2><span>🎧</span> Our Late Night Calls</h2>
+      <p class="card-intro">Where time doesn't exist and falling asleep together is home.</p>
+
+      <div class="call-hud-screen">
+        <div class="call-status-tag">
+          <span style="font-size:0.65rem; color:var(--accent-green);">●</span> CONNECTED ACROSS SCREENS
+        </div>
+        
+        <div class="call-avatars-row">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+            <div class="call-user-avatar">
+              <span>👑</span>
+              <div class="call-online-dot"></div>
+            </div>
+            <span style="font-size:0.75rem; color:#cbd5e1; font-weight:600; letter-spacing:0.5px;">Me 🇷🇴</span>
+          </div>
+          
+          <div class="call-pulse-wave">
+            <div class="call-wave-bar"></div>
+            <div class="call-wave-bar"></div>
+            <div class="call-wave-bar"></div>
+            <div class="call-wave-bar"></div>
+            <div class="call-wave-bar"></div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+            <div class="call-user-avatar steph">
+              <span>🌸</span>
+              <div class="call-online-dot"></div>
+            </div>
+            <span style="font-size:0.75rem; color:var(--accent-pink); font-weight:600; letter-spacing:0.5px;">You 🇸🇦</span>
+          </div>
+        </div>
+
+        <div class="call-timer-ticker" id="callTicker">04:22:15</div>
+        <div class="call-quote">"Falling asleep to your soft breathing in my headphones is my peace." 🌙</div>
+      </div>
+
+      <button class="call-kiss-btn" onclick="sendKiss()">
+        <span>💋</span> Kiss
+      </button>
+    </div>
+
+    <!-- 2. VIP BOARDING PASS TO YOU -->
+    <div class="card ticket-card">
+      <div class="ticket-header">
+        <h3><span>✈️</span> Direct Flight To Your Arms</h3>
+        <span style="font-family:'JetBrains Mono'; font-size:0.75rem; letter-spacing:1px;">FLIGHT ST-0508</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-route">
+          <div class="airport-node">
+            <div class="airport-code">OTP</div>
+            <div class="airport-city">Bucharest 🇷🇴</div>
+          </div>
+          <div class="ticket-flight-path">
+            <span class="ticket-plane">✈️</span>
+            <span style="font-size:0.65rem; color:#cbd5e1; font-family:'JetBrains Mono'; margin-top:2px;">DIRECT NON-STOP</span>
+          </div>
+          <div class="airport-node right">
+            <div class="airport-code">SAU</div>
+            <div class="airport-city">Saudi Arabia 🇸🇦</div>
+          </div>
+        </div>
+
+        <div class="ticket-details-grid">
+          <div class="ticket-detail-item">
+            <div class="ticket-detail-label">Passenger</div>
+            <div class="ticket-detail-val" style="color:var(--accent-pink);">Steph 👑</div>
+          </div>
+          <div class="ticket-detail-item">
+            <div class="ticket-detail-label">Seat</div>
+            <div class="ticket-detail-val">1A (Next to Me)</div>
+          </div>
+          <div class="ticket-detail-item">
+            <div class="ticket-detail-label">Class</div>
+            <div class="ticket-detail-val" style="color:var(--accent-gold);">Soulmate 1st</div>
+          </div>
+          <div class="ticket-detail-item">
+            <div class="ticket-detail-label">Departure</div>
+            <div class="ticket-detail-val">Soonest Day</div>
+          </div>
+          <div class="ticket-detail-item">
+            <div class="ticket-detail-label">Gate</div>
+            <div class="ticket-detail-val">0508</div>
+          </div>
+          <div class="ticket-detail-item">
+            <div class="ticket-detail-label">Baggage</div>
+            <div class="ticket-detail-val">Infinite Love</div>
+          </div>
+        </div>
+
+        <div class="ticket-perforation"></div>
+
+        <div class="ticket-footer-row">
+          <div class="ticket-barcode">||| | ||||| || |||| ||| |||</div>
+          <button class="ticket-stamp-btn" id="ticketStampBtn" onclick="stampTicket()">
+            Tap to Validate Stamp
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Candle & Wish -->
-    <div class="card" style="text-align: center;">
-      <h2><span>🎂</span> Birthday Wish</h2>
-      <p class="card-intro">Tap the candle to make a wish.</p>
-      <div class="wish-box" id="wishBox" onclick="makeWish()">
-        <div class="candle-icon" id="candleEmoji">🕯️</div>
-      </div>
-    </div>
-
-    <!-- Interactive Little Things -->
-    <div class="mini-grid">
-      <div class="mini-box" onclick="growFlower(this)">
-        <div class="mini-icon" id="flowerIcon">🌱</div>
-        <div class="mini-title">Water Me</div>
-      </div>
-      <div class="mini-box" onclick="giveVirtualHug()">
-        <div class="mini-icon">🫂</div>
-        <div class="mini-title">Need a Hug?</div>
-      </div>
-    </div>
-
-    <!-- 100 Reasons -->
+    <!-- Dual World Clock & Distance Tracker -->
     <div class="card">
-      <h2><span>💕</span> Why You're My Angel</h2>
-      <div class="reasons-box">
-        <div class="reason-text" id="reasonText">"I love the way you..."</div>
-        <button class="btn" onclick="nextReason()">Give me a reason ❤️</button>
+      <h2><span>🗺️</span> Two Countries, One Sky</h2>
+      <p class="card-intro">Live synchronized world time between our bedrooms.</p>
+      
+      <div class="world-clock-box">
+        <div class="clock-side">
+          <span class="clock-flag">🇷🇴</span>
+          <div class="clock-city">Romania (Me)</div>
+          <div class="clock-time" id="clockRo">--:--:--</div>
+        </div>
+        
+        <div class="clock-divider">
+          <span class="clock-sync-badge">Synchronized</span>
+          <div class="plane-track"><span class="plane-icon">✈️</span></div>
+          <span style="font-size:0.68rem; color:#cbd5e1; font-family:'JetBrains Mono';">≈ 3,300 km</span>
+        </div>
+
+        <div class="clock-side">
+          <span class="clock-flag">🇸🇦</span>
+          <div class="clock-city">Saudi Arabia (You)</div>
+          <div class="clock-time" id="clockSa">--:--:--</div>
+        </div>
+      </div>
+
+      <div class="distance-quote" onclick="revealMapDetails()">
+        "Same exact hour on the clock. Zero distance between our hearts." 🤍
       </div>
     </div>
 
-    <!-- Letters -->
+    <!-- 3. HOLD MY HAND TOUCH PAD -->
+    <div class="card hand-pad-card">
+      <h2><span>🤝</span> Hold My Hand</h2>
+      <p class="card-intro">Press and hold your finger on the heart to hold my hand across the distance.</p>
+
+      <div class="hand-pad-target" id="handPadTarget">
+        <span>🤍</span>
+      </div>
+
+      <div class="hand-hold-status" id="handHoldStatus">
+        Tap and hold above...
+      </div>
+      <div class="hand-quote" id="handQuote">
+        "One day this will be my actual hand in yours."
+      </div>
+    </div>
+
+    <!-- CINEMA: FAVORITE VIDEOS OF YOU -->
     <div class="card">
-      <h2><span>💌</span> "Open When..."</h2>
-      <p class="card-intro">Select a letter for exactly how you feel right now.</p>
+      <h2><span>🎬</span> Favorite Videos of You</h2>
+      <p class="card-intro">A private vault of my favorite videos of you... hopefully so many more soon. 🤍</p>
+
+      <div class="cinema-tabs">
+        <button class="cinema-tab-btn active" id="tabVid1" onclick="switchVideo(1)">
+          <span>✨</span> Film 01: Angelic
+        </button>
+        <button class="cinema-tab-btn" id="tabVid2" onclick="switchVideo(2)">
+          <span>🤍</span> Film 02: I Love You
+        </button>
+        <button class="cinema-tab-btn" id="tabVid3" onclick="switchVideo(3)">
+          <span>✈️</span> Film 03: Coming Soon...
+        </button>
+      </div>
+
+      <!-- Main Video Screen -->
+      <div class="cinema-screen-wrap" id="cinemaScreenWrap">
+        <div class="cinema-badge-overlay">
+          <div class="rec-dot"></div> REC • LOOPING ON REPEAT
+        </div>
+        <video id="cinemaPlayer" class="cinema-video" playsinline webkit-playsinline controls preload="metadata" loop>
+          <source src="Videos/ANGELIC.mov" type="video/quicktime" />
+          <source src="Videos/ANGELIC.mov" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Teaser Screen for Film 03 -->
+      <div class="cinema-locked-screen" id="cinemaLockedScreen">
+        <div style="font-size: 3.8rem; margin-bottom: 0.6rem; filter: drop-shadow(0 0 20px var(--accent-pink));">✈️</div>
+        <h3 style="color:#fff; font-size: 1.3rem; margin-bottom: 0.5rem; letter-spacing: 0.5px;">Film 03: The First Video We Take Together</h3>
+        <p style="color: var(--accent-pink); font-family: 'Dancing Script', cursive; font-size: 1.45rem; max-width: 380px; line-height: 1.35; margin-bottom: 1rem;">
+          "Reserved for the video we film the second we see each other at airport arrivals."
+        </p>
+        <span style="font-size: 0.78rem; background: rgba(255,255,255,0.06); padding: 0.4rem 1rem; border-radius: 50px; border: 1px solid var(--card-border); color: #cbd5e1;">
+          🔒 Status: Locked until our first in-person hug
+        </span>
+      </div>
+
+      <div class="cinema-caption" id="cinemaCaption">
+        "One of my favorite videos of you. You look so effortlessly angelic, my heart skips a beat every time." ✨
+      </div>
+
+      <div class="cinema-actions-row">
+        <button class="cinema-heart-btn" onclick="reactToVideo()">
+          <span>💖</span> Send Love Hearts
+        </button>
+      </div>
+    </div>
+
+    <!-- 4. OUR STORY TIMELINE -->
+    <div class="card">
+      <h2><span>⏳</span> Our Story Journey</h2>
+      <p class="card-intro">From two strangers across the world to souls bound forever.</p>
+
+      <div class="timeline-wrap">
+        <div class="timeline-step">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">Chapter 01</div>
+          <div class="timeline-title">The First Message 💬</div>
+          <div class="timeline-desc">A simple notification that turned out to be the beginning of my entire universe.</div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">Chapter 02</div>
+          <div class="timeline-title">Our First Late-Night Call 🎧</div>
+          <div class="timeline-desc">Talking for hours until 4 AM without noticing the time slip away, feeling like we had known each other forever.</div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">Chapter 03</div>
+          <div class="timeline-title">The Moment I Knew 🤍</div>
+          <div class="timeline-desc">When hearing your voice became my peace, and loving you became as effortless as breathing.</div>
+        </div>
+
+        <div class="timeline-step gold">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">Today • September 24</div>
+          <div class="timeline-title">Your Birthday 🎂👑</div>
+          <div class="timeline-desc">Celebrating the sweetest, most breathtaking soul on earth. The girl who owns all of my love.</div>
+        </div>
+
+        <div class="timeline-step gold">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">The Next Chapter</div>
+          <div class="timeline-title">Airport Terminal Gate ✈️🫂</div>
+          <div class="timeline-desc">The moment the doors slide open, the screen disappears, and I finally wrap my real arms around you forever.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 6 PROMISES ACROSS THE MILES & GOLDEN LOVE LOCK -->
+    <div class="card promises-card">
+      <h2><span>💍</span> 6 Promises Across The Miles</h2>
+      <p class="card-intro">No matter how many kilometers stand between us, these six vows are carved in stone for you, Steph.</p>
+
+      <div class="promises-grid">
+        <div class="promise-pill" onclick="revealPromise(this, 0)">
+          <div class="promise-icon">✨</div>
+          <div class="promise-content">
+            <div class="promise-title">1. My Love Will Never Fade</div>
+            <div class="promise-body">3,500 km is just geography, my love for you only deepens with every sunrise and every quiet call.</div>
+          </div>
+          <div class="promise-seal">🤍</div>
+        </div>
+
+        <div class="promise-pill" onclick="revealPromise(this, 1)">
+          <div class="promise-icon">🌙</div>
+          <div class="promise-content">
+            <div class="promise-title">2. Always One Call Away</div>
+            <div class="promise-body">Day or night, good mood or tough day, if you ever need a listening ear or warm comfort, I am always here.</div>
+          </div>
+          <div class="promise-seal">🤍</div>
+        </div>
+
+        <div class="promise-pill" onclick="revealPromise(this, 2)">
+          <div class="promise-icon">✈️</div>
+          <div class="promise-content">
+            <div class="promise-title">3. That Airport Hug Will Be Real</div>
+            <div class="promise-body">The countdown is ticking, and when the arrivals doors open, I will wrap my arms around you so tight that time stops.</div>
+          </div>
+          <div class="promise-seal">🤍</div>
+        </div>
+
+        <div class="promise-pill" onclick="revealPromise(this, 3)">
+          <div class="promise-icon">🛡️</div>
+          <div class="promise-content">
+            <div class="promise-title">4. You Will Never Be Alone</div>
+            <div class="promise-body">Whenever the world feels loud or the miles feel heavy, my heart is right beside yours, protecting your peace.</div>
+          </div>
+          <div class="promise-seal">🤍</div>
+        </div>
+
+        <div class="promise-pill" onclick="revealPromise(this, 4)">
+          <div class="promise-icon">👑</div>
+          <div class="promise-content">
+            <div class="promise-title">5. You Are My Only One</div>
+            <div class="promise-body">In a world of billions of people, you are the only one I want, the only one I choose, and my true queen.</div>
+          </div>
+          <div class="promise-seal">🤍</div>
+        </div>
+
+        <div class="promise-pill" onclick="revealPromise(this, 5)">
+          <div class="promise-icon">💍</div>
+          <div class="promise-content">
+            <div class="promise-title">6. Bound Forever</div>
+            <div class="promise-body">This is not a temporary story, Steph, it is the beautiful foundation of the life we are going to build together.</div>
+          </div>
+          <div class="promise-seal">🤍</div>
+        </div>
+      </div>
+
+      <!-- GOLDEN LOVE LOCK (Pont des Arts Style) -->
+      <div class="love-lock-section">
+        <div class="lock-visual-wrap">
+          <div class="golden-lock" id="goldenLock">
+            <div class="lock-shackle" id="lockShackle"></div>
+            <div class="lock-body">
+              <div class="lock-initials">KIYO 🤍 STEPH</div>
+              <div class="lock-keyhole">🔒</div>
+              <div class="lock-date">ST-0508 • FOREVER</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lock-status-text" id="lockStatusText">
+          Tap the button below to turn the key and seal our love across the miles forever.
+        </div>
+
+        <button class="lock-btn" id="lockBtn" onclick="toggleLoveLock()">
+          <span>🔐</span> Turn Golden Key & Lock Our Hearts
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Love Stopwatch & Infinity Timer -->
+    <div class="card love-timer-card">
+      <h2><span>🕰️</span> Until Our First In-Person Hug</h2>
+      <p class="card-intro">We have never met face-to-face yet... but every second brings us closer.</p>
+
+      <div class="infinity-symbol">∞</div>
+      <p style="font-size: 1.25rem; font-family: 'Dancing Script', cursive; color: var(--accent-pink); margin-bottom: 0.8rem;">
+        days left until I finally wrap my arms around you in real life.
+      </p>
+
+      <div class="timer-subtitle">
+        We don't know the exact flight date yet,<br>
+        but that just means our first hug will be the sweetest moment of our lives.
+      </div>
+    </div>
+
+    <!-- 0 Photos Album: Future Polaroids -->
+    <div class="card">
+      <h2><span>📸</span> 0 In-Person Photos... For Now</h2>
+      <p class="card-intro">Every photo I have of you right now is on my phone screen. But these are the real polaroids waiting for us when we finally meet f2f.</p>
+      
+      <div class="polaroid-grid">
+        <div class="polaroid-card" onclick="openPolaroid(0)">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-photo"><span>✈️</span></div>
+          <div class="polaroid-label">Airport Arrival</div>
+        </div>
+        <div class="polaroid-card" onclick="openPolaroid(1)">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-photo"><span>🫂</span></div>
+          <div class="polaroid-label">First Real Hug</div>
+        </div>
+        <div class="polaroid-card" onclick="openPolaroid(2)">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-photo"><span>☕</span></div>
+          <div class="polaroid-label">First Coffee Date</div>
+        </div>
+        <div class="polaroid-card" onclick="openPolaroid(3)">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-photo"><span>🌃</span></div>
+          <div class="polaroid-label">Midnight Car Drive</div>
+        </div>
+        <div class="polaroid-card" onclick="openPolaroid(4)">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-photo"><span>🏙️</span></div>
+          <div class="polaroid-label">Walking Together</div>
+        </div>
+        <div class="polaroid-card" onclick="openPolaroid(5)">
+          <div class="polaroid-tape"></div>
+          <div class="polaroid-photo"><span>📸</span></div>
+          <div class="polaroid-label">First Real Selfie</div>
+        </div>
+      </div>
+
+      <div class="polaroid-desc-box" id="polaroidDesc">
+        "Tap any polaroid to see what we'll do on that day."
+      </div>
+    </div>
+
+    <!-- "Reasons Why I Love You" Love Jar -->
+    <div class="card love-jar-card">
+      <h2><span>🍯</span> "Why I Love You" Jar</h2>
+      <p class="card-intro">Pull an origami note from the jar whenever you need a reminder.</p>
+
+      <div class="jar-visual" onclick="drawLoveNote()">🫙</div>
+
+      <div class="jar-scroll-box">
+        <p class="jar-scroll-text" id="jarScrollText">
+          "Tap the jar or the button below to draw a reason..."
+        </p>
+      </div>
+
+      <button class="jar-draw-btn" onclick="drawLoveNote()">
+        <span>⭐</span> Draw A Sweet Note
+      </button>
+    </div>
+
+    <!-- First Meeting Bucket List -->
+    <div class="card">
+      <h2><span>🌱</span> Our First Meeting Bucket List</h2>
+      <p class="card-intro">The things we will do the very first time we see each other.</p>
+      
+      <div class="bucket-list">
+        <div class="bucket-item" onclick="toggleBucket(this)"><span class="bucket-icon">🔒</span> Seeing you walk through airport arrivals without a camera delay</div>
+        <div class="bucket-item" onclick="toggleBucket(this)"><span class="bucket-icon">🔒</span> Our first real-life hug (holding on for at least 10 minutes)</div>
+        <div class="bucket-item" onclick="toggleBucket(this)"><span class="bucket-icon">🔒</span> Hearing your laugh in the same room without headphones</div>
+        <div class="bucket-item" onclick="toggleBucket(this)"><span class="bucket-icon">🔒</span> Late night car drive with your hand resting in mine</div>
+        <div class="bucket-item" onclick="toggleBucket(this)"><span class="bucket-icon">🔒</span> Cooking dinner while bumping shoulders in the kitchen</div>
+        <div class="bucket-item" onclick="toggleBucket(this)"><span class="bucket-icon">🔒</span> First "Goodnight" in person where I can actually kiss your forehead</div>
+        <div class="bucket-item" style="color: var(--accent-purple); justify-content: center; font-style: italic; font-weight: 500; border: none; background: transparent; padding-top: 0.5rem;">
+          To be continued through every year of our lives... ✨
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated Core Memory Chat -->
+    <div class="card">
+      <h2><span>💬</span> Our Late Night Messages</h2>
+      <p class="card-intro">Replaying a core text memory from across our screens.</p>
+      
+      <div class="chat-box" id="animatedChat" onclick="playChat()">
+        <p class="chat-prompt" id="chatPrompt">Tap to replay this memory</p>
+        <div class="msg-bubble msg-her">I love you 🥺</div>
+        <div class="msg-you msg-bubble">love you more</div>
+        <div class="msg-bubble msg-her">no I love you more</div>
+        <div class="msg-you msg-bubble">impossible</div>
+        <div class="msg-bubble msg-her">WATCH ME</div>
+      </div>
+    </div>
+
+    <!-- Same Sky -->
+    <div class="card">
+      <h2><span>🌌</span> Same Sky</h2>
+      <div class="sky-container" onclick="pulseSky()">
+        <div class="sky-half">
+          <div class="sky-label">🇷🇴 My Sky</div>
+          <div class="sky-star" style="margin-top: 10px; margin-left: -20px;">✦</div>
+          <div class="sky-star" style="margin-top: 25px; margin-left: 30px; font-size: 1rem; opacity: 0.6;">✦</div>
+        </div>
+        <div style="font-size: 2.2rem; color: rgba(255,255,255,0.9); z-index: 2; margin-top: 16px; filter: drop-shadow(0 0 15px rgba(255,255,255,0.8));">☾</div>
+        <div class="sky-half">
+          <div class="sky-label">Your Sky 🇸🇦</div>
+          <div class="sky-star" style="margin-top: 18px; margin-right: -25px; font-size: 1.2rem;">✦</div>
+          <div class="sky-star" style="margin-top: 15px; margin-left: -20px; opacity: 0.5;">✦</div>
+        </div>
+        <div class="sky-text">"We are looking at different pieces of the very same sky."</div>
+      </div>
+    </div>
+
+    <!-- Future Home -->
+    <div class="card">
+      <h2><span>🏠</span> Our Future Home</h2>
+      <p class="card-intro">Tap around the home we will build when distance is just a memory.</p>
+      <div class="home-grid">
+        <div class="home-item" onclick="homeClick('Our dual gaming setups side-by-side 🎮')">🎮</div>
+        <div class="home-item" onclick="homeClick('Warm coffee on quiet mornings together ☕')">☕</div>
+        <div class="home-item" onclick="homeClick('The couch we will finally cuddle on 🛋️')">🛋️</div>
+        <div class="home-item" onclick="homeClick('Looking out the window watching the rain 🪟')">🪟</div>
+        <div class="home-item" onclick="homeClick('Our playlists humming in the living room 🎵')">🎵</div>
+        <div class="home-item" onclick="homeClick('Safe, warm, and together in person at last 🧸')">🧸</div>
+      </div>
+      <div class="home-text" id="homeText">Tap an icon to explore...</div>
+    </div>
+
+    <!-- Virtual Hug Box -->
+    <div class="card hug-launch-card" onclick="giveVirtualHug()">
+      <div class="hug-icon-large">🫂</div>
+      <h2 style="justify-content: center; margin-bottom: 0.4rem;">Send High-Priority Virtual Hug</h2>
+      <p style="color: var(--accent-pink); font-size: 0.9rem; font-weight: 500;">Tap to transmit 100% genuine warmth across the Wi-Fi</p>
+    </div>
+
+    <!-- Letters "Open When..." -->
+    <div class="card">
+      <h2><span>💌</span> "Open When..." Letters</h2>
+      <p class="card-intro">Handcrafted letters for whenever you need me right now.</p>
       <div class="envelope-grid">
         <button class="envelope-btn" onclick="openLetter('birthday')"><span>🎂</span><b>Your Birthday</b></button>
         <button class="envelope-btn" onclick="openLetter('doubt')"><span>🥺</span><b>Feel Scared</b></button>
@@ -363,16 +2616,17 @@
         <button class="envelope-btn" onclick="openLetter('hug')"><span>🤍</span><b>Need a Hug</b></button>
         <button class="envelope-btn" onclick="openLetter('angry')"><span>😤</span><b>You're Angry</b></button>
         <button class="envelope-btn" onclick="openLetter('nosleep')"><span>🦉</span><b>Wide Awake</b></button>
-        <button class="envelope-btn" onclick="openLetter('unloved')"><span>🌧️</span><b>Feel Unloved</b></button>
+        <button class="envelope-btn" onclick="openLetter('unloved')"><span>🌧️</span><b>Feel Down</b></button>
         <button class="envelope-btn" onclick="openLetter('smile')"><span>🌻</span><b>Need a Smile</b></button>
         <button class="envelope-btn" onclick="openLetter('motivation')"><span>✨</span><b>Motivation</b></button>
       </div>
     </div>
 
-    <!-- RE Inventory System -->
+    <!-- Inventory (Attache Case) -->
     <div class="card">
       <h2><span>🎒</span> Attache Case</h2>
-      <p class="card-intro">Tap an item to inspect it. Tap two items to combine.</p>
+      <p class="card-intro">Tap an item to inspect. Tap two compatible items to combine.</p>
+      
       <div class="inventory-grid" id="invGrid">
         <div class="inv-slot" data-id="herb" onclick="selectItem(this)">🌿</div>
         <div class="inv-slot" data-id="spray" onclick="selectItem(this)">🧴</div>
@@ -383,216 +2637,438 @@
         <div class="inv-slot empty" id="slot7" data-id="empty" onclick="selectItem(this)"></div>
         <div class="inv-slot empty" id="slot8" data-id="empty" onclick="selectItem(this)"></div>
       </div>
+      
       <div class="inv-desc" id="invDesc">Select an item from your case to view its status...</div>
     </div>
 
-    <!-- Vault -->
+    <!-- Secret Vault -->
     <div class="card">
       <h2><span>🔐</span> Secret Vault</h2>
-      <p class="card-intro">Find the secret 4-digit passcode.</p>
-      <input type="password" id="vaultInput" class="vault-input" placeholder="Enter 4-digit code...">
-      <button class="btn" style="width: 100%; padding: 1.2rem;" onclick="unlockVault()">Unlock Vault</button>
+      <p class="card-intro">Enter our 4-digit secret passcode.</p>
+      <input type="password" id="vaultInput" class="vault-input" maxlength="4" placeholder="••••" />
+      <div class="vault-hint-text" onclick="showVaultHint()">💡 Need a hint? (Our date)</div>
+      <button class="btn" style="width: 100%; padding: 1.1rem;" onclick="unlockVault()">Unlock Vault</button>
     </div>
 
-    <!-- Radio -->
+    <!-- Midnight Radio Card -->
     <div class="card">
       <h2><span>📻</span> Midnight Radio</h2>
       <div class="radio-ui">
         <div class="cassette-box" id="cassette">📼</div>
-        <div style="font-size: 0.85rem; color: var(--accent-pink); letter-spacing: 1px; text-transform: uppercase; font-weight: 700;" id="tapeTitle">Tape 01: TV Girl</div>
+        <div style="font-size: 0.88rem; color: var(--accent-purple); letter-spacing: 2px; text-transform: uppercase; font-weight: 700;" id="tapeTitle">
+          Tape 01: TV Girl
+        </div>
         <div class="radio-progress"><div class="radio-fill" id="radioFill"></div></div>
         <div class="radio-controls">
-          <button class="r-btn" onclick="changeTape(-1)">◀</button>
-          <button class="r-btn" onclick="playRadioToggle()" style="width:55px;height:55px;font-size:1.4rem;">▶</button>
-          <button class="r-btn" onclick="changeTape(1)">▶</button>
+          <button class="r-btn" onclick="changeTape(-1)">⏮</button>
+          <button class="r-btn" onclick="playRadioToggle()" style="width:62px; height:62px; font-size:1.6rem; background: var(--accent-purple); border-color: var(--accent-purple); box-shadow: var(--neon-glow);" id="radioCenterPlayBtn">▶</button>
+          <button class="r-btn" onclick="changeTape(1)">⏭</button>
         </div>
-        <div class="lyrics" id="radioLyrics">...</div>
+        <div class="lyrics" id="radioLyrics">
+          "I want to run my fingers through your hair..." 🎵
+        </div>
       </div>
     </div>
 
-    <!-- Mystery Gift -->
+    <!-- Mystery Gift Box -->
     <div class="card" id="giftCard">
-      <h2><span>🎁</span> Mystery Box</h2>
+      <h2><span>🎁</span> Princess Birthday Gift</h2>
       <div id="giftSection">
-        <div class="gift-container" onclick="openGift()">
-          <div class="gift-icon" id="giftIcon">🎁</div>
-          <p style="margin-top: 1rem; color: var(--accent-pink); font-weight: 600; letter-spacing: 1px;">YOUR GIFT IS WAITING...</p>
+        <div class="gift-container" onclick="openGift()" style="text-align: center; padding: 2rem 1rem; cursor: pointer;">
+          <div style="font-size: 5rem; filter: drop-shadow(0 0 25px rgba(244,114,182,0.5)); animation: gentleShake 3s infinite;" id="giftIcon">🎁</div>
+          <p style="margin-top: 1.2rem; color: var(--accent-purple); font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">
+            TAP TO UNWRAP YOUR GIFT...
+          </p>
         </div>
-        <div class="gift-choices" id="giftChoices">
-          <button class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); margin-bottom: 0.5rem;" onclick="claimGift('letter')">💌 Claim: Secret Letter</button>
-          <button class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);" onclick="claimGift('hug')">🎟️ Claim: Hug Voucher</button>
+        <div class="gift-choices" id="giftChoices" style="display: none; flex-direction: column; gap: 0.8rem;">
+          <button class="btn" style="background: rgba(0,0,0,0.35); border: 1px solid var(--card-border); box-shadow: none;" onclick="claimGift('letter')">
+            💌 Claim: Sealed Love Note
+          </button>
+          <button class="btn" style="background: rgba(0,0,0,0.35); border: 1px solid var(--card-border); box-shadow: none;" onclick="claimGift('hug')">
+            🎟️ Claim: VIP First-Hug Voucher
+          </button>
         </div>
       </div>
+    </div>
+
+    <!-- Skip to Magic Button -->
+    <div style="text-align: center; margin-top: 0.5rem;">
+      <button class="btn" style="background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); box-shadow: none; font-size: 0.8rem;" onclick="startTrueEnding()">
+        ✨ Skip to Our First Meeting Ending ✨
+      </button>
+    </div>
+
+    <div class="footer-note">
+      Crafted with infinite love for <span>Steph</span> on her Birthday.<br>
+      Dating online for now, but forever yours in every reality. 🤍
     </div>
 
   </div>
 
   <!-- Letter Modal -->
-  <div class="letter-modal" id="letterModal">
+  <div class="letter-modal" id="letterModal" onclick="checkCloseLetter(event)">
     <div class="envelope-scene">
       <div class="actual-paper" id="paperContent"></div>
-      <button class="close-paper" onclick="closeLetter()">Fold and keep safe 🤍</button>
+      <button class="close-paper" onclick="closeLetter()">Fold and keep safe in my heart 🤍</button>
     </div>
   </div>
 
-  <!-- Virtual Hug Overlay -->
-  <div class="hug-overlay" id="hugOverlay" onclick="this.classList.remove('active')">
-    <div class="hug-emoji">🫂</div>
-    <div class="hug-text">HUG DELIVERED</div>
-    <div style="color: rgba(255,255,255,0.9); font-size: 1rem; margin-top: 15px; font-weight: 300;">Duration: ∞ (Tap anywhere to close)</div>
+  <!-- LDR Virtual Hug Overlay -->
+  <div class="hug-overlay" id="hugOverlay" onclick="closeHug(event)">
+    <div class="hug-status-box" id="hugStatusBox">
+      <p style="color: var(--accent-pink); font-weight: 700; letter-spacing: 2px; margin-bottom: 1.5rem; text-align: center; font-size: 1.25rem;">
+        🫂 SATELLITE HUG TRANSMISSION
+      </p>
+      
+      <p class="hug-line">Distance detected:<br><span style="color: #cbd5e1; letter-spacing: 2px;">██████████████ (3,300 km)</span></p>
+      <p class="hug-line">Physical hug:<br><span style="color: #38bdf8; font-weight: 700;">BUFFERING UNTIL AIRPORT ARRIVALS ✈️</span></p>
+      <p class="hug-line">Virtual hug beam:<br><span id="hugLoadText" style="color: var(--accent-pink); font-weight: 700;">TRANSMITTING VIA WI-FI...</span></p>
+      
+      <div class="hug-bar-container">
+        <div class="hug-load-bar" id="hugLoadBar"></div>
+      </div>
+      
+      <div class="hug-delivered" id="hugDelivered">
+        <div style="font-size: 5rem; animation: popHeart 1.5s infinite; filter: drop-shadow(0 0 30px rgba(244,114,182,0.85));">🤍</div>
+        <p style="font-size: 1.45rem; font-weight: 700; color: #fff; margin-top: 1rem; letter-spacing: 2px;">HUG DELIVERED SAFELY</p>
+        <p style="color: #e9d5ff; margin-top: 0.8rem; font-family: 'Dancing Script', cursive; font-size: 1.6rem;">"Until the day I wrap my real arms around you."</p>
+        <button class="close-hug-btn" onclick="document.getElementById('hugOverlay').classList.remove('active')">Hold on to this feeling ✨</button>
+      </div>
+    </div>
   </div>
 
-  <!-- Cinematic Overlays -->
+  <!-- Cinematic Overlays (Ending) -->
   <div class="cinematic-overlay" id="cineOverlay">
+    <div style="margin-bottom: 2.5rem; color: var(--accent-pink); font-size: 1rem; letter-spacing: 4px; font-weight: 700;">
+      ✈️ FROM ONLINE TO REAL LIFE
+    </div>
     <div class="cine-slide" id="cineSlide">...</div>
-    <button class="cine-final-btn" id="ctBtn" onclick="launchGoodnight()">[ Begin Goodnight ]</button>
+    <button class="cine-final-btn" id="ctBtn" onclick="launchGoodnight()">[ Step into that day → ]</button>
   </div>
 
-  <div class="cinematic-overlay" id="gnOverlay" style="background: radial-gradient(circle, #0a0515 0%, #000 100%); z-index:11000;">
+  <div class="cinematic-overlay" id="gnOverlay" style="background: radial-gradient(circle, #140828 0%, #000 100%); z-index:11000;">
     <div class="cine-slide" id="gnSlide">...</div>
-    <div class="gn-heart" id="gnHeart">🤍</div>
+    <div style="font-size: 6.5rem; opacity: 0; transform: scale(0.6); filter: drop-shadow(0 0 35px var(--accent-pink)); transition: all 1.5s ease;" id="gnHeart">🤍</div>
   </div>
 
   <script>
-    // --- AMBIENT STARS ---
-    const starsContainer = document.getElementById('stars-container');
-    for (let i = 0; i < 40; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = `${Math.random() * 100}vw`;
-      star.style.top = `${Math.random() * 100}vh`;
-      star.style.width = `${Math.random() * 2 + 1}px`;
-      star.style.height = star.style.width;
-      star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-      starsContainer.appendChild(star);
+    // ==========================================
+    // 1. HIGH-PERFORMANCE CANVAS BACKGROUND
+    // ==========================================
+    const canvas = document.getElementById('spaceCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let stars = [];
+    let shootingStars = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initStars();
     }
 
-    // --- LOCK SCREEN COUNTDOWN LOGIC ---
-    // Unlocks exactly at 00:00 September 25, 2026 GMT+3
-    const targetDate = new Date('2026-09-25T00:00:00+03:00').getTime();
-    
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-
-      if (distance <= 0) {
-        document.getElementById('lockScreen').classList.add('hidden');
-        return; // Site is unlocked
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById('lockCountdown').innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-
-    // --- BULLETPROOF AUDIO SYSTEM ---
-    const bgAudio = document.getElementById('bgMusic');
-    const musicBtn = document.getElementById('musicToggleBtn');
-    const lockPlayBtn = document.getElementById('lockPlayBtn');
-    let isPlaying = false;
-    let audioUnlocked = false;
-
-    let tapes = [
-      { title: "Tape 01: TV Girl", lyrics: '"I want to run my fingers through your hair..." 🎵', file: 'media.mp3' },
-      { title: "Tape 02: Cigarettes After Sex", lyrics: '"It\'s so sweet, knowing that you love me..." 🤍', file: 'media2.mp3' },
-      { title: "Tape 03: Aware", lyrics: '"Every second with you feels like our own universe..." ✨', file: 'media3.mp3' },
-      { title: "Tape 04: Resident Evil (Safe Room)", lyrics: '[ Safe Room Active: You are completely protected here. ] 🌿🤍', file: 'media4.mp3' }
-    ];
-    let currentTape = 0;
-
-    function syncRadioUI(playing) {
-      const fill = document.getElementById('radioFill');
-      const cass = document.getElementById('cassette');
-      if (playing) {
-        cass.classList.add('playing');
-        fill.style.transition = 'width 10s linear';
-        fill.style.width = '100%';
-        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
-        
-        musicBtn.innerText = '🎵';
-        musicBtn.classList.add('playing');
-        if (lockPlayBtn) lockPlayBtn.innerText = '⏸';
-      } else {
-        cass.classList.remove('playing');
-        fill.style.transition = 'none';
-        fill.style.width = '0%';
-        document.getElementById('radioLyrics').innerText = '...';
-        
-        musicBtn.innerText = '🔇';
-        musicBtn.classList.remove('playing');
-        if (lockPlayBtn) lockPlayBtn.innerText = '▶';
+    function initStars() {
+      stars = [];
+      const count = Math.floor((width * height) / 3800);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 1.5 + 0.5,
+          color: Math.random() > 0.4 ? '#ffffff' : (Math.random() > 0.5 ? '#f472b6' : '#c084fc'),
+          alpha: Math.random() * 0.8 + 0.2,
+          speed: Math.random() * 0.02 + 0.005
+        });
       }
     }
 
-    function loadAndPlayTape(index) {
-      currentTape = index;
-      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
+    function spawnShootingStar() {
+      if (Math.random() < 0.015 && shootingStars.length < 2) {
+        shootingStars.push({
+          x: Math.random() * width * 0.8,
+          y: Math.random() * (height * 0.4),
+          len: Math.random() * 80 + 50,
+          speed: Math.random() * 7 + 9,
+          size: Math.random() * 1.5 + 1,
+          angle: (Math.PI / 4) + (Math.random() * 0.2 - 0.1),
+          alpha: 1
+        });
+      }
+    }
 
-      if (!bgAudio.src.endsWith(tapes[currentTape].file.replace('./', ''))) {
-          bgAudio.src = tapes[currentTape].file;
-          bgAudio.load();
+    function animateSpace() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Stars
+      for (let s of stars) {
+        s.alpha += s.speed;
+        if (s.alpha > 1 || s.alpha < 0.2) s.speed = -s.speed;
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = Math.max(0.1, Math.min(1, s.alpha));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fill();
       }
 
-      bgAudio.play().then(() => {
-        isPlaying = true;
-        syncRadioUI(true);
-        if(!quests.tape && currentTape === 2) { 
-           quests.tape = true;
-           unlockAchievement('Radio Operator', 'You listened to our tapes.');
+      // Shooting stars
+      spawnShootingStar();
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        let ss = shootingStars[i];
+        ctx.save();
+        ctx.globalAlpha = ss.alpha;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = ss.size;
+        ctx.beginPath();
+        ctx.moveTo(ss.x, ss.y);
+        ctx.lineTo(ss.x - Math.cos(ss.angle) * ss.len, ss.y - Math.sin(ss.angle) * ss.len);
+        ctx.stroke();
+        ctx.restore();
+
+        ss.x += Math.cos(ss.angle) * ss.speed;
+        ss.y += Math.sin(ss.angle) * ss.speed;
+        ss.alpha -= 0.02;
+
+        if (ss.alpha <= 0 || ss.x > width || ss.y > height) {
+          shootingStars.splice(i, 1);
         }
-      }).catch(err => {
-        console.warn("Audio waiting for user gesture:", err);
-        isPlaying = false;
-        syncRadioUI(false);
+      }
+
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(animateSpace);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    requestAnimationFrame(animateSpace);
+
+    // ==========================================
+    // 2. TAP SPARKS ENGINE
+    // ==========================================
+    const sparkSymbols = ['✨', '🤍', '💖', '🌸', '✦', '⭐'];
+    window.addEventListener('pointerdown', (e) => {
+      if (e.target.tagName === 'VIDEO') return;
+
+      const spark = document.createElement('div');
+      spark.className = 'tap-spark';
+      spark.innerText = sparkSymbols[Math.floor(Math.random() * sparkSymbols.length)];
+      spark.style.left = `${e.clientX}px`;
+      spark.style.top = `${e.clientY}px`;
+      const dx = (Math.random() - 0.5) * 60;
+      const dy = (Math.random() - 0.5) * 40;
+      const rot = (Math.random() - 0.5) * 60;
+      spark.style.setProperty('--dx', `${dx}px`);
+      spark.style.setProperty('--dy', `${dy}px`);
+      spark.style.setProperty('--rot', `${rot}deg`);
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 1100);
+    });
+
+    // ==========================================
+    // 3. PURE WEB AUDIO SYNTHESIZER
+    // ==========================================
+    let audioCtx = null;
+    let sfxEnabled = true;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function toggleSFX() {
+      sfxEnabled = !sfxEnabled;
+      const btn = document.getElementById('sfxToggleBtn');
+      btn.innerText = sfxEnabled ? '🔔' : '🔕';
+      if (sfxEnabled) playChime(587.33, 'sine', 0.2, 0.1);
+    }
+
+    function playChime(freq, type = 'sine', duration = 0.3, vol = 0.12) {
+      if (!sfxEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(vol, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (err) {}
+    }
+
+    function sfxHeartCollect() {
+      if (!sfxEnabled) return;
+      playChime(659.25, 'sine', 0.25, 0.15);
+      setTimeout(() => playChime(880, 'sine', 0.35, 0.15), 90);
+    }
+
+    function sfxVaultUnlock() {
+      if (!sfxEnabled) return;
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, idx) => {
+        setTimeout(() => playChime(freq, 'sine', 0.4, 0.18), idx * 120);
       });
     }
 
+    function sfxHeartbeat() {
+      if (!sfxEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const playBeat = (time) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(75, time);
+          osc.frequency.exponentialRampToValueAtTime(45, time + 0.12);
+          gain.gain.setValueAtTime(0.25, time);
+          gain.gain.exponentialRampToValueAtTime(0.001, time + 0.15);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(time);
+          osc.stop(time + 0.15);
+        };
+        playBeat(ctx.currentTime);
+        playBeat(ctx.currentTime + 0.18);
+      } catch (err) {}
+    }
+
+    // ==========================================
+    // 4. MUSIC & SOUNDTRACK SYSTEM
+    // ==========================================
+    const bgAudio = document.getElementById('bgMusic');
+    const hudPlayBtn = document.getElementById('hudPlayBtn');
+    const radioCenterPlayBtn = document.getElementById('radioCenterPlayBtn');
+    const hudCassette = document.getElementById('hudCassette');
+    const cassette = document.getElementById('cassette');
+    const startPrompt = document.getElementById('startPrompt');
+
+    let isPlaying = false;
+    let tapes = [
+      { title: "Tape 01: TV Girl", lyrics: '"I want to run my fingers through your hair..." 🎵', file: 'media.mp3' },
+      { title: "Tape 02: Our Space", lyrics: '"As long as you need me I am here." 🤍', file: 'media2.mp3' },
+      { title: "Tape 03: Fairytale", lyrics: '"I feel like I am in a fairytale rn." ✨', file: 'media3.mp3' },
+      { title: "Tape 04: Late Night", lyrics: '"Just you, me, and the stars." 🌌', file: 'media4.mp3' }
+    ];
+    let currentTape = 0;
+
+    function startAudioExperience() {
+      getAudioContext();
+      if (startPrompt) {
+        startPrompt.style.opacity = '0';
+        setTimeout(() => startPrompt.remove(), 500);
+      }
+      playRadio(true);
+    }
+
     function toggleMusicBtn() {
-      if (!isPlaying) {
-        loadAndPlayTape(currentTape);
+      getAudioContext();
+      playRadio(!isPlaying);
+    }
+    function playRadioToggle() {
+      getAudioContext();
+      playRadio(!isPlaying);
+    }
+
+    function updateVisualizers(active) {
+      document.querySelectorAll('.viz-bar').forEach(b => {
+        if (active) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+    }
+
+    function playRadio(forcePlay) {
+      isPlaying = typeof forcePlay === 'boolean' ? forcePlay : !isPlaying;
+      const fill = document.getElementById('radioFill');
+
+      if (isPlaying) {
+        cassette.classList.add('playing');
+        hudCassette.classList.add('playing');
+        updateVisualizers(true);
+        fill.style.transition = 'width 10s linear';
+        fill.style.width = '100%';
+        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
+        hudPlayBtn.innerText = '⏸';
+        radioCenterPlayBtn.innerText = '⏸';
+
+        if (bgAudio.src.indexOf(tapes[currentTape].file) === -1) {
+          bgAudio.src = tapes[currentTape].file;
+        }
+
+        bgAudio.play().then(() => {
+          if (startPrompt) startPrompt.remove();
+        }).catch(() => {
+          if (startPrompt) startPrompt.style.display = 'flex';
+        });
+
+        if (!quests.tape && currentTape === 2) {
+          quests.tape = true;
+          unlockAchievement('Radio Operator', 'You listened to our tapes.');
+        }
       } else {
+        cassette.classList.remove('playing');
+        hudCassette.classList.remove('playing');
+        updateVisualizers(false);
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        document.getElementById('radioLyrics').innerText = '...';
+        hudPlayBtn.innerText = '▶';
+        radioCenterPlayBtn.innerText = '▶';
         bgAudio.pause();
-        isPlaying = false;
-        syncRadioUI(false);
       }
     }
 
-    function playRadioToggle() { toggleMusicBtn(); }
-    
-    // Function specifically for the lock screen play button
-    function toggleLockMusic() { toggleMusicBtn(); }
-
     function changeTape(dir) {
+      playChime(440, 'sine', 0.15, 0.08);
       currentTape += dir;
       if (currentTape < 0) currentTape = tapes.length - 1;
       if (currentTape >= tapes.length) currentTape = 0;
-      loadAndPlayTape(currentTape);
-    }
-    
-    // Function specifically for lock screen skip button
-    function skipLockMusic() { changeTape(1); }
 
-    bgAudio.addEventListener('ended', () => { changeTape(1); });
+      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
+      document.getElementById('hudTrackTitle').innerText = tapes[currentTape].title;
+      bgAudio.src = tapes[currentTape].file;
 
-    function unlockAudio() {
-      if (!audioUnlocked) {
-        audioUnlocked = true;
-        document.removeEventListener('click', unlockAudio);
-        document.removeEventListener('touchend', unlockAudio);
+      if (isPlaying) {
+        bgAudio.play().catch(() => {});
+        document.getElementById('radioLyrics').innerText = tapes[currentTape].lyrics;
+        const fill = document.getElementById('radioFill');
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        setTimeout(() => {
+          fill.style.transition = 'width 10s linear';
+          fill.style.width = '100%';
+        }, 50);
       }
     }
+    bgAudio.addEventListener('ended', () => { changeTape(1); });
 
-    document.addEventListener('click', unlockAudio);
-    document.addEventListener('touchend', unlockAudio);
+    window.addEventListener('pointerdown', function firstTouchAudio() {
+      getAudioContext();
+      window.removeEventListener('pointerdown', firstTouchAudio);
+    }, { once: true });
 
-    // --- PROGRESS & QUEST SYSTEM ---
-    const quests = { wish: false, hearts: false, gift: false, vault: false, inventory: false, tape: false, letters: false };
+    // ==========================================
+    // 5. QUEST & PROGRESSION SYSTEM
+    // ==========================================
+    const quests = {
+      map: false,
+      hearts: false,
+      video: false,
+      gift: false,
+      vault: false,
+      inventory: false,
+      tape: false,
+      letters: false
+    };
     let heartsFound = 0;
     let lettersOpened = 0;
 
@@ -600,193 +3076,635 @@
       const total = Object.keys(quests).length;
       const completed = Object.values(quests).filter(v => v).length;
       document.getElementById('questFill').style.width = `${(completed / total) * 100}%`;
-      document.getElementById('questText').innerText = `${completed}/${total} DISCOVERED`;
-      
+      document.getElementById('questText').innerText = `${completed}/${total} SECRETS DISCOVERED`;
       if (completed === total) {
-        setTimeout(startTrueEnding, 2500);
+        setTimeout(startTrueEnding, 2200);
       }
     }
 
     function unlockAchievement(title, desc) {
+      sfxVaultUnlock();
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
       toast.className = 'toast';
       toast.innerHTML = `<div class="toast-icon">🏆</div><div class="toast-text"><h4>${title}</h4><p>${desc}</p></div>`;
       container.appendChild(toast);
-      
-      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => toast.classList.add('show'), 15);
       setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 500);
       }, 4500);
-      
       updateProgress();
     }
 
-    window.onload = () => {
+    window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('statLove').style.width = '100%';
         document.getElementById('statCute').style.width = '100%';
         document.getElementById('statKind').style.width = '100%';
-      }, 600);
-    };
+        document.getElementById('statAngel').style.width = '100%';
+      }, 500);
+      updateClocks();
+      setInterval(updateClocks, 1000);
+      initCallTicker();
+      initHandHold();
+      // initVoicePlayer removed
+    });
 
-    // --- HIDDEN HEARTS ---
+    // ==========================================
+    // 6. HIDDEN HEARTS
+    // ==========================================
     function findHeart(el) {
-      if(el.classList.contains('found')) return;
+      if (el.classList.contains('found')) return;
+      sfxHeartCollect();
       el.classList.add('found');
       heartsFound++;
+
       if (heartsFound === 8 && !quests.hearts) {
         quests.hearts = true;
-        unlockAchievement('Heart Collector', 'You found every piece of my heart.');
-        addToInventory('🔑', 'key'); 
+        unlockAchievement('Heart Collector', 'You gathered all 8 pieces of my heart.');
+        addToInventory('🔑', 'key');
       } else {
         const hint = document.createElement('div');
-        hint.style.position = 'fixed'; hint.style.top = '15px'; hint.style.left = '50%'; hint.style.transform = 'translateX(-50%)';
-        hint.style.color = '#f472b6'; hint.style.zIndex = '9999'; hint.style.fontWeight = '700'; hint.style.letterSpacing = '1px';
-        hint.innerText = `Heart Found (${heartsFound}/8)`;
+        hint.style = "position:fixed; top:75px; left:50%; transform:translateX(-50%); color:var(--accent-pink); z-index:9999; font-weight:700; letter-spacing:1px; background:rgba(0,0,0,0.7); padding:6px 14px; border-radius:20px; border:1px solid var(--accent-pink);";
+        hint.innerText = `Heart Found (${heartsFound}/8) 🤍`;
         document.body.appendChild(hint);
-        setTimeout(() => hint.remove(), 2500);
+        setTimeout(() => hint.remove(), 2000);
       }
     }
 
-    // --- CANDLE WISH ---
-    function makeWish() {
-      if (quests.wish) return;
-      quests.wish = true;
-      document.getElementById('candleEmoji').innerText = '💨✨';
-      unlockAchievement('Wish Made', 'Your wish is safe with me.');
-      setTimeout(() => document.getElementById('candleEmoji').innerText = '🕯️', 1200);
+    // ==========================================
+    // 7. DUAL CLOCKS (ROMANIA & SAUDI ARABIA)
+    // ==========================================
+    function updateClocks() {
+      const now = new Date();
+      const roTimeStr = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/Bucharest', hour12: false });
+      const saTimeStr = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Riyadh', hour12: false });
+      
+      const roEl = document.getElementById('clockRo');
+      const saEl = document.getElementById('clockSa');
+      if (roEl) roEl.innerText = roTimeStr;
+      if (saEl) saEl.innerText = saTimeStr;
     }
 
-    // --- LITTLE THINGS ---
-    const flowerStages = ['🌱', '🌿', '🌷', '🌸'];
-    let flowerStage = 0;
-    function growFlower(el) {
-      if (flowerStage < 3) {
-        flowerStage++;
-        document.getElementById('flowerIcon').innerText = flowerStages[flowerStage];
-        if (flowerStage === 3) {
-          el.querySelector('.mini-title').innerText = 'It Bloomed 🤍';
+    function revealMapDetails() {
+      playChime(523.25, 'sine', 0.2, 0.1);
+      if (!quests.map) {
+        quests.map = true;
+        unlockAchievement('Connected Across Borders', 'You inspected our shared time zone.');
+      }
+    }
+
+    // ==========================================
+    // 8. LATE NIGHT CALL TICKER & MAGICAL KISS ANIMATION
+    // ==========================================
+    let callSeconds = 15735;
+    function initCallTicker() {
+      setInterval(() => {
+        callSeconds++;
+        const hrs = String(Math.floor(callSeconds / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((callSeconds % 3600) / 60)).padStart(2, '0');
+        const secs = String(callSeconds % 60).padStart(2, '0');
+        const ticker = document.getElementById('callTicker');
+        if (ticker) ticker.innerText = `${hrs}:${mins}:${secs}`;
+      }, 1000);
+    }
+
+    function sendKiss() {
+      playChime(784, 'sine', 0.15, 0.2);
+      setTimeout(() => playChime(1046.5, 'sine', 0.25, 0.2), 90);
+
+      if (navigator.vibrate) navigator.vibrate([60, 40, 80]);
+
+      // Romantic Screen Blush
+      const blush = document.createElement('div');
+      blush.style = "position:fixed; inset:0; background:radial-gradient(circle, rgba(244,114,182,0.35) 0%, rgba(124,58,237,0.15) 60%, transparent 100%); z-index:99998; pointer-events:none; transition:opacity 0.9s ease; opacity:1;";
+      document.body.appendChild(blush);
+      setTimeout(() => blush.style.opacity = '0', 250);
+      setTimeout(() => blush.remove(), 1150);
+
+      // Big Center Animated Kiss & Message
+      const bigKiss = document.createElement('div');
+      bigKiss.innerHTML = `
+        <div style="font-size:5.5rem; filter:drop-shadow(0 0 35px var(--accent-pink)); animation:kissPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">💋</div>
+        <div style="font-family:'Dancing Script', cursive; font-size:2rem; color:#fff; text-shadow:0 0 15px var(--accent-pink); margin-top:8px;">Kiss received straight to my heart! 🤍</div>
+      `;
+      bigKiss.style = "position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:99999; pointer-events:none; text-align:center; transition:all 0.6s ease;";
+      document.body.appendChild(bigKiss);
+      setTimeout(() => {
+        bigKiss.style.opacity = '0';
+        bigKiss.style.transform = 'translate(-50%, -60%) scale(1.1)';
+      }, 1600);
+      setTimeout(() => bigKiss.remove(), 2200);
+
+      // Flurry of floating kiss lips and hearts
+      for (let i = 0; i < 22; i++) {
+        setTimeout(() => {
+          const k = document.createElement('div');
+          k.innerText = ['💋', '💖', '🌸', '✨', '🤍', '😘'][Math.floor(Math.random() * 6)];
+          const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 220;
+          const startY = window.innerHeight * 0.62;
+          k.style = `position:fixed; top:${startY}px; left:${startX}px; font-size:${Math.random() * 1.6 + 1.2}rem; z-index:99999; pointer-events:none; transition: all 1.6s cubic-bezier(0.2, 0.8, 0.2, 1); filter:drop-shadow(0 0 10px var(--accent-pink));`;
+          document.body.appendChild(k);
+          setTimeout(() => {
+            k.style.transform = `translate(${(Math.random() - 0.5) * 350}px, -${Math.random() * 450 + 200}px) scale(${Math.random() * 0.5 + 0.8}) rotate(${(Math.random() - 0.5) * 70}deg)`;
+            k.style.opacity = '0';
+          }, 30);
+          setTimeout(() => k.remove(), 1700);
+        }, i * 40);
+      }
+    }
+
+    // ==========================================
+    // 9. BIRTHDAY CAKE BLOWOUT & CONFETTI
+    // ==========================================
+    let cakeBlown = false;
+    function blowCandles() {
+      if (cakeBlown) {
+        // Relight candles
+        document.querySelectorAll('.candle').forEach(c => c.classList.remove('extinguished'));
+        document.getElementById('cakeWishReveal').style.display = 'none';
+        document.getElementById('blowBtn').innerHTML = '<span>🕯️</span> Make A Wish & Blow Out';
+        cakeBlown = false;
+        playChime(600, 'sine', 0.2, 0.1);
+        return;
+      }
+
+      cakeBlown = true;
+      playChime(1046.5, 'sine', 0.4, 0.25);
+      setTimeout(() => playChime(1318.5, 'sine', 0.45, 0.25), 120);
+
+      document.querySelectorAll('.candle').forEach(c => c.classList.add('extinguished'));
+      document.getElementById('cakeWishReveal').style.display = 'block';
+      document.getElementById('blowBtn').innerHTML = '<span>✨</span> Relight Candles & Make Another Wish';
+
+      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+      // Confetti burst
+      const colors = ['#f472b6', '#fde047', '#c084fc', '#38bdf8', '#34d399', '#ffffff'];
+      for (let i = 0; i < 45; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = `${Math.random() * 90 + 5}vw`;
+        piece.style.top = `${window.innerHeight * 0.4}px`;
+        piece.style.width = `${Math.random() * 8 + 6}px`;
+        piece.style.height = `${Math.random() * 12 + 8}px`;
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        const cx = (Math.random() - 0.5) * 450;
+        const cy = Math.random() * 450 + 200;
+        const crot = (Math.random() - 0.5) * 720;
+        piece.style.setProperty('--cx', `${cx}px`);
+        piece.style.setProperty('--cy', `${cy}px`);
+        piece.style.setProperty('--crot', `${crot}deg`);
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 2300);
+      }
+
+      unlockAchievement('Birthday Princess', 'You made a birthday wish!');
+    }
+
+    // ==========================================
+    // 10. VIP BOARDING PASS STAMP
+    // ==========================================
+    function stampTicket() {
+      sfxVaultUnlock();
+      const btn = document.getElementById('ticketStampBtn');
+      btn.classList.add('stamped');
+      btn.innerText = 'STAMPED • DESTINED TO MEET ✈️';
+      if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
+      unlockAchievement('First Class Flight', 'Boarding pass confirmed to close the distance.');
+    }
+
+    // ==========================================
+    // 11. "HOLD MY HAND" TOUCH PAD
+    // ==========================================
+    let holdTimer = null;
+    let holdSeconds = 0;
+
+    function initHandHold() {
+      const pad = document.getElementById('handPadTarget');
+      if (!pad) return;
+
+      const startHold = (e) => {
+        e.preventDefault();
+        getAudioContext();
+        pad.classList.add('holding');
+        holdSeconds = 0;
+        sfxHeartbeat();
+
+        holdTimer = setInterval(() => {
+          holdSeconds++;
+          const status = document.getElementById('handHoldStatus');
+          const quote = document.getElementById('handQuote');
+          status.innerText = `Holding your hand: ${holdSeconds}s... 🤍`;
+          sfxHeartbeat();
+          if (navigator.vibrate) navigator.vibrate([40, 20]);
+
+          if (holdSeconds === 3) {
+            quote.innerText = '"I feel your warmth across the screen..." ✨';
+          } else if (holdSeconds === 6) {
+            quote.innerText = '"One day soon, this will be your actual hand in mine." 🤝';
+          } else if (holdSeconds === 10) {
+            quote.innerText = '"3,300 kilometers, but in this second, we are together." 🤍';
+            unlockAchievement('Hand In Hand', 'You held my hand across the distance.');
+          }
+        }, 1000);
+      };
+
+      const endHold = (e) => {
+        pad.classList.remove('holding');
+        if (holdTimer) clearInterval(holdTimer);
+        holdTimer = null;
+        if (holdSeconds > 0) {
+          document.getElementById('handHoldStatus').innerText = `Held for ${holdSeconds}s • Never letting go.`;
+          playChime(659.25, 'sine', 0.25, 0.12);
+        } else {
+          document.getElementById('handHoldStatus').innerText = 'Tap and hold above...';
+        }
+      };
+
+      pad.addEventListener('mousedown', startHold);
+      pad.addEventListener('mouseup', endHold);
+      pad.addEventListener('mouseleave', endHold);
+      pad.addEventListener('touchstart', startHold, { passive: false });
+      pad.addEventListener('touchend', endHold);
+      pad.addEventListener('touchcancel', endHold);
+    }
+
+    // ==========================================
+    // 12. 6 PROMISES ACROSS THE MILES & GOLDEN LOVE LOCK
+    // ==========================================
+    let isLoveLocked = false;
+    let revealedPromises = 0;
+
+    function revealPromise(el, idx) {
+      if (!el.classList.contains('revealed')) {
+        el.classList.add('revealed');
+        revealedPromises++;
+        playChime(659.25, 'sine', 0.15, 0.2);
+        setTimeout(() => playChime(880, 'sine', 0.22, 0.2), 80);
+        if (navigator.vibrate) navigator.vibrate(35);
+
+        const seal = el.querySelector('.promise-seal');
+        if (seal) seal.innerText = '💖';
+
+        // Floating star
+        const rect = el.getBoundingClientRect();
+        const p = document.createElement('div');
+        p.innerText = '✨';
+        p.style = `position:fixed; left:${rect.right - 40}px; top:${rect.top + 10}px; font-size:1.3rem; pointer-events:none; z-index:99999; animation: floatUp 1s ease-out forwards;`;
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1000);
+
+        if (revealedPromises >= 6) {
+          unlockAchievement('Vows Sealed', 'You revealed all 6 promises across the miles.');
         }
       }
     }
 
+    function toggleLoveLock() {
+      getAudioContext();
+      const lock = document.getElementById('goldenLock');
+      const text = document.getElementById('lockStatusText');
+      const btn = document.getElementById('lockBtn');
+
+      if (!isLoveLocked) {
+        isLoveLocked = true;
+        lock.classList.add('locked');
+
+        // Sounds: Heavy metallic lock click
+        playChime(392, 'square', 0.15, 0.3);
+        setTimeout(() => playChime(523.25, 'sine', 0.4, 0.4), 100);
+        setTimeout(() => sfxVaultUnlock(), 250);
+
+        if (navigator.vibrate) navigator.vibrate([100, 50, 150]);
+
+        text.innerHTML = '<span style="color:#f6d365; font-weight:700;">Locked forever on your birthday, May 8th.</span><br>The key has been cast into the starry sky, no distance can ever break what belongs together 💖';
+        btn.innerHTML = '<span>🔒</span> Hearts Permanently Sealed';
+        btn.style.background = 'linear-gradient(135deg, rgba(246, 211, 101, 0.3), rgba(253, 160, 133, 0.3))';
+        btn.style.color = '#f6d365';
+        btn.style.borderColor = '#f6d365';
+        btn.style.pointerEvents = 'none';
+
+        // Burst confetti & hearts
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const rect = lock.getBoundingClientRect();
+            const h = document.createElement('div');
+            h.innerText = ['💖', '✨', '🔒', '💛', '👑'][Math.floor(Math.random() * 5)];
+            h.style = `position:fixed; left:${rect.left + rect.width / 2}px; top:${rect.top + rect.height / 2}px; font-size:${Math.random() * 1.2 + 1}rem; pointer-events:none; z-index:99999; transition:all 1s cubic-bezier(0.2, 0.8, 0.2, 1); opacity:1;`;
+            document.body.appendChild(h);
+            const dx = (Math.random() - 0.5) * 300;
+            const dy = -(Math.random() * 250 + 60);
+            setTimeout(() => {
+              h.style.transform = `translate(${dx}px, ${dy}px) rotate(${Math.random() * 360}deg) scale(0.6)`;
+              h.style.opacity = '0';
+            }, 20);
+            setTimeout(() => h.remove(), 1100);
+          }, i * 40);
+        }
+
+        unlockAchievement('Eternal Love Lock', 'You locked our hearts across 3,500 km.');
+      }
+    }
+
+    // Mobile Audio Unlock on first touch/click anywhere
+    function mobileUnlockAudio() {
+      getAudioContext();
+      window.removeEventListener('touchstart', mobileUnlockAudio);
+      window.removeEventListener('click', mobileUnlockAudio);
+    }
+    window.addEventListener('touchstart', mobileUnlockAudio, { passive: true });
+    window.addEventListener('click', mobileUnlockAudio, { passive: true });
+
+    // ==========================================
+    // 13. CINEMA: FAVORITE VIDEOS OF YOU
+    // ==========================================
+    const cinemaPlayer = document.getElementById('cinemaPlayer');
+    const cinemaCaption = document.getElementById('cinemaCaption');
+    const cinemaScreenWrap = document.getElementById('cinemaScreenWrap');
+    const cinemaLockedScreen = document.getElementById('cinemaLockedScreen');
+
+    function switchVideo(num) {
+      playChime(600, 'sine', 0.15, 0.08);
+      document.getElementById('tabVid1').classList.toggle('active', num === 1);
+      document.getElementById('tabVid2').classList.toggle('active', num === 2);
+      document.getElementById('tabVid3').classList.toggle('active', num === 3);
+
+      if (num === 1) {
+        cinemaScreenWrap.style.display = 'block';
+        cinemaLockedScreen.style.display = 'none';
+        cinemaPlayer.src = 'Videos/ANGELIC.mov';
+        cinemaCaption.innerText = '"One of my favorite videos of you. You look so effortlessly angelic, my heart skips a beat every time." ✨';
+        cinemaPlayer.load();
+        cinemaPlayer.play().catch(() => {});
+      } else if (num === 2) {
+        cinemaScreenWrap.style.display = 'block';
+        cinemaLockedScreen.style.display = 'none';
+        cinemaPlayer.src = 'Videos/I LOVE YOU.mp4';
+        cinemaCaption.innerText = '"Hearing you say those three words across our screens makes all 3,300 kilometers vanish into thin air." 🤍';
+        cinemaPlayer.load();
+        cinemaPlayer.play().catch(() => {});
+      } else if (num === 3) {
+        cinemaPlayer.pause();
+        cinemaScreenWrap.style.display = 'none';
+        cinemaLockedScreen.style.display = 'flex';
+        cinemaCaption.innerText = '"Reserved for the video we film the second we see each other at airport arrivals." ✈️';
+      }
+
+      if (!quests.video) {
+        quests.video = true;
+        unlockAchievement('Cinema Under Stars', 'You watched our favorite video memories.');
+      }
+    }
+
+    function reactToVideo() {
+      playChime(750, 'sine', 0.25, 0.15);
+      for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.innerText = ['💖', '🤍', '✨', '🌸'][Math.floor(Math.random() * 4)];
+          const rect = cinemaScreenWrap.getBoundingClientRect();
+          const startX = rect.left + Math.random() * rect.width;
+          const startY = rect.bottom - 40;
+          heart.style = `position:fixed; top:${startY}px; left:${startX}px; font-size:1.8rem; z-index:999; pointer-events:none; transition: all 1.4s cubic-bezier(0.2, 0.8, 0.2, 1); filter:drop-shadow(0 0 10px var(--accent-pink));`;
+          document.body.appendChild(heart);
+          setTimeout(() => {
+            heart.style.transform = `translateY(-180px) scale(1.3) rotate(${(Math.random()-0.5)*40}deg)`;
+            heart.style.opacity = '0';
+          }, 30);
+          setTimeout(() => heart.remove(), 1500);
+        }, i * 80);
+      }
+    }
+
+    // ==========================================
+    // 14. PRINCESS CHARM (RPG ACTION)
+    // ==========================================
+    function castPrincessCharm() {
+      playChime(800, 'sine', 0.3, 0.2);
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.innerText = ['👑', '💖', '✨', '🌸', '🤍'][Math.floor(Math.random() * 5)];
+          heart.style = `position:fixed; bottom: 50px; left: ${Math.random() * 90}vw; font-size: ${Math.random() * 1.5 + 1.2}rem; z-index: 9999; pointer-events: none; transition: all 1.8s cubic-bezier(0.2, 0.8, 0.2, 1); filter: drop-shadow(0 0 10px var(--accent-pink));`;
+          document.body.appendChild(heart);
+          setTimeout(() => {
+            heart.style.transform = `translateY(-${Math.random() * 400 + 200}px) scale(1.4)`;
+            heart.style.opacity = '0';
+          }, 30);
+          setTimeout(() => heart.remove(), 1900);
+        }, i * 70);
+      }
+    }
+
+    // ==========================================
+    // 15. POLAROID DREAM BOARD (OUR ALBUM)
+    // ==========================================
+    const polaroidMemories = [
+      "Airport Arrival Gate: Running up to you the second the sliding doors open, throwing my arms around you, and not letting go for ten minutes.",
+      "Our First Real Hug: Feeling your warmth and breathing you in without a glass screen between us for the first time in our lives.",
+      "First In-Person Coffee Date: Sitting across from you in a little cafe, looking right into your eyes, and hearing your laugh in real life.",
+      "Midnight Car Drive: Windows rolled down into the cool night air, your hand resting in mine on the center console while our songs play.",
+      "Walking Side-by-Side: Strolling through the city streets together, finally being able to hold you close instead of holding a phone.",
+      "Our First Real Selfie: Snapping our very first photo together, replacing '0 photos' with the start of a lifetime of albums."
+    ];
+
+    function openPolaroid(idx) {
+      playChime(659.25, 'sine', 0.2, 0.1);
+      const desc = document.getElementById('polaroidDesc');
+      desc.style.opacity = '0';
+      setTimeout(() => {
+        desc.innerText = `"${polaroidMemories[idx]}" ✨`;
+        desc.style.opacity = '1';
+      }, 150);
+    }
+
+    // ==========================================
+    // 16. "REASONS WHY I LOVE YOU" LOVE JAR
+    // ==========================================
+    const loveReasons = [
+      "How you can make me feel more loved through a screen than anyone ever has in person.",
+      "The cute videos you send me that I re-watch a thousand times whenever I miss your smile.",
+      "Falling asleep on call with you to the peaceful sound of your breathing.",
+      "How your text notifications instantly turn the hardest day into pure joy.",
+      "The adorable face you make on camera when you get shy or start giggling.",
+      "Because distance taught me that love isn't about physical proximity, it's about finding the one soul that feels like home.",
+      "How safe, understood, and at peace I feel whenever I talk to you.",
+      "The way you believe in me even when self-doubt creeps in.",
+      "Because no matter how many miles lie between Romania and Saudi Arabia, you are the only one I want.",
+      "Your gentle, caring heart that makes me want to be the best version of myself for you.",
+      "Because loving you across screens is effortless, and holding you in person will be pure heaven.",
+      "How every time you say 'I love you', my chest feels warm and weightless.",
+      "Because you are worth every single mile, every flight delay, and every second of waiting."
+    ];
+
+    function drawLoveNote() {
+      playChime(700, 'sine', 0.25, 0.15);
+      const jarText = document.getElementById('jarScrollText');
+      jarText.style.opacity = '0';
+      const pick = loveReasons[Math.floor(Math.random() * loveReasons.length)];
+      setTimeout(() => {
+        jarText.innerText = `"${pick}" 🤍`;
+        jarText.style.opacity = '1';
+      }, 180);
+    }
+
+    // ==========================================
+    // 17. BUCKET LIST INTERACTION
+    // ==========================================
+    function toggleBucket(el) {
+      playChime(750, 'sine', 0.2, 0.1);
+      el.classList.toggle('completed');
+      const icon = el.querySelector('.bucket-icon');
+      if (el.classList.contains('completed')) {
+        icon.innerText = '💖';
+      } else {
+        icon.innerText = '🔒';
+      }
+    }
+
+    // ==========================================
+    // 18. CORE MEMORY CHAT REPLAY
+    // ==========================================
+    let chatPlaying = false;
+    function playChat() {
+      if (chatPlaying) return;
+      chatPlaying = true;
+      playChime(500, 'sine', 0.15, 0.08);
+      document.getElementById('chatPrompt').style.display = 'none';
+      const bubbles = document.querySelectorAll('.msg-bubble');
+      bubbles.forEach(b => b.classList.remove('show'));
+
+      let delay = 300;
+      bubbles.forEach((b, index) => {
+        setTimeout(() => {
+          playChime(b.classList.contains('msg-her') ? 550 : 650, 'sine', 0.15, 0.08);
+          b.classList.add('show');
+          if (index === bubbles.length - 1) {
+            setTimeout(() => {
+              chatPlaying = false;
+              document.getElementById('chatPrompt').style.display = 'block';
+            }, 2500);
+          }
+        }, delay);
+        delay += 1100;
+      });
+    }
+
+    // ==========================================
+    // 19. SAME SKY & FUTURE HOME
+    // ==========================================
+    function pulseSky() {
+      playChime(800, 'sine', 0.3, 0.1);
+      const text = document.querySelector('.sky-text');
+      text.style.opacity = '1';
+      setTimeout(() => text.style.opacity = '0', 4000);
+    }
+
+    function homeClick(text) {
+      playChime(620, 'sine', 0.15, 0.1);
+      const tBox = document.getElementById('homeText');
+      tBox.style.opacity = '0';
+      setTimeout(() => {
+        tBox.innerText = text;
+        tBox.style.opacity = '1';
+      }, 150);
+    }
+
+    // ==========================================
+    // 20. LDR VIRTUAL HUG TRANSMISSION
+    // ==========================================
     function giveVirtualHug() {
+      sfxHeartbeat();
       const overlay = document.getElementById('hugOverlay');
       overlay.classList.add('active');
+      const bar = document.getElementById('hugLoadBar');
+      const text = document.getElementById('hugLoadText');
+      const delivered = document.getElementById('hugDelivered');
+
+      bar.style.width = '0%';
+      text.innerText = 'TRANSMITTING VIA WI-FI...';
+      delivered.style.opacity = '0';
+
       if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-    }
 
-    // --- 100 REASONS ---
-    const reasons = [
-      "The way you care so deeply about the people you love.",
-      "Because you're the only person who can make me smile this fast.",
-      "How you make everyday conversations feel like a fairytale.",
-      "The way you promised to bake me sweets.",
-      "Because you are my safe space.",
-      "How fiercely loyal and protective you are.",
-      "The beautiful way your mind works."
-    ];
-    function nextReason() {
-      const box = document.getElementById('reasonText');
-      box.style.opacity = '0';
       setTimeout(() => {
-        box.innerText = `"${reasons[Math.floor(Math.random() * reasons.length)]}"`;
-        box.style.opacity = '1';
-      }, 300);
+        bar.style.width = '100%';
+        sfxHeartbeat();
+      }, 400);
+
+      setTimeout(() => {
+        text.innerText = '100% RECEIVED';
+        delivered.style.opacity = '1';
+        sfxHeartbeat();
+        if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+      }, 3200);
     }
 
-    // --- LETTERS ---
+    function closeHug(e) {
+      if (e.target.id === 'hugOverlay') {
+        document.getElementById('hugOverlay').classList.remove('active');
+      }
+    }
+
+    // ==========================================
+    // 21. LETTERS ("OPEN WHEN...")
+    // ==========================================
     const letterContent = {
-      birthday: `
-        <p>My prettiest baby,</p>
-        <p>Happy Birthday. If I could give you anything today, I would give you the ability to see yourself through my eyes, just for five seconds, so you’d understand why you are my easiest choice and the sweetest blessing in my life. You think you’re just an ordinary girl, but you turned my whole world upside down in the best way possible.</p>
-        <p>You calling me a gem when you are literally my entire universe made my heart melt. Today belongs entirely to you. Eat all the sweets you want, smile until your cheeks hurt, and remember: you're stuck with me forever. I’m never letting you go, maximum into my arms, duhhhh.</p>
-        <p>Happy birthday, my angel! 🎂🤍</p>
-      `,
-      doubt: `
-        <p>Hey my sweet girl,</p>
-        <p>I know that when someone loves you properly, and gently, it can feel terrifying if you're used to having to fight for basic kindness. You told me my love scares you because nobody has ever cared for you like this before.</p>
-        <p>Listen to me: you never did a single thing wrong in your life to think you didn't deserve softness. You are not "hard to love," you don't need a three to five business day turnaround to text me back, and you never have to put on a performance to keep me around.</p>
-        <p>When those doubts creep in, take a deep breath and just hold onto my hand. I’m not leaving, I’m not giving up on you, and I will protect you from every memory that made you feel small. You are completely safe with me. 🤍</p>
-      `,
-      miss: `
-        <p>My baby,</p>
-        <p>If you opened this because you miss me right now, close your eyes, take a slow breath, and imagine my arms pulling you in tight until there's no space left between us.</p>
-        <p>There’s that TV Girl line where he says, <i>"I want to run my fingers through your hair and tell you that I've never done this before with someone like you."</i> That is you to me. You can run your fingers through my hair as much as you want, lean your head on my chest, and let me keep you warm.</p>
-        <p>Distance is only temporary, angel. Until I can pull you into my arms for real, remember I’m carrying you in my heart every second of the day. 🫂🤍</p>
-      `,
-      sleep: `
-        <p>Goodnight, my sweet little princess.</p>
-        <p>Put your phone down, pull the blanket up, and let the entire day go. You don't have to carry the weight of tomorrow right now, and you don't have to overthink anything in the dark.</p>
-        <p>We are a team now. Whatever heavy thoughts or racing worries are trying to keep you awake, pass them to me, I'll keep watch over them while you rest.</p>
-        <p>Dream the sweetest dreams, my angel, and wake up knowing you are the most adored person on earth. I love you endlessly. 🌙🤍</p>
-      `,
-      hug: `
-        <p>Come here.</p>
-        <p>Close your eyes, take a deep breath, and just imagine my arms wrapping completely around you. You are completely secure, you are warm, and nothing outside of this hug can touch you right now.</p>
-        <p>No overthinking, no stress, no worries. Just you and me. I've got you. Just breathe. 🫂🤍</p>
-      `,
-      angry: `
-        <p>Hey.</p>
-        <p>Take a deep breath. Whatever made you mad, your feelings are completely valid and you have every right to be upset. You never have to apologize to me for having an attitude or needing to vent. I am on your side, unconditionally.</p>
-        <p>Do you want to vent about it until you run out of breath? I’ll listen to every single word. Do you want me to activate bodyguard protocol and handle it for you? Done. Or do you just want to sit in silence and be mad together? Whatever you need, I've got your back. Nobody messes with my girl. 😤🤍</p>
-      `,
-      nosleep: `
-        <p>Hey... still awake?</p>
-        <p>It's okay. Don't force yourself to sleep, and definitely don't beat yourself up for having a loud mind tonight. Late nights have a way of magnifying every little worry, but none of those thoughts are facts, they're just tiredness talking.</p>
-        <p>Picture our safe room. No noise, no pressure, no demands from anyone. Just soft blankets, the faint sound of music playing in the background, and me holding you while you listen to my heartbeat. Let your body relax even if your thoughts are still drifting. You don't have to solve anything tonight. 🦉✨</p>
-      `,
-      unloved: `
-        <p>Stop whatever you're doing, put your hand over your heart, and read this carefully:</p>
-        <p>You are my entire world. You are not "too much," you are not a burden, and you are not someone who can easily be replaced. On the days where your brain tricks you into feeling invisible or unappreciated, remember that somewhere out there, there is someone whose favorite notification is your name on his screen.</p>
-        <p>You bring peace just by existing. You are the prettiest blessing I could have ever asked for, and I will spend every single day reminding you of that until you finally believe it yourself. 🤍</p>
-      `,
-      smile: `
-        <p>Did you know you're at your absolute prettiest when you smile?</p>
-        <p>I bet you're sitting there looking adorable right now. Just think about us: think about the late-night chats, the promise to bake treats together, and all the silly moments where we couldn't stop laughing.</p>
-        <p>You turned my ordinary life into something warm and exciting. I’m probably smiling at my screen right now just picturing your face. Let that little smile show, princess, it looks too good on you to keep hidden. 🌻✨</p>
-      `,
-      motivation: `
-        <p>My little fighter,</p>
-        <p>Whatever mountain is in front of you right now, whether it's school, stress, or just feeling exhausted, you are going to conquer it. You have this quiet, stubborn strength inside you that you don't give yourself enough credit for.</p>
-        <p>Don't look at the whole staircase, just take the very next step. I believe in you even when you forget to believe in yourself. Put your chin up, do your best, and remember that your biggest fan is cheering you on every second. You've got this! ✨💪</p>
-      `
+      birthday: `<p>My prettiest baby,</p><p>Happy Birthday. Even though we are thousands of miles apart today and celebrating through our screens, my heart is right there next to you.</p><p>If I could give you anything in this world today, I would give you the ability to see yourself through my eyes, just for five seconds. You would see why you are my greatest miracle, why I love you so fiercely, and why no distance could ever weaken what we have.</p><p>Happy birthday, my angel! 🎂🤍</p>`,
+      doubt: `<p>Hey my sweet girl,</p><p>I know that loving someone across countries and screens can sometimes feel vulnerable and scary. You might wonder if this is real or if you're safe.</p><p>Look at me: I am not going anywhere. My loyalty, my heart, and my future belong to you. You are completely safe with me, through every screen call, every good day, and every hard day. 🤍</p>`,
+      miss: `<p>My baby,</p><p>If you opened this because you miss me right now, close your eyes, take a slow breath, and imagine my arms wrapping tight around you.</p><p>Every mile between Romania and Saudi Arabia is just temporary numbers on a map. Our hearts are beating in the exact same hour. I miss you too, angel, but our countdown is ticking. 🫂🤍</p>`,
+      sleep: `<p>Goodnight, my sweet little princess.</p><p>Put your phone down, pull the blanket warm over your shoulders, and let the entire day go.</p><p>Imagine my hand gently brushing your hair back as you drift off. Dream the sweetest dreams, my angel, I'll be right there in them with you. 🌙🤍</p>`,
+      hug: `<p>Come here.</p><p>Close your eyes, take a deep breath in, and imagine my arms wrapped around you so securely that all the noise in your mind fades away.</p><p>Until the day I can hold you at airport arrivals, feel this hug through your screen. I've got you. Just breathe. 🫂🤍</p>`,
+      angry: `<p>Hey.</p><p>Take a deep breath. Whatever made you mad or frustrated, your feelings are completely valid and you are allowed to feel upset.</p><p>I'm in your corner no matter what. Vent to me, scream into a pillow, or take all the space you need. Nobody messes with my girl. 😤🤍</p>`,
+      nosleep: `<p>Hey... still awake?</p><p>It's okay. Don't stress or count the hours until sunrise.</p><p>Look at our clocks: I'm living in the exact same hour as you tonight. Put on our playlist, relax your shoulders, and let your body drift off whenever it's ready. 🦉✨</p>`,
+      unloved: `<p>Stop whatever you're doing, put your hand over your heart, and read this carefully:</p><p>You are my entire world. Even through a screen, you bring more light into my life than anything else in this world.</p><p>Never let a heavy day trick you into thinking you are anything less than a masterpiece. You are deeply cherished, irreplaceable, and so loved. 🤍</p>`,
+      smile: `<p>Did you know you're at your absolute prettiest when you smile?</p><p>I bet you're sitting there looking utterly adorable right now.</p><p>Let that sweet smile show, princess, your smile over FaceTime or camera calls is my favorite sight on earth. 🌻✨</p>`,
+      motivation: `<p>My little fighter,</p><p>Whatever challenge or mountain is standing in front of you right now... you are going to conquer it.</p><p>You are stronger, smarter, and more resilient than you even give yourself credit for. Go out there and show them who you are. I believe in you with every fiber of my being! ✨💪</p>`
     };
 
     function openLetter(key) {
+      playChime(650, 'sine', 0.25, 0.12);
       const modal = document.getElementById('letterModal');
       const paper = document.getElementById('paperContent');
-      paper.innerHTML = letterContent[key];
+      paper.innerHTML = letterContent[key] || '<p>I love you forever. 🤍</p>';
       modal.classList.add('active');
       paper.scrollTop = 0;
-      
+
       lettersOpened++;
       if (lettersOpened === 10 && !quests.letters) {
         quests.letters = true;
-        unlockAchievement('Message Collector', 'You read every word I wrote for you.');
+        unlockAchievement('Letter Collector', 'You read every word I wrote for you.');
       }
     }
-    function closeLetter() { document.getElementById('letterModal').classList.remove('active'); }
 
-    // --- INVENTORY COMBINATION & LOGIC ---
+    function closeLetter() {
+      document.getElementById('letterModal').classList.remove('active');
+    }
+    function checkCloseLetter(e) {
+      if (e.target.id === 'letterModal') closeLetter();
+    }
+
+    // ==========================================
+    // 22. ATTACHE CASE (INVENTORY SYSTEM)
+    // ==========================================
     const invData = {
-      'herb': { name: 'Green Herb 🌿', desc: 'Restores warmth.' },
+      'herb': { name: 'Green Herb 🌿', desc: 'Restores warmth and comfort.' },
       'spray': { name: 'First Aid 🧴', desc: 'Cures overthinking instantly.', action: 'Use Spray', func: 'useSpray()' },
       'star': { name: 'Starbolt ✨', desc: 'Tamaranian protection energy.', action: 'Shoot Starbolt', func: 'useStar()' },
-      'key': { name: 'Heart Key 🔑', desc: 'A strange key with a tiny inscription: <br><b style="font-size:1.4rem; letter-spacing: 2px;">0508</b>' },
+      'key': { name: 'Heart Key 🔑', desc: 'A mysterious key engraved with: <br><b style="font-size:1.35rem; letter-spacing: 3px; color: var(--accent-pink);">0508</b>' },
       'tape': { name: 'Cassette Tape 📼', desc: 'A secret recording...', action: 'Insert into Radio', func: 'useTape()' },
       'letter_item': { name: 'Secret Letter 💌', desc: 'Combine this with the Green Herb...' },
       'love_herb': { name: 'Love Herb 💖', desc: 'Restores 100% of princess happiness.', action: 'Consume', func: 'useLoveHerb()' },
-      'hug_ticket': { name: 'Hug Voucher 🎟️', desc: 'A golden ticket for instant warmth.', action: 'Redeem Hug', func: 'useHugTicket()' }
+      'hug_ticket': { name: 'First-Hug Voucher 🎟️', desc: 'A golden ticket for our first airport hug.', action: 'Redeem Voucher', func: 'useHugTicket()' }
     };
-
     let selectedSlot = null;
 
     function addToInventory(icon, id) {
       const slots = document.querySelectorAll('.inv-slot.empty');
-      if(slots.length > 0) {
+      if (slots.length > 0) {
         const slot = slots[0];
         slot.classList.remove('empty');
         slot.innerHTML = icon;
@@ -802,26 +3720,25 @@
     }
 
     function selectItem(el) {
-      if(el.classList.contains('empty')) return;
-      
+      if (el.classList.contains('empty')) return;
+      playChime(600, 'sine', 0.12, 0.08);
       const itemId = el.getAttribute('data-id');
-      
-      // Combination
+
+      // Check Combination
       if (selectedSlot && selectedSlot !== el) {
         const id1 = selectedSlot.getAttribute('data-id');
         const id2 = itemId;
-        
         if ((id1 === 'herb' && id2 === 'letter_item') || (id2 === 'herb' && id1 === 'letter_item')) {
+          playChime(880, 'sine', 0.4, 0.2);
           el.innerHTML = '💖';
           el.setAttribute('data-id', 'love_herb');
           el.classList.add('mixing');
           clearSlot(selectedSlot);
           selectedSlot = null;
-          
-          document.getElementById('invDesc').innerHTML = `<b>Love Herb Created!</b><br>Restores 100% of princess happiness.`;
-          if(!quests.inventory) {
+          document.getElementById('invDesc').innerHTML = `<b style="color:var(--accent-pink); font-size:1.1rem;">Love Herb Synthesized!</b><br>Restores 100% of princess happiness.`;
+          if (!quests.inventory) {
             quests.inventory = true;
-            unlockAchievement('Alchemist', 'You successfully combined items!');
+            unlockAchievement('Alchemist', 'You successfully combined your inventory items!');
           }
           return;
         }
@@ -830,48 +3747,50 @@
       document.querySelectorAll('.inv-slot').forEach(s => s.classList.remove('active'));
       el.classList.add('active');
       selectedSlot = el;
-      
-      const item = invData[itemId] || {name: 'Unknown Item', desc: '...'};
-      let descHtml = `<b>${item.name}</b><br><span style="margin-top: 5px; display: block;">${item.desc}</span>`;
-      
-      if (item.action) {
-        descHtml += `<button class="use-btn" onclick="${item.func}">${item.action}</button>`;
-      }
-      
+
+      const item = invData[itemId] || { name: 'Unknown Item', desc: '...' };
+      let descHtml = `<b style="color:var(--accent-purple); font-size:1.1rem;">${item.name}</b><br><span style="margin-top: 6px; display: block;">${item.desc}</span>`;
+      if (item.action) descHtml += `<button class="use-btn" onclick="${item.func}">${item.action}</button>`;
+
       const descBox = document.getElementById('invDesc');
       descBox.style.opacity = '0';
       setTimeout(() => {
         let bColor = 'transparent';
-        if(itemId === 'herb' || itemId === 'love_herb') bColor = 'var(--accent-green)';
-        if(itemId === 'spray') bColor = '#38bdf8';
-        if(itemId === 'star') bColor = 'var(--accent-purple)';
+        if (itemId === 'herb' || itemId === 'love_herb') bColor = 'var(--accent-green)';
+        if (itemId === 'spray') bColor = '#38bdf8';
+        if (itemId === 'star' || itemId === 'tape') bColor = 'var(--accent-purple)';
+        if (itemId === 'key') bColor = 'var(--accent-pink)';
         descBox.style.borderLeftColor = bColor;
         descBox.innerHTML = descHtml;
         descBox.style.opacity = '1';
-      }, 150);
+      }, 120);
     }
 
-    // --- ITEM ACTIONS ---
     function useTape() {
-      tapes.push({ title: "Tape 05: Secret Message", lyrics: '"I will always be your safe space. Forever." 🤍', file: 'media.mp3' });
-      loadAndPlayTape(tapes.length - 1);
-      
+      tapes.push({
+        title: "Tape 05: Secret Freq",
+        lyrics: '"I will always be your safe space. Forever and ever." 🤍',
+        file: 'media.mp3'
+      });
+      currentTape = tapes.length - 1;
+      document.getElementById('tapeTitle').innerText = tapes[currentTape].title;
+      document.getElementById('hudTrackTitle').innerText = tapes[currentTape].title;
+      playRadio(true);
       clearSlot(selectedSlot);
       selectedSlot = null;
-      document.getElementById('invDesc').innerHTML = "Tape inserted into the Midnight Radio.";
-      if(!quests.tape) {
+      document.getElementById('invDesc').innerHTML = "Tape inserted into Midnight Radio!";
+      if (!quests.tape) {
         quests.tape = true;
-        unlockAchievement('Secret Tape', 'You played the hidden frequency.');
+        unlockAchievement('Secret Tape', 'You tuned in to the hidden broadcast.');
       }
     }
 
     function useSpray() {
       const flash = document.createElement('div');
-      flash.style = "position:fixed;inset:0;background:rgba(56, 189, 248, 0.4);z-index:9999;pointer-events:none;transition:opacity 0.8s;opacity:1;";
+      flash.style = "position:fixed;inset:0;background:rgba(56, 189, 248, 0.35);z-index:9999;pointer-events:none;transition:opacity 0.8s;opacity:1;";
       document.body.appendChild(flash);
-      setTimeout(() => flash.style.opacity = '0', 100);
+      setTimeout(() => flash.style.opacity = '0', 80);
       setTimeout(() => flash.remove(), 900);
-      
       clearSlot(selectedSlot);
       selectedSlot = null;
       document.getElementById('invDesc').innerHTML = "Used First Aid Spray.<br>Overthinking cured! +100 Peace.";
@@ -881,9 +3800,8 @@
       const flash = document.createElement('div');
       flash.style = "position:fixed;inset:0;background:rgba(244, 114, 182, 0.4);z-index:9999;pointer-events:none;transition:opacity 1s;opacity:1;";
       document.body.appendChild(flash);
-      setTimeout(() => flash.style.opacity = '0', 200);
-      setTimeout(() => flash.remove(), 1200);
-      
+      setTimeout(() => flash.style.opacity = '0', 150);
+      setTimeout(() => flash.remove(), 1100);
       clearSlot(selectedSlot);
       selectedSlot = null;
       document.getElementById('invDesc').innerHTML = "Consumed Love Herb.<br>Maximum warmth restored! 💖";
@@ -892,9 +3810,11 @@
     function useStar() {
       const bolt = document.createElement('div');
       bolt.innerText = '✨';
-      bolt.style = "position:fixed;bottom:20%;left:-100px;font-size:4rem;z-index:9999;filter:drop-shadow(0 0 20px #10b981);transition:transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);";
+      bolt.style = "position:fixed;bottom:20%;left:-100px;font-size:4rem;z-index:9999;filter:drop-shadow(0 0 20px #c084fc);transition:transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);";
       document.body.appendChild(bolt);
-      setTimeout(() => { bolt.style.transform = `translate(${window.innerWidth + 200}px, -${window.innerHeight/2}px)`; }, 50);
+      setTimeout(() => {
+        bolt.style.transform = `translate(${window.innerWidth + 200}px, -${window.innerHeight / 2}px)`;
+      }, 50);
       setTimeout(() => bolt.remove(), 900);
     }
 
@@ -902,49 +3822,70 @@
       giveVirtualHug();
       clearSlot(selectedSlot);
       selectedSlot = null;
-      document.getElementById('invDesc').innerHTML = "Ticket redeemed!";
+      document.getElementById('invDesc').innerHTML = "Voucher redeemed! Hold on tight ✨";
     }
 
-    // --- VAULT ---
+    // ==========================================
+    // 23. VAULT SYSTEM (PASSCODE 0508)
+    // ==========================================
     function unlockVault() {
-      const input = document.getElementById('vaultInput').value;
+      const input = document.getElementById('vaultInput').value.trim();
       if (input === '0508') {
-        document.getElementById('vaultInput').style.background = 'rgba(16, 185, 129, 0.15)';
-        document.getElementById('vaultInput').style.borderColor = 'var(--accent-green)';
-        document.getElementById('vaultInput').value = 'ACCESS GRANTED';
-        document.getElementById('vaultInput').disabled = true;
-        
+        sfxVaultUnlock();
+        const vInput = document.getElementById('vaultInput');
+        vInput.style.background = 'rgba(16, 185, 129, 0.18)';
+        vInput.style.borderColor = 'var(--accent-green)';
+        vInput.style.color = 'var(--accent-green)';
+        vInput.value = 'ACCESS GRANTED';
+        vInput.disabled = true;
+
         if (!quests.vault) {
           quests.vault = true;
-          unlockAchievement('Secret Keeper', 'You remembered our special date.');
-          addToInventory('📼', 'tape'); 
+          unlockAchievement('Vault Keeper', 'You remembered our special date (0508).');
+          addToInventory('📼', 'tape');
         }
       } else {
-        document.getElementById('vaultInput').value = '';
-        document.getElementById('vaultInput').placeholder = 'Incorrect passcode...';
+        playChime(250, 'sawtooth', 0.2, 0.1);
+        const vInput = document.getElementById('vaultInput');
+        vInput.value = '';
+        vInput.placeholder = 'Incorrect code...';
       }
     }
 
-    // --- MYSTERY GIFT ---
+    function showVaultHint() {
+      const vInput = document.getElementById('vaultInput');
+      vInput.placeholder = 'Hint: 0508 🔑';
+    }
+
+    // ==========================================
+    // 24. MYSTERY BIRTHDAY GIFT
+    // ==========================================
     function openGift() {
+      playChime(600, 'sine', 0.2, 0.1);
       document.getElementById('giftIcon').style.animation = 'none';
       document.getElementById('giftChoices').style.display = 'flex';
       document.querySelector('.gift-container p').style.display = 'none';
     }
-    
+
     function claimGift(type) {
       if (type === 'letter') addToInventory('💌', 'letter_item');
       if (type === 'hug') addToInventory('🎟️', 'hug_ticket');
-      
-      document.getElementById('giftSection').innerHTML = '<div style="padding: 2rem; text-align: center;"><div style="font-size:4rem; margin-bottom:1rem;">🎁</div><p style="color:var(--text-muted);">Gift added to your Attache Case.</p></div>';
-      
+
+      document.getElementById('giftSection').innerHTML = `
+        <div style="padding: 2rem; text-align: center;">
+          <div style="font-size:4rem; margin-bottom:0.8rem; filter: drop-shadow(0 0 20px rgba(192,132,252,0.4));">🎁</div>
+          <p style="color:var(--accent-purple); font-weight: 600; letter-spacing: 1px;">Gift placed into your Attache Case.</p>
+        </div>`;
+
       if (!quests.gift) {
         quests.gift = true;
-        unlockAchievement('Surprise!', 'You opened your birthday gift.');
+        unlockAchievement('Surprise!', 'You claimed your birthday gift.');
       }
     }
 
-    // --- CLEAN SEQUENTIAL ENDING ---
+    // ==========================================
+    // 25. CINEMATIC FIRST MEETING ENDING
+    // ==========================================
     async function playCineSequence() {
       const slide = document.getElementById('cineSlide');
       const btn = document.getElementById('ctBtn');
@@ -957,17 +3898,15 @@
         await new Promise(r => setTimeout(r, waitTime));
       }
 
-      await showLine("ALL FILES RECOVERED.", 2400);
-      await showLine("ALL HEARTS COLLECTED.", 2400);
-      await showLine("If you made it this far...", 2800);
-      await showLine("I hope you understand that none of this was really about the website.", 3500);
-      await showLine("I just wanted to build you a tiny universe.", 3000);
-      await showLine("A place where every button means something.<br>Every star is a memory.", 3500);
+      await showLine("Status:<br><span style='color:var(--accent-pink); font-family: monospace;'>ONLINE DATING FOR NOW... ██████░░░░ SOON.</span>", 2800);
+      await showLine("We started as two voices on a screen.", 2800);
+      await showLine("We fell in love across late night calls and videos.", 3000);
+      await showLine("We have never met face-to-face yet...", 2800);
+      await showLine("But one day, the flight will touch down.", 3000);
+      await showLine("The airport doors will slide open...", 3000);
+      await showLine("And I will finally get to hold you, and never let go.", 3500);
 
       slide.classList.remove('visible');
-      await new Promise(r => setTimeout(r, 600));
-      slide.innerHTML = "And at the center of it all...<br><span style='color: var(--accent-pink); font-weight: 500;'>there's you. ❤️</span>";
-      slide.classList.add('visible');
       await new Promise(r => setTimeout(r, 600));
       btn.classList.add('visible');
     }
@@ -992,12 +3931,14 @@
       }
 
       await showLine("The adventure is over for tonight, princess.", 3200);
-      await showLine("Close your eyes.", 2600);
-      await showLine("I'll see you in your dreams. 🌙🤍", 3200);
+      await showLine("Close your eyes, sweet girl.", 2600);
+      await showLine("I'll see you in our call, and in your dreams. 🌙🤍", 3200);
 
       slide.classList.remove('visible');
       await new Promise(r => setTimeout(r, 1000));
-      heart.classList.add('visible');
+      heart.style.opacity = '1';
+      heart.style.transform = 'scale(1)';
+      heart.style.animation = 'popHeart 2.5s infinite ease-in-out';
     }
 
     function launchGoodnight() {
